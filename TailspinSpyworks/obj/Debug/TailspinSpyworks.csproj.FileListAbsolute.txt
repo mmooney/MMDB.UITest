@@ -1,0 +1,48 @@
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks\TailspinSpyworks\bin\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks\TailspinSpyworks\bin\TailspinSpyworks.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks\TailspinSpyworks\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks\TailspinSpyworks\obj\Debug\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks\TailspinSpyworks\obj\Debug\TailspinSpyworks.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks\TailspinSpyworks\bin\System.Web.Ajax.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks\TailspinSpyworks\bin\System.Web.Ajax.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-1.0\TailspinSpyworks\bin\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-1.0\TailspinSpyworks\bin\TailspinSpyworks.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-1.0\TailspinSpyworks\bin\System.Web.Ajax.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-1.0\TailspinSpyworks\bin\System.Web.Ajax.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-1.0\TailspinSpyworks\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-1.0\TailspinSpyworks\obj\Debug\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-1.0\TailspinSpyworks\obj\Debug\TailspinSpyworks.pdb
+C:\Users\Joe Stagner\Desktop\WIP\Tailspin-SpyWorks\TailSpin Spyworks\TailspinSpyworks-v0.8\TailspinSpyworks-v0.8\TailspinSpyworks\bin\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\WIP\Tailspin-SpyWorks\TailSpin Spyworks\TailspinSpyworks-v0.8\TailspinSpyworks-v0.8\TailspinSpyworks\bin\TailspinSpyworks.pdb
+C:\Users\Joe Stagner\Desktop\WIP\Tailspin-SpyWorks\TailSpin Spyworks\TailspinSpyworks-v0.8\TailspinSpyworks-v0.8\TailspinSpyworks\bin\System.Web.Ajax.dll
+C:\Users\Joe Stagner\Desktop\WIP\Tailspin-SpyWorks\TailSpin Spyworks\TailspinSpyworks-v0.8\TailspinSpyworks-v0.8\TailspinSpyworks\bin\System.Web.Ajax.pdb
+C:\Users\Joe Stagner\Desktop\WIP\Tailspin-SpyWorks\TailSpin Spyworks\TailspinSpyworks-v0.8\TailspinSpyworks-v0.8\TailspinSpyworks\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Joe Stagner\Desktop\WIP\Tailspin-SpyWorks\TailSpin Spyworks\TailspinSpyworks-v0.8\TailspinSpyworks-v0.8\TailspinSpyworks\obj\Debug\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\WIP\Tailspin-SpyWorks\TailSpin Spyworks\TailspinSpyworks-v0.8\TailspinSpyworks-v0.8\TailspinSpyworks\obj\Debug\TailspinSpyworks.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.8\TailspinSpyworks\bin\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.8\TailspinSpyworks\bin\TailspinSpyworks.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.8\TailspinSpyworks\bin\System.Web.Ajax.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.8\TailspinSpyworks\bin\System.Web.Ajax.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.8\TailspinSpyworks\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.8\TailspinSpyworks\obj\Debug\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.8\TailspinSpyworks\obj\Debug\TailspinSpyworks.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.9\TailspinSpyworks\bin\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.9\TailspinSpyworks\bin\TailspinSpyworks.pdb
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.9\TailspinSpyworks\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.9\TailspinSpyworks\obj\Debug\TailspinSpyworks.dll
+C:\Users\Joe Stagner\Desktop\TailspinSpyworks-v0.9\TailspinSpyworks\obj\Debug\TailspinSpyworks.pdb
+C:\Users\mmoone00c\Downloads\TailspinSpyworks-v0.9\TailspinSpyworks-v0.9\TailspinSpyworks\bin\TailspinSpyworks.dll
+C:\Users\mmoone00c\Downloads\TailspinSpyworks-v0.9\TailspinSpyworks-v0.9\TailspinSpyworks\bin\TailspinSpyworks.pdb
+C:\Users\mmoone00c\Downloads\TailspinSpyworks-v0.9\TailspinSpyworks-v0.9\TailspinSpyworks\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\mmoone00c\Downloads\TailspinSpyworks-v0.9\TailspinSpyworks-v0.9\TailspinSpyworks\obj\Debug\TailspinSpyworks.dll
+C:\Users\mmoone00c\Downloads\TailspinSpyworks-v0.9\TailspinSpyworks-v0.9\TailspinSpyworks\obj\Debug\TailspinSpyworks.pdb
+C:\Projects\Samples\TailspinSpyworks-v0.9\TailspinSpyworks\bin\TailspinSpyworks.dll
+C:\Projects\Samples\TailspinSpyworks-v0.9\TailspinSpyworks\bin\TailspinSpyworks.pdb
+C:\Projects\Samples\TailspinSpyworks-v0.9\TailspinSpyworks\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\Samples\TailspinSpyworks-v0.9\TailspinSpyworks\obj\Debug\TailspinSpyworks.dll
+C:\Projects\Samples\TailspinSpyworks-v0.9\TailspinSpyworks\obj\Debug\TailspinSpyworks.pdb
+C:\Users\mmoone00c\Dropbox\Code\MMDB.UITest\TailspinSpyworks\bin\TailspinSpyworks.dll
+C:\Users\mmoone00c\Dropbox\Code\MMDB.UITest\TailspinSpyworks\bin\TailspinSpyworks.pdb
+C:\Users\mmoone00c\Dropbox\Code\MMDB.UITest\TailspinSpyworks\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\mmoone00c\Dropbox\Code\MMDB.UITest\TailspinSpyworks\obj\Debug\TailspinSpyworks.dll
+C:\Users\mmoone00c\Dropbox\Code\MMDB.UITest\TailspinSpyworks\obj\Debug\TailspinSpyworks.pdb
