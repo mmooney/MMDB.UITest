@@ -14,7 +14,7 @@ namespace MMDB.UITest.Generator.App
 		[STAThread]
 		static void Main()
 		{
-			var webPages = ProxyGenerator.LoadWebPages(@"C:\Users\mmoone00c\Dropbox\Code\screwturn-screwturn-wiki-4-cf9155b27d4c\WebApplication\WebApplication.csproj");
+			var webPages = ProxyGenerator.LoadWebPages(@"C:\Users\admin\Dropbox\Code\screwturn-screwturn-wiki-4-cf9155b27d4c\WebApplication\WebApplication.csproj");
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
