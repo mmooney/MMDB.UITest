@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspxDefinition.cs" />
+    <Compile Include="TargetClass.cs" />
+    <Compile Include="TargetProject.cs" />
     <Compile Include="WebControls\LiteralControl.cs" />
     <Compile Include="SourceContainer.cs" />
     <Compile Include="SourceMasterContentPage.cs" />
@@ -59,6 +61,10 @@
     <Compile Include="SourceWebProject.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MMDB.UITest.Core\MMDB.UITest.Core.csproj">
+      <Project>{0BA31399-FB89-42D8-BA72-12016790CD52}</Project>
+      <Name>MMDB.UITest.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MMDB.UITest.DotNetParser\MMDB.UITest.DotNetParser.csproj">
       <Project>{40249B15-0986-4F23-AAC2-6516FE1B8C4E}</Project>
       <Name>MMDB.UITest.DotNetParser</Name>

@@ -1,0 +1,12 @@
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\ScrewturnWikiProxySample.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\ScrewturnWikiProxySample.pdb
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\MMDB.UITest.Core.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\WatiN.Core.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\nunit.framework.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\Interop.SHDocVw.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\MMDB.UITest.Core.pdb
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\WatiN.Core.xml
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\nunit.framework.xml
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\obj\Debug\ScrewturnWikiProxySample.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\obj\Debug\ScrewturnWikiProxySample.pdb

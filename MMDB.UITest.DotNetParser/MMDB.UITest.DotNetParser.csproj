@@ -47,9 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSAttribute.cs" />
     <Compile Include="CSClass.cs" />
     <Compile Include="CSField.cs" />
     <Compile Include="CSProjectFile.cs" />
+    <Compile Include="DotNetParserHelper.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

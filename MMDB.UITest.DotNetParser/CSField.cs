@@ -34,26 +34,10 @@ namespace MMDB.UITest.DotNetParser
 			}
 			var memberTypeNode = (MemberType)fieldNode.Children.Single(i => i is MemberType);
 			fieldObject.TypeName = memberTypeNode.MemberName;
-			fieldObject.TypeNamespace = BuildNamespace(memberTypeNode);
+			fieldObject.TypeNamespace = DotNetParserHelper.BuildNamespace(memberTypeNode);
 			var variableInitializer = (VariableInitializer)fieldNode.Children.Single(i=>i is VariableInitializer);
 			fieldObject.FieldName = variableInitializer.Name;
 			return fieldObject;
-		}
-
-		private static string BuildNamespace(MemberType memberTypeNode)
-		{
-			string returnValue = string.Empty;
-			var child = (MemberType)memberTypeNode.Children.SingleOrDefault(i=>i is MemberType);
-			if(child != null && !child.IsDoubleColon)
-			{
-				returnValue = BuildNamespace(child);
-			}
-			if(!string.IsNullOrEmpty(returnValue))
-			{
-				returnValue += ".";
-			}
-			returnValue += child.MemberName;
-			return returnValue;
 		}
 	}
 }

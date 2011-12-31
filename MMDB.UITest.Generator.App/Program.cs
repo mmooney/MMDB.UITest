@@ -14,8 +14,8 @@ namespace MMDB.UITest.Generator.App
 		[STAThread]
 		static void Main()
 		{
-			var webPages = ProxyGenerator.LoadWebPages(@"C:\Users\admin\Dropbox\Code\screwturn-screwturn-wiki-4-cf9155b27d4c\WebApplication\WebApplication.csproj");
-
+			var sourceProject= ProxyGenerator.LoadWebPages(@"C:\Users\admin\Dropbox\Code\screwturn-screwturn-wiki-4-cf9155b27d4c\WebApplication\WebApplication.csproj");
+			ProxyGenerator.UpdateProxyProject(@"C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\ScrewturnWikiProxySample.csproj", sourceProject);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new Form1());

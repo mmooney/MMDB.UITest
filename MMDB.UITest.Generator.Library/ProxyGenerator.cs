@@ -14,6 +14,15 @@ namespace MMDB.UITest.Generator.Library
 {
 	public static class ProxyGenerator
 	{
+		public static void UpdateProxyProject(string targetProjectPath, SourceWebProject sourceProject)
+		{
+			XDocument xdoc = XDocument.Load(targetProjectPath);
+			TargetProject targetProject = TargetProject.Load(targetProjectPath);
+			foreach(var masterPage in sourceProject.MasterPageList)
+			{
+			}
+		}
+
 		public static SourceWebProject LoadWebPages(string csProjFilePath)
 		{
 			SourceWebProject project = new SourceWebProject();
@@ -105,7 +114,7 @@ namespace MMDB.UITest.Generator.Library
 				if(node is TypeDeclaration)
 				{
 					var typeDefinitionNode = (TypeDeclaration)node;
-					CSClass classObject = CSClass.Parse(namespaceNode, typeDefinitionNode);
+					CSClass classObject = CSClass.Parse(namespaceNode, typeDefinitionNode, pageObject.PagePath);
 					foreach(var fieldObject in classObject.FieldList)
 					{
 						if(fieldObject.TypeNamespace == "System.Web.UI.WebControls")
@@ -133,14 +142,14 @@ namespace MMDB.UITest.Generator.Library
 
 		private static List<string> GetMasterFileList(XDocument xdoc)
 		{
-			List<string> aspxFileList = new List<string>();
+			List<string> masterFileList = new List<string>();
 			var nodes = xdoc.Descendants().Where(i => i.Name.LocalName == "Content" && i.Attributes().Any(j => j.Name.LocalName == "Include" && j.Value.EndsWith(".master")));
 			foreach (var node in nodes)
 			{
 				string path = node.Attributes().Single(i => i.Name.LocalName == "Include").Value;
-				aspxFileList.Add(path);
+				masterFileList.Add(path);
 			}
-			return aspxFileList;
+			return masterFileList;
 		}
 
 		private static List<string> GetAspxFileList(XDocument xdoc)
@@ -153,6 +162,18 @@ namespace MMDB.UITest.Generator.Library
 				aspxFileList.Add(path);
 			}
 			return aspxFileList;
+		}
+
+		private static List<string> GetClassFiles(XDocument xdoc)
+		{
+			List<string> classFileList = new List<string>();
+			var nodes = xdoc.Descendants().Where(i => i.Name.LocalName == "Compile" && i.Attributes().Any(j => j.Name.LocalName == "Include" && j.Value.EndsWith(".cs")));
+			foreach (var node in nodes)
+			{
+				string path = node.Attributes().Single(i => i.Name.LocalName == "Include").Value;
+				classFileList.Add(path);
+			}
+			return classFileList;
 		}
 	}
 }
