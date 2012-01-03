@@ -13,31 +13,40 @@ namespace MMDB.UITest.DotNetParser
 		public string TypeName { get; set; }
 		public string TypeNamespace { get; set; }
 
-		public static CSField Parse(FieldDeclaration fieldNode)
+		public static List<CSField> Parse(FieldDeclaration fieldNode)
 		{
-			CSField fieldObject = new CSField();
-			if ((fieldNode.Modifiers | Modifiers.Public) == Modifiers.Public)
+			var returnList = new List<CSField>();
+			EnumProtectionLevel protectionLevel;
+			if ((fieldNode.Modifiers & Modifiers.Public) == Modifiers.Public)
 			{
-				fieldObject.ProtectionLevel = EnumProtectionLevel.Public;
+				protectionLevel = EnumProtectionLevel.Public;
 			}
-			else if ((fieldNode.Modifiers | Modifiers.Private) == Modifiers.Private)
+			else if ((fieldNode.Modifiers & Modifiers.Private) == Modifiers.Private)
 			{
-				fieldObject.ProtectionLevel = EnumProtectionLevel.Private;
+				protectionLevel = EnumProtectionLevel.Private;
 			}
-			else if ((fieldNode.Modifiers | Modifiers.Protected) == Modifiers.Protected)
+			else if ((fieldNode.Modifiers & Modifiers.Protected) == Modifiers.Protected)
 			{
-				fieldObject.ProtectionLevel = EnumProtectionLevel.Protected;
+				protectionLevel = EnumProtectionLevel.Protected;
 			}
-			else if ((fieldNode.Modifiers | Modifiers.Internal) == Modifiers.Internal)
+			else if ((fieldNode.Modifiers & Modifiers.Internal) == Modifiers.Internal)
 			{
-				fieldObject.ProtectionLevel = EnumProtectionLevel.Internal;
+				protectionLevel = EnumProtectionLevel.Internal;
 			}
-			var memberTypeNode = (MemberType)fieldNode.Children.Single(i => i is MemberType);
-			fieldObject.TypeName = memberTypeNode.MemberName;
-			fieldObject.TypeNamespace = DotNetParserHelper.BuildNamespace(memberTypeNode);
-			var variableInitializer = (VariableInitializer)fieldNode.Children.Single(i=>i is VariableInitializer);
-			fieldObject.FieldName = variableInitializer.Name;
-			return fieldObject;
+			string typeName;
+			string typeNamespace;
+			DotNetParserHelper.SplitType(fieldNode.ReturnType.ToString(), out typeName, out typeNamespace);
+			foreach(var variableNode in fieldNode.Variables)
+			{
+				CSField fieldObject = new CSField
+				{
+					TypeName = typeName,
+					TypeNamespace = typeNamespace,
+					FieldName = variableNode.Name
+				};
+				returnList.Add(fieldObject);
+			}
+			return returnList;
 		}
 	}
 }

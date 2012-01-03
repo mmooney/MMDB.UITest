@@ -8,7 +8,7 @@
     <ProjectGuid>{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScrewturnWikiProxySample</RootNamespace>
+    <RootNamespace>Screwturn.Wiki.Proxy.Sample</RootNamespace>
     <AssemblyName>ScrewturnWikiProxySample</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,10 +40,35 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WatiN.Core, Version=2.1.0.1196, Culture=neutral, PublicKeyToken=db7cfd3acb5ad44e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Projects\ThirdParty\WatiN\v2.1.0.1196\bin\net40\WatiN.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestClass.cs" />
+    <Compile Include="TestClass.designer.cs">
+      <DependentUpon>TestClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestClass123.cs" />
+    <Compile Include="TestClass123.designer.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminMasterPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminMasterPageClient.designer.cs">
+      <DependentUpon>AdminMasterPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\MasterPageCleanPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\MasterPageCleanPageClient.designer.cs">
+      <DependentUpon>MasterPageCleanPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\MasterPagePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\MasterPagePageClient.designer.cs">
+      <DependentUpon>MasterPagePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\MasterPageSAPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\MasterPageSAPageClient.designer.cs">
+      <DependentUpon>MasterPageSAPageClient.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MMDB.UITest.Core\MMDB.UITest.Core.csproj">

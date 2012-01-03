@@ -25,19 +25,14 @@ namespace MMDB.UITest.DotNetParser
 		public static CSAttribute Parse(ICSharpCode.NRefactory.CSharp.Attribute attributeNode)
 		{
 			var returnValue = new CSAttribute();
-			foreach(var node in attributeNode.Children)
+			string typeName;
+			string typeNamespace;
+			DotNetParserHelper.SplitType(attributeNode.Type.ToString(), out typeName, out typeNamespace);
+			returnValue.TypeName = typeName;
+			returnValue.TypeNamespace = typeNamespace;
+
+			foreach (var node in attributeNode.Children)
 			{
-				if(node is MemberType)
-				{
-					var memberTypeNode = (MemberType)node;
-					returnValue.TypeName = memberTypeNode.MemberName;
-					returnValue.TypeNamespace = DotNetParserHelper.BuildNamespace(memberTypeNode);
-				}
-				if(node is SimpleType)
-				{
-					var simpleTypeNode = (SimpleType)node;
-					returnValue.TypeName = simpleTypeNode.Identifier;
-				}
 				if(node is PrimitiveExpression)
 				{
 					var primitiveExpressionNode = (PrimitiveExpression)node;

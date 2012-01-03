@@ -16,12 +16,15 @@ namespace MMDB.UITest.DotNetParser
 		public List<string> FilePathList { get; set; }
 		public List<CSField> FieldList { get; set; }
 		public List<CSAttribute> AttributeList { get; set; }
+		public List<string> DependentUponFilePathList { get; set; }
+
 
 		public CSClass()
 		{
 			this.FieldList = new List<CSField>();
 			this.FilePathList = new List<string>();
 			this.AttributeList = new List<CSAttribute>();
+			this.DependentUponFilePathList = new List<string>();
 		}
 
 		public static CSClass Parse(NamespaceDeclaration namespaceNode, TypeDeclaration typeDefinitionNode, string filePath)
@@ -42,8 +45,8 @@ namespace MMDB.UITest.DotNetParser
 				if (node is FieldDeclaration)
 				{
 					var fieldNode = (FieldDeclaration)node;
-					CSField fieldObject = CSField.Parse(fieldNode);
-					this.FieldList.Add(fieldObject);
+					var fieldObjectList = CSField.Parse(fieldNode);
+					this.FieldList.AddRange(fieldObjectList);
 				}
 			}
 			if(!this.FilePathList.Contains(filePath, StringComparer.CurrentCultureIgnoreCase))

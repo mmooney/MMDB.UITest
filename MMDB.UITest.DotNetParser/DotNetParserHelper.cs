@@ -8,6 +8,25 @@ namespace MMDB.UITest.DotNetParser
 {
 	public static class DotNetParserHelper
 	{
+		public static void SplitType(string rawTypeValue, out string typeName, out string typeNamespace)
+		{
+			string workingValue = rawTypeValue;
+			if (workingValue.IndexOf("::") > 0)
+			{
+				workingValue = workingValue.Substring(workingValue.IndexOf("::") + 2);
+			}
+			if(workingValue.Contains('.'))
+			{
+				typeName = workingValue.Substring(workingValue.LastIndexOf('.')+1);
+				typeNamespace = workingValue.Substring(0, workingValue.LastIndexOf('.'));
+			}
+			else
+			{
+				typeName = workingValue;
+				typeNamespace = string.Empty;
+			}
+		}
+
 		public static string BuildNamespace(MemberType memberTypeNode)
 		{
 			string returnValue = string.Empty;

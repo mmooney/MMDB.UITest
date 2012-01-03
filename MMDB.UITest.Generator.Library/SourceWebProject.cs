@@ -9,6 +9,7 @@ namespace MMDB.UITest.Generator.Library
 	{
 		public List<SourceMasterPage> MasterPageList { get; set; }
 		public List<SourceWebControl> WebPageList { get; set; }
+		public string RootNamespace { get; set; }
 
 		public SourceWebProject()
 		{

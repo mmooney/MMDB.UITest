@@ -9,7 +9,7 @@ namespace ScrewturnWikiProxySample
 	[MMDB.UITest.Core.UIClient("testClassName","testNamespaceName")]
 	[Serializable]
 	[XmlType(IncludeInSchema=false)]
-	public class TestClass
+	public partial class TestClass
 	{
 		public int TestProperty { get; set; }
 	}
