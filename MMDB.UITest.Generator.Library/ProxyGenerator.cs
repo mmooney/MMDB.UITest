@@ -27,7 +27,7 @@ namespace MMDB.UITest.Generator.Library
             {
                 if (csClass.DependentUponFilePathList.Any(i => i.EndsWith(".master", StringComparison.CurrentCultureIgnoreCase)))
                 {
-                    var pageObject = project.MasterPageList.SingleOrDefault(i => i.ClassName == csClass.ClassName && i.Namespace == csClass.Namespace);
+                    var pageObject = project.MasterPageList.SingleOrDefault(i => i.ClassFullName == csClass.ClassFullName);
                     if (pageObject == null)
                     {
                         pageObject = new SourceMasterPage();
@@ -48,7 +48,7 @@ namespace MMDB.UITest.Generator.Library
 			foreach(var masterPage in sourceProject.MasterPageList)
 			{
 				//Find existing object
-				var targetClass = targetProject.TargetClassList.SingleOrDefault(i=>i.SourceClassName == masterPage.ClassName && i.SourceClassNamespace == masterPage.Namespace);
+				var targetClass = targetProject.TargetClassList.SingleOrDefault(i=>i.SourceClassFullName == masterPage.ClassFullName);
 				if(targetClass == null)
 				{
 					targetClass = TargetClass.Create(targetProject, sourceProject, masterPage);
@@ -57,7 +57,7 @@ namespace MMDB.UITest.Generator.Library
 				targetClass.PageUrl = masterPage.PageUrl;
 				var comparison = UIObjectComparison.Compare(masterPage, targetClass);
 				targetClass.EnsureFiles(targetProjectPath);
-				targetClass.AddFieldsToFile(comparison.FieldsToAdd);
+				targetClass.AddFieldsToFile(targetProjectPath, targetClass.DesignerFilePath, comparison.FieldsToAdd);
 				//If does not exist, create it
 				//For each missing field, add it
 			}
@@ -65,7 +65,17 @@ namespace MMDB.UITest.Generator.Library
 
 		private static string GenerateTargetFilePath(string basePath, SourceWebPage page)
 		{
-			return Path.Combine(basePath, "Client","Pages",page.Namespace.Replace('.','\\'),page.ClassName+"Page.designer.cs");
+			string typeName;
+			string typeNamespace;
+			DotNetParserHelper.SplitType(page.ClassFullName, out typeName, out typeNamespace);
+			if(!string.IsNullOrEmpty(typeName))
+			{
+				return Path.Combine(basePath, "Client", "Pages", typeNamespace, typeName + "Page.designer.cs");
+			}
+			else 
+			{
+				return Path.Combine(basePath, "Client", "Pages", typeName + "Page.designer.cs");
+			}
 		}
 
 
@@ -96,26 +106,34 @@ namespace MMDB.UITest.Generator.Library
 
 		private static void PopulatePageObject(SourceMasterPage pageObject, CSClass classObject)
 		{
-			pageObject.ClassName = classObject.ClassName;
-			pageObject.Namespace = classObject.Namespace;
+			pageObject.ClassFullName = classObject.ClassFullName;
 			foreach (var fieldObject in classObject.FieldList)
 			{
-				if (fieldObject.TypeNamespace == "System.Web.UI.WebControls")
+				switch(fieldObject.TypeFullName)
 				{
-					if (fieldObject.TypeName == "Literal")
-					{
-						var control = new LiteralControl
+					case "System.Web.UI.WebControls.Literal":
 						{
-							FieldName = fieldObject.FieldName,
-							TypeName = fieldObject.TypeName,
-							TypeNamespace = fieldObject.TypeNamespace
-						};
-						pageObject.Controls.Add(control);
-					}
-					if (fieldObject.TypeName == "ContentPlaceHolder")
-					{
+							var control = new LiteralControl
+							{
+								FieldName = fieldObject.FieldName,
+								TypeFullName = fieldObject.TypeFullName
+							};
+							pageObject.Controls.Add(control);
+						} 
+						break;
+					case "System.Web.UI.WebControls.ContentPlaceHolder":
 						pageObject.ContentHolderIDs.Add(fieldObject.FieldName);
-					}
+						break;
+					default:
+						{
+							var control = new SourceWebControl()
+							{
+								FieldName = fieldObject.FieldName,
+								TypeFullName = fieldObject.TypeFullName
+							};
+							pageObject.Controls.Add(control);
+						}
+						break;
 				}
 			}
 		}

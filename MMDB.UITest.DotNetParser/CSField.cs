@@ -10,13 +10,12 @@ namespace MMDB.UITest.DotNetParser
 	{
 		public EnumProtectionLevel ProtectionLevel { get; set; }
 		public string FieldName { get; set; }
-		public string TypeName { get; set; }
-		public string TypeNamespace { get; set; }
+		public string TypeFullName { get; set; }
 
 		public static List<CSField> Parse(FieldDeclaration fieldNode)
 		{
 			var returnList = new List<CSField>();
-			EnumProtectionLevel protectionLevel;
+			EnumProtectionLevel protectionLevel = EnumProtectionLevel.None;
 			if ((fieldNode.Modifiers & Modifiers.Public) == Modifiers.Public)
 			{
 				protectionLevel = EnumProtectionLevel.Public;
@@ -40,9 +39,9 @@ namespace MMDB.UITest.DotNetParser
 			{
 				CSField fieldObject = new CSField
 				{
-					TypeName = typeName,
-					TypeNamespace = typeNamespace,
-					FieldName = variableNode.Name
+					TypeFullName = typeNamespace + "." + typeName,
+					FieldName = variableNode.Name,
+					ProtectionLevel = protectionLevel
 				};
 				returnList.Add(fieldObject);
 			}

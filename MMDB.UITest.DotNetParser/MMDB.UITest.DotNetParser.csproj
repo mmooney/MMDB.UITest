@@ -33,11 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>..\icsharpcode-NRefactory-3d9b3ec\ICSharpCode.NRefactory\bin\Debug\ICSharpCode.NRefactory.dll</HintPath>
+    <Reference Include="ICSharpCode.NRefactory, Version=5.0.0.1, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\icsharpcode-NRefactory-3d9b3ec\ICSharpCode.NRefactory.Demo\bin\Debug\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.NRefactory.CSharp">
-      <HintPath>..\icsharpcode-NRefactory-3d9b3ec\ICSharpCode.NRefactory\bin\Debug\ICSharpCode.NRefactory.CSharp.dll</HintPath>
+    <Reference Include="ICSharpCode.NRefactory.CSharp, Version=5.0.0.1, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\icsharpcode-NRefactory-3d9b3ec\ICSharpCode.NRefactory.Demo\bin\Debug\ICSharpCode.NRefactory.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +54,7 @@
     <Compile Include="CSClass.cs" />
     <Compile Include="CSField.cs" />
     <Compile Include="CSProjectFile.cs" />
+    <Compile Include="CSProperty.cs" />
     <Compile Include="DotNetParserHelper.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

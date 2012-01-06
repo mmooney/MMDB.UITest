@@ -10,11 +10,11 @@ namespace MMDB.UITest.DotNetParser
 {
 	public class CSClass
 	{
-		public string Namespace { get; set; }
-		public string ClassName { get; set; }
+		public string ClassFullName { get; set; }
 		public EnumProtectionLevel ProtectionLevel { get; set; }
 		public List<string> FilePathList { get; set; }
 		public List<CSField> FieldList { get; set; }
+		public List<CSProperty> PropertyList { get; set; }
 		public List<CSAttribute> AttributeList { get; set; }
 		public List<string> DependentUponFilePathList { get; set; }
 
@@ -22,6 +22,7 @@ namespace MMDB.UITest.DotNetParser
 		public CSClass()
 		{
 			this.FieldList = new List<CSField>();
+			this.PropertyList = new List<CSProperty>();
 			this.FilePathList = new List<string>();
 			this.AttributeList = new List<CSAttribute>();
 			this.DependentUponFilePathList = new List<string>();
@@ -31,8 +32,7 @@ namespace MMDB.UITest.DotNetParser
 		{
 			CSClass classObject = new CSClass
 			{
-				Namespace = namespaceNode.FullName,
-				ClassName = typeDefinitionNode.Name
+				ClassFullName = namespaceNode.FullName + "." + typeDefinitionNode.Name
 			};
 			classObject.Parse(typeDefinitionNode, filePath);
 			return classObject;	
@@ -40,19 +40,32 @@ namespace MMDB.UITest.DotNetParser
 
 		public void Parse(TypeDeclaration typeDefinitionNode, string filePath)
 		{
-			foreach (var node in typeDefinitionNode.Children)
+			var fieldList = typeDefinitionNode.Children.Where(i=>i is FieldDeclaration);
+			foreach(FieldDeclaration fieldNode in fieldList)
 			{
-				if (node is FieldDeclaration)
+				var fieldObjectList = CSField.Parse(fieldNode);
+				this.FieldList.AddRange(fieldObjectList);
+			}
+			var propertyList = typeDefinitionNode.Children.Where(i=>i is PropertyDeclaration);
+			foreach(PropertyDeclaration propertyNode in propertyList)
+			{
+				var propertyObject = CSProperty.Parse(propertyNode);
+				this.PropertyList.Add(propertyObject);
+			}
+			var attributeSectionList = typeDefinitionNode.Children.Where(i => i is AttributeSection);
+			foreach (AttributeSection attributeSectionNode in attributeSectionList)
+			{
+				foreach (var attributeNode in attributeSectionNode.Attributes)
 				{
-					var fieldNode = (FieldDeclaration)node;
-					var fieldObjectList = CSField.Parse(fieldNode);
-					this.FieldList.AddRange(fieldObjectList);
+					var attribute = CSAttribute.Parse(attributeNode);
+					this.AttributeList.Add(attribute);
 				}
 			}
-			if(!this.FilePathList.Contains(filePath, StringComparer.CurrentCultureIgnoreCase))
+			if (!this.FilePathList.Contains(filePath, StringComparer.CurrentCultureIgnoreCase))
 			{
 				this.FilePathList.Add(filePath);
 			}
 		}
+
 	}
 }

@@ -63,7 +63,9 @@
     <Compile Include="BaseUserControlClient.cs" />
     <Compile Include="OKDialogHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIClientAttribute.cs" />
+    <Compile Include="UIClientControlAttribute.cs" />
+    <Compile Include="UIClientPageAttribute.cs" />
+    <Compile Include="UIClientPropertyAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -38,7 +38,7 @@ namespace MMDB.UITest.DotNetParser
 					var primitiveExpressionNode = (PrimitiveExpression)node;
 					var argument = new CSAttributeArgument
 					{
-						ArguementValue = primitiveExpressionNode.LiteralValue
+						ArguementValue = primitiveExpressionNode.Value
 					};
 					returnValue.ArgumentList.Add(argument);
 				}
@@ -49,7 +49,7 @@ namespace MMDB.UITest.DotNetParser
 					var argument = new CSAttributeArgument
 					{
 						ArgumentName = namedExpressionNode.Identifier,
-						ArguementValue = primitiveExpressionNode.LiteralValue
+						ArguementValue = primitiveExpressionNode.Value
 					};
 					returnValue.ArgumentList.Add(argument);
 				}

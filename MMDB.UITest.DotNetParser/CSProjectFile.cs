@@ -41,42 +41,36 @@ namespace MMDB.UITest.DotNetParser
 			var classFileList = GetFileList(xdoc, "Compile", ".cs");
 			foreach(var classFile in classFileList)
 			{
-				using(var reader = new StreamReader(Path.Combine(Path.GetDirectoryName(projectFile),classFile.FilePath)))
+				string filePath = Path.Combine(Path.GetDirectoryName(projectFile),classFile.FilePath);
+				if(File.Exists(filePath))
 				{
-					var compilationUnit = parser.Parse(reader);
-					foreach (var node1 in compilationUnit.Children)
+					using(var reader = new StreamReader(filePath))
 					{
-						if (node1 is NamespaceDeclaration)
+						var compilationUnit = parser.Parse(reader);
+						foreach (var node1 in compilationUnit.Children)
 						{
-							var namespaceNode = (NamespaceDeclaration)node1;
-							foreach (var node2 in namespaceNode.Children)
+							if (node1 is NamespaceDeclaration)
 							{
-								if (node2 is TypeDeclaration)
+								var namespaceNode = (NamespaceDeclaration)node1;
+								foreach (var node2 in namespaceNode.Children)
 								{
-									var typeDefinitionNode = (TypeDeclaration)node2;
-									var classObject = returnValue.ClassList.SingleOrDefault(i=>i.ClassName == typeDefinitionNode.Name && i.Namespace == namespaceNode.FullName);
-									if(classObject == null)
+									if (node2 is TypeDeclaration)
 									{
-										classObject = new CSClass
+										var typeDefinitionNode = (TypeDeclaration)node2;
+										string fullTypeName = namespaceNode.FullName + "." + typeDefinitionNode.Name;
+										var classObject = returnValue.ClassList.SingleOrDefault(i=>i.ClassFullName == fullTypeName);
+										if(classObject == null)
 										{
-											Namespace = namespaceNode.FullName,
-											ClassName = typeDefinitionNode.Name
-										};
-										returnValue.ClassList.Add(classObject);
-									}
-									classObject.Parse(typeDefinitionNode, classFile.FilePath);
-									if(!string.IsNullOrEmpty(classFile.DependentUponFilePath) && !classObject.DependentUponFilePathList.Contains(classFile.DependentUponFilePath, StringComparer.CurrentCultureIgnoreCase))
-									{
-										classObject.DependentUponFilePathList.Add(classFile.DependentUponFilePath);
-									}
-
-									var attributeSectionList = typeDefinitionNode.Children.Where(i=>i is AttributeSection);
-									foreach(AttributeSection attributeSectionNode in attributeSectionList)
-									{
-										foreach (var attributeNode in attributeSectionNode.Attributes)
+											classObject = new CSClass
+											{
+												ClassFullName = fullTypeName
+											};
+											returnValue.ClassList.Add(classObject);
+										}
+										classObject.Parse(typeDefinitionNode, classFile.FilePath);
+										if(!string.IsNullOrEmpty(classFile.DependentUponFilePath) && !classObject.DependentUponFilePathList.Contains(classFile.DependentUponFilePath, StringComparer.CurrentCultureIgnoreCase))
 										{
-											var attribute = CSAttribute.Parse(attributeNode);
-											classObject.AttributeList.Add(attribute);
+											classObject.DependentUponFilePathList.Add(classFile.DependentUponFilePath);
 										}
 									}
 								}

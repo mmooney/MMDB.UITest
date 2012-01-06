@@ -5,10 +5,9 @@ using System.Text;
 
 namespace MMDB.UITest.Generator.Library
 {
-	public abstract class SourceWebControl
+	public class SourceWebControl
 	{
 		public string FieldName { get; set; }
-		public string TypeName { get; set; }
-		public string TypeNamespace { get; set; }
+		public string TypeFullName { get; set; }
 	}
 }

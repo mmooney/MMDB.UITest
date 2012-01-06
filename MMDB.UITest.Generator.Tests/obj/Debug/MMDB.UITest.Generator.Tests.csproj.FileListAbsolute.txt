@@ -1,0 +1,9 @@
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.Tests\bin\Debug\MMDB.UITest.Generator.Tests.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.Tests\bin\Debug\MMDB.UITest.Generator.Tests.pdb
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.Tests\bin\Debug\nunit.framework.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.Tests\bin\Debug\nunit.mocks.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.Tests\bin\Debug\pnunit.framework.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.Tests\bin\Debug\nunit.framework.xml
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.Tests\obj\Debug\MMDB.UITest.Generator.Tests.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.Tests\obj\Debug\MMDB.UITest.Generator.Tests.pdb

@@ -11,10 +11,8 @@ namespace MMDB.UITest.Generator.Library
 {
 	public class TargetClass
 	{
-		public string SourceClassName { get; set; }
-		public string SourceClassNamespace { get; set;}
-		public string TargetClassName { get; set; }
-		public string TargetClassNamespace { get; set; }
+		public string SourceClassFullName { get; set; }
+		public string TargetClassFullName { get; set; }
 		public List<TargetField> TargetFieldList { get; set; }
 		public string DesignerFilePath { get; set; }
 		public string UserFilePath { get; set; }
@@ -28,19 +26,19 @@ namespace MMDB.UITest.Generator.Library
 
 		public static bool IsTargetClass(CSClass csClass)
 		{
-			return csClass.AttributeList.Any(i=>i.TypeName == "UIClient" && i.TypeNamespace  ==  typeof(UIClientAttribute).Namespace);
+			return csClass.AttributeList.Any(i=>i.TypeName == typeof(UIClientPageAttribute).Name && i.TypeNamespace  ==  typeof(UIClientPageAttribute).Namespace);
 		}
 
 		internal static TargetClass TryLoad(CSClass csClass)
 		{
 			TargetClass returnValue = null;
-			var uiClientAttribute = csClass.AttributeList.SingleOrDefault(i=>i.TypeName == "UIClient" && i.TypeNamespace  ==  typeof(UIClientAttribute).Namespace);
-			if(uiClientAttribute != null)
+			var uiClientPageAttribute = csClass.AttributeList.SingleOrDefault(i => i.TypeName == typeof(UIClientPageAttribute).Name && i.TypeNamespace == typeof(UIClientPageAttribute).Namespace);
+			if(uiClientPageAttribute != null)
 			{
 				returnValue = new TargetClass
 				{
-					SourceClassName = uiClientAttribute.GetAttributeParameter(0, "SourceClassName", true),
-					SourceClassNamespace = uiClientAttribute.GetAttributeParameter(1, "SourceClassNamespace", true)
+					SourceClassFullName = uiClientPageAttribute.GetAttributeParameter(0, "SourceClassFullName", true),
+					TargetClassFullName = csClass.ClassFullName
 				};
 
 				//If there is only one field, that is the user and designer file.
@@ -64,41 +62,84 @@ namespace MMDB.UITest.Generator.Library
 						returnValue.UserFilePath = csClass.FilePathList.FirstOrDefault(i=>i != returnValue.DesignerFilePath);
 					}
 				}
+
+				foreach(var csProperty in csClass.PropertyList)
+				{
+					var targetField = TargetField.TryLoad(csProperty);
+					if(targetField != null)
+					{
+						returnValue.TargetFieldList.Add(targetField);
+					}
+				}
 			}
 			return returnValue;
 		}
 
 		public static TargetClass Create(TargetProject targetProject, SourceWebProject sourceProject, SourceWebPage sourcePage)
 		{
+			string sourceTypeName;
+			string sourceTypeNamespace;
+			DotNetParserHelper.SplitType(sourcePage.ClassFullName, out sourceTypeName, out sourceTypeNamespace);
+
 			string relativeSourceNamespace;
-			if(sourcePage.Namespace.StartsWith(sourceProject.RootNamespace))
+			if(sourceTypeNamespace.StartsWith(sourceProject.RootNamespace))
 			{
-				relativeSourceNamespace = sourcePage.Namespace.Substring(sourceProject.RootNamespace.Length+1);
+				relativeSourceNamespace = sourceTypeNamespace.Substring(sourceProject.RootNamespace.Length + 1);
 			}
 			else 
 			{
-				relativeSourceNamespace = sourcePage.Namespace;
+				relativeSourceNamespace = sourceTypeNamespace;
 			}
-			string targetClassName = sourcePage.ClassName + "PageClient";
+			string targetClassName = sourceTypeName + "PageClient";
 			string targetNamespace = targetProject.RootNamespace + ".Client.Pages." + relativeSourceNamespace;
 			TargetClass returnValue = new TargetClass()
 			{
-				SourceClassName = sourcePage.ClassName,
-				SourceClassNamespace = sourcePage.Namespace,
-				TargetClassName = targetClassName,
-				TargetClassNamespace = targetNamespace,
-				DesignerFilePath = Path.Combine(targetProject.Directory,targetNamespace.Replace('.', '\\'), targetClassName + ".designer.cs"),
-				UserFilePath = Path.Combine(targetProject.Directory, targetNamespace.Replace('.', '\\'), targetClassName + ".cs"),
+				SourceClassFullName = sourcePage.ClassFullName,
+				TargetClassFullName = targetNamespace + "." + targetClassName,
+				DesignerFilePath = Path.Combine(targetNamespace.Replace('.', '\\'), targetClassName + ".designer.cs"),
+				UserFilePath = Path.Combine(targetNamespace.Replace('.', '\\'), targetClassName + ".cs"),
 			};
 			return returnValue;
 		}
 
-		public void AddFieldsToFile(List<TargetField> list)
+		public void AddFieldsToFile(string targetProjectPath, string relativeFilePath, List<TargetField> list)
 		{
+			CompilationUnit compilationUnit;
+			string filePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), relativeFilePath);
+			using(StreamReader reader = new StreamReader(filePath))
+			{
+				CSharpParser parser = new CSharpParser();
+				compilationUnit = parser.Parse(reader);
+			}
+			string typeName;
+			string typeNamespace;
+			DotNetParserHelper.SplitType(this.TargetClassFullName, out typeName, out typeNamespace);
+			var typeDeclarationList = compilationUnit.Descendants.Where(i => i is TypeDeclaration);
+			var classObject = (TypeDeclaration)compilationUnit.Descendants.Single(i=>i is TypeDeclaration && ((TypeDeclaration)i).Name == typeName);
+			foreach(var field in list)
+			{
+				switch(field.TypeFullName)
+				{
+					case "System.Web.UI.WebControls.Literal":
+						TargetControlGenerator.AddLiteralControl(classObject, field);
+						break;
+					case "System.Web.UI.WebControls.HyperLink":
+						TargetControlGenerator.AddHyperLinkControl(classObject, field, field.TypeFullName);
+						break;
+				}
+			}
+			using(StreamWriter writer = new StreamWriter(filePath))
+			{
+				CSharpOutputVisitor visitor = new CSharpOutputVisitor(writer, new CSharpFormattingOptions());
+				compilationUnit.AcceptVisitor(visitor);
+			}
 		}
 
 		private void CreateUserFile(string userFilePath)
 		{
+			string typeName;
+			string typeNamespace;
+			DotNetParserHelper.SplitType(this.TargetClassFullName, out typeName, out typeNamespace);
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("using System;");
 			sb.AppendLine("using System.Collections.Generic;");
@@ -107,9 +148,9 @@ namespace MMDB.UITest.Generator.Library
 			sb.AppendLine("using MMDB.UITest.Core;");
 			sb.AppendLine("using WatiN.Core;");
 			sb.AppendLine();
-			sb.AppendLine(string.Format("namespace {0}", this.TargetClassNamespace));
+			sb.AppendLine(string.Format("namespace {0}", typeNamespace));
 			sb.AppendLine("{");
-			sb.AppendLine(string.Format("\tpublic partial class {0}", this.TargetClassName));
+			sb.AppendLine(string.Format("\tpublic partial class {0}", typeName));
 			sb.AppendLine("\t{");
 			sb.AppendLine();
 			sb.AppendLine("\t}");
@@ -129,13 +170,16 @@ namespace MMDB.UITest.Generator.Library
 
         public void EnsureFiles(string targetProjectPath)
 		{
-			if (!File.Exists(this.UserFilePath))
+			string userFilePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), this.UserFilePath);
+			if (!File.Exists(userFilePath))
 			{
-				this.CreateUserFile(this.UserFilePath);
+				this.CreateUserFile(userFilePath);
 			}
-			if(!File.Exists(this.DesignerFilePath))
+
+			string designerFilePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), this.DesignerFilePath);
+			if (!File.Exists(designerFilePath))
 			{
-				this.CreateDesignerFile(this.DesignerFilePath);
+				this.CreateDesignerFile(designerFilePath);
 			}
 			CSProjectFile.EnsureFileInclude(targetProjectPath, this.UserFilePath, null);
 			CSProjectFile.EnsureFileInclude(targetProjectPath, this.DesignerFilePath, this.UserFilePath);
@@ -143,6 +187,9 @@ namespace MMDB.UITest.Generator.Library
 
 		private void CreateDesignerFile(string designerFilePath)
 		{
+			string typeName;
+			string typeNamespace;
+			DotNetParserHelper.SplitType(this.TargetClassFullName, out typeName, out typeNamespace);
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("using System;");
 			sb.AppendLine("using System.Collections.Generic;");
@@ -151,12 +198,13 @@ namespace MMDB.UITest.Generator.Library
 			sb.AppendLine("using MMDB.UITest.Core;");
 			sb.AppendLine("using WatiN.Core;");
 			sb.AppendLine();
-			sb.AppendLine(string.Format("namespace {0}", this.TargetClassNamespace));
+			sb.AppendLine(string.Format("namespace {0}", typeNamespace));
 			sb.AppendLine("{");
-				sb.AppendLine(string.Format("partial class {0} : {1}", this.TargetClassName, typeof(BasePageClient).FullName));
+				sb.AppendLine(string.Format("[{0}(\"{1}\")]", typeof(UIClientPageAttribute).FullName, this.SourceClassFullName));
+				sb.AppendLine(string.Format("partial class {0} : {1}", typeName, typeof(BasePageClient).FullName));
 				sb.AppendLine("{");
 					sb.AppendLine();
-					sb.AppendLine(string.Format("public {0} (Browser browser) : base(browser) {{}}", this.TargetClassName));
+					sb.AppendLine(string.Format("public {0} (Browser browser) : base(browser) {{}}", typeName));
 					sb.AppendLine();
 					sb.AppendLine(string.Format("protected override string ExpectedUrl {{get {{ return \"{0}\"; }}}}", this.PageUrl));
 					sb.AppendLine();

@@ -6,6 +6,7 @@ using MMDB.UITest.Core;
 using WatiN.Core;
 namespace ScrewturnWikiProxySample.Client.Pages.ScrewTurn.Wiki
 {
+	[MMDB.UITest.Core.UIClientPageAttribute ("ScrewTurn.Wiki.MasterPage")]
 	partial class MasterPagePageClient : MMDB.UITest.Core.BasePageClient
 	{
 		public MasterPagePageClient (Browser browser) : base (browser)
