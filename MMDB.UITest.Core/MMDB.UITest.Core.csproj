@@ -61,6 +61,7 @@
     <Compile Include="BaseContainerClient.cs" />
     <Compile Include="BasePageClient.cs" />
     <Compile Include="BaseUserControlClient.cs" />
+    <Compile Include="BaseMasterPageClient.cs" />
     <Compile Include="OKDialogHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIClientControlAttribute.cs" />

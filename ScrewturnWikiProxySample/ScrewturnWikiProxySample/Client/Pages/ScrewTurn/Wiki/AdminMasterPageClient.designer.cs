@@ -7,15 +7,10 @@ using WatiN.Core;
 namespace ScrewturnWikiProxySample.Client.Pages.ScrewTurn.Wiki
 {
 	[MMDB.UITest.Core.UIClientPageAttribute ("ScrewTurn.Wiki.AdminMaster")]
-	partial class AdminMasterPageClient : MMDB.UITest.Core.BasePageClient
+	partial class AdminMasterPageClient : MMDB.UITest.Core.BaseMasterPageClient
 	{
 		public AdminMasterPageClient (Browser browser) : base (browser)
 		{
-		}
-		protected override string ExpectedUrl {
-			get {
-				return "Admin.master";
-			}
 		}
 		[MMDB.UITest.Core.UIClientPropertyAttribute ("lnkSelectAdminHome", "System.Web.UI.WebControls.HyperLink")]
 		public Link lnkSelectAdminHome {

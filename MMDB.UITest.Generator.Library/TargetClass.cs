@@ -201,12 +201,10 @@ namespace MMDB.UITest.Generator.Library
 			sb.AppendLine(string.Format("namespace {0}", typeNamespace));
 			sb.AppendLine("{");
 				sb.AppendLine(string.Format("[{0}(\"{1}\")]", typeof(UIClientPageAttribute).FullName, this.SourceClassFullName));
-				sb.AppendLine(string.Format("partial class {0} : {1}", typeName, typeof(BasePageClient).FullName));
+				sb.AppendLine(string.Format("partial class {0} : {1}", typeName, typeof(BaseMasterPageClient).FullName));
 				sb.AppendLine("{");
 					sb.AppendLine();
 					sb.AppendLine(string.Format("public {0} (Browser browser) : base(browser) {{}}", typeName));
-					sb.AppendLine();
-					sb.AppendLine(string.Format("protected override string ExpectedUrl {{get {{ return \"{0}\"; }}}}", this.PageUrl));
 					sb.AppendLine();
 				sb.AppendLine("}");
 			sb.AppendLine("}");

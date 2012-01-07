@@ -7,15 +7,10 @@ using WatiN.Core;
 namespace ScrewturnWikiProxySample.Client.Pages.ScrewTurn.Wiki
 {
 	[MMDB.UITest.Core.UIClientPageAttribute ("ScrewTurn.Wiki.MasterPage")]
-	partial class MasterPagePageClient : MMDB.UITest.Core.BasePageClient
+	partial class MasterPagePageClient : MMDB.UITest.Core.BaseMasterPageClient
 	{
 		public MasterPagePageClient (Browser browser) : base (browser)
 		{
-		}
-		protected override string ExpectedUrl {
-			get {
-				return "MasterPage.master";
-			}
 		}
 	}
 }

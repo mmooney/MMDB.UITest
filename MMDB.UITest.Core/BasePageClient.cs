@@ -14,7 +14,7 @@ namespace MMDB.UITest.Core
 			this.ValidateUrl();
 		}
 
-		public void ValidateUrl()
+		public virtual void ValidateUrl()
 		{
 			string absolutePath = this.Browser.Uri.AbsolutePath;
 			Assert.AreEqual(this.ExpectedUrl.ToLower(), absolutePath.ToLower());

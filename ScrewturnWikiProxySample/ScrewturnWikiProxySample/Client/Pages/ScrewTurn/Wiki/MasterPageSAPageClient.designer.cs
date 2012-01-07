@@ -7,15 +7,10 @@ using WatiN.Core;
 namespace ScrewturnWikiProxySample.Client.Pages.ScrewTurn.Wiki
 {
 	[MMDB.UITest.Core.UIClientPageAttribute ("ScrewTurn.Wiki.MasterPageSA")]
-	partial class MasterPageSAPageClient : MMDB.UITest.Core.BasePageClient
+	partial class MasterPageSAPageClient : MMDB.UITest.Core.BaseMasterPageClient
 	{
 		public MasterPageSAPageClient (Browser browser) : base (browser)
 		{
-		}
-		protected override string ExpectedUrl {
-			get {
-				return "MasterPageSA.Master";
-			}
 		}
 		[MMDB.UITest.Core.UIClientPropertyAttribute ("lnkPreviousPage", "System.Web.UI.WebControls.HyperLink")]
 		public Link lnkPreviousPage {
