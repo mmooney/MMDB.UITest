@@ -109,7 +109,7 @@ namespace MMDB.UITest.Generator.Library
 			using(StreamReader reader = new StreamReader(filePath))
 			{
 				CSharpParser parser = new CSharpParser();
-				compilationUnit = parser.Parse(reader);
+				compilationUnit = parser.Parse(reader, Path.GetFileName(filePath));
 			}
 			string typeName;
 			string typeNamespace;
@@ -156,7 +156,7 @@ namespace MMDB.UITest.Generator.Library
 			sb.AppendLine("\t}");
 			sb.AppendLine("}");
 			CSharpParser parser = new CSharpParser();
-			var compilationUnit = parser.Parse(sb.ToString());
+			var compilationUnit = parser.Parse(sb.ToString(), Path.GetFileName(userFilePath));
 			if(!Directory.Exists(Path.GetDirectoryName(userFilePath)))
 			{
 				Directory.CreateDirectory(Path.GetDirectoryName(userFilePath));
@@ -209,7 +209,7 @@ namespace MMDB.UITest.Generator.Library
 				sb.AppendLine("}");
 			sb.AppendLine("}");
 			CSharpParser parser = new CSharpParser();
-			var compilationUnit = parser.Parse(sb.ToString());
+			var compilationUnit = parser.Parse(sb.ToString(), Path.GetFileName(designerFilePath));
 			if (!Directory.Exists(Path.GetDirectoryName(designerFilePath)))
 			{
 				Directory.CreateDirectory(Path.GetDirectoryName(designerFilePath));

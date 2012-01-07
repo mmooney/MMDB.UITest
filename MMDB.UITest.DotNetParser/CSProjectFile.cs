@@ -46,7 +46,7 @@ namespace MMDB.UITest.DotNetParser
 				{
 					using(var reader = new StreamReader(filePath))
 					{
-						var compilationUnit = parser.Parse(reader);
+						var compilationUnit = parser.Parse(reader, Path.GetFileName(filePath));
 						foreach (var node1 in compilationUnit.Children)
 						{
 							if (node1 is NamespaceDeclaration)
