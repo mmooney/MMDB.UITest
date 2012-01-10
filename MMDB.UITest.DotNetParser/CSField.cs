@@ -10,7 +10,15 @@ namespace MMDB.UITest.DotNetParser
 	{
 		public EnumProtectionLevel ProtectionLevel { get; set; }
 		public string FieldName { get; set; }
-		public string TypeFullName { get; set; }
+		public string TypeClassName { get; set; }
+		public string TypeNamespaceName { get; set; }
+		public string TypeClassFullName 
+		{ 
+			get 
+			{
+				return this.TypeNamespaceName + "." + this.TypeClassName;
+			}
+		}
 
 		public static List<CSField> Parse(FieldDeclaration fieldNode)
 		{
@@ -39,7 +47,8 @@ namespace MMDB.UITest.DotNetParser
 			{
 				CSField fieldObject = new CSField
 				{
-					TypeFullName = typeNamespace + "." + typeName,
+					TypeNamespaceName = typeNamespace,
+					TypeClassName = typeName,
 					FieldName = variableNode.Name,
 					ProtectionLevel = protectionLevel
 				};

@@ -22,13 +22,13 @@ namespace MMDB.UITest.Generator.Library
 			foreach(var control in masterPage.Controls)
 			{
 				var targetField = targetClass.TargetFieldList.FirstOrDefault(i=>i.FieldName == control.FieldName
-																		&& i.TypeFullName == control.TypeFullName);
+																		&& i.TypeFullName == control.ClassFullName);
 				if(targetField == null)
 				{
 					targetField = new TargetField()
 					{
 						FieldName = control.FieldName,
-						TypeFullName = control.TypeFullName
+						TypeFullName = control.ClassFullName
 					};
 					comparison.FieldsToAdd.Add(targetField);
 				}

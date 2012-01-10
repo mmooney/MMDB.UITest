@@ -10,3 +10,5 @@ C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\nunit
 C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\obj\Debug\ScrewturnWikiProxySample.dll
 C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\obj\Debug\ScrewturnWikiProxySample.pdb
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\nunit.mocks.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\bin\Debug\pnunit.framework.dll

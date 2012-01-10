@@ -61,6 +61,10 @@ namespace MMDB.UITest.Generator.Library
 				//If does not exist, create it
 				//For each missing field, add it
 			}
+			foreach(var webPage in sourceProject.WebPageList)
+			{
+				var targetClass = targetProject.TargetClassList.SingleOrDefault(i=>i.SourceClassFullName == webPage.ClassFullName);
+			}
 		}
 
 		private static string GenerateTargetFilePath(string basePath, SourceWebPage page)
@@ -109,14 +113,15 @@ namespace MMDB.UITest.Generator.Library
 			pageObject.ClassFullName = classObject.ClassFullName;
 			foreach (var fieldObject in classObject.FieldList)
 			{
-				switch(fieldObject.TypeFullName)
+				switch(fieldObject.TypeClassFullName)
 				{
 					case "System.Web.UI.WebControls.Literal":
 						{
 							var control = new LiteralControl
 							{
 								FieldName = fieldObject.FieldName,
-								TypeFullName = fieldObject.TypeFullName
+								ClassName = fieldObject.TypeClassName,
+								NamespaceName = fieldObject.TypeNamespaceName
 							};
 							pageObject.Controls.Add(control);
 						} 
@@ -129,7 +134,8 @@ namespace MMDB.UITest.Generator.Library
 							var control = new SourceWebControl()
 							{
 								FieldName = fieldObject.FieldName,
-								TypeFullName = fieldObject.TypeFullName
+								ClassName = fieldObject.TypeClassName,
+								NamespaceName = fieldObject.TypeNamespaceName
 							};
 							pageObject.Controls.Add(control);
 						}
