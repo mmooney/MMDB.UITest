@@ -5,13 +5,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMDB.UITest.Generator.Libra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMDB.UITest.DotNetParser", "MMDB.UITest.DotNetParser\MMDB.UITest.DotNetParser.csproj", "{40249B15-0986-4F23-AAC2-6516FE1B8C4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrewturnWikiProxySample", "ScrewturnWikiProxySample\ScrewturnWikiProxySample.csproj", "{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMDB.UITest.Core", "MMDB.UITest.Core\MMDB.UITest.Core.csproj", "{0BA31399-FB89-42D8-BA72-12016790CD52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMDB.UITest.Generator.App", "MMDB.UITest.Generator.App\MMDB.UITest.Generator.App.csproj", "{EF1FA89C-973D-48BA-A875-EA952DD68C05}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMDB.UITest.Generator.Tests", "MMDB.UITest.Generator.Tests\MMDB.UITest.Generator.Tests.csproj", "{ABB576A1-FFE2-47D0-B87B-862831AFCDDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugNetProxySample", "BugNetProxySample\BugNetProxySample.csproj", "{69A597A0-56E1-4904-90A6-006D6AE6C2B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,16 +43,6 @@ Global
 		{40249B15-0986-4F23-AAC2-6516FE1B8C4E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{40249B15-0986-4F23-AAC2-6516FE1B8C4E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{40249B15-0986-4F23-AAC2-6516FE1B8C4E}.Release|x86.ActiveCfg = Release|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{DB4DC680-BC9F-4A15-B2FA-3C314B567D37}.Release|x86.ActiveCfg = Release|Any CPU
 		{0BA31399-FB89-42D8-BA72-12016790CD52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0BA31399-FB89-42D8-BA72-12016790CD52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BA31399-FB89-42D8-BA72-12016790CD52}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -83,6 +73,16 @@ Global
 		{ABB576A1-FFE2-47D0-B87B-862831AFCDDB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{ABB576A1-FFE2-47D0-B87B-862831AFCDDB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{ABB576A1-FFE2-47D0-B87B-862831AFCDDB}.Release|x86.ActiveCfg = Release|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{69A597A0-56E1-4904-90A6-006D6AE6C2B6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

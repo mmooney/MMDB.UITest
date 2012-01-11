@@ -14,8 +14,12 @@ namespace MMDB.UITest.Generator.App
 		[STAThread]
 		static void Main()
 		{
-			var sourceProject= ProxyGenerator.LoadWebPages(@"C:\Users\admin\Dropbox\Code\screwturn-screwturn-wiki-4-cf9155b27d4c\WebApplication\WebApplication.csproj");
-			ProxyGenerator.UpdateProxyProject(@"C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\ScrewturnWikiProxySample.csproj", sourceProject);
+			//string inputProject = @"C:\Users\admin\Dropbox\Code\screwturn-screwturn-wiki-4-cf9155b27d4c\WebApplication\WebApplication.csproj";
+			string inputProjectPath = @"..\..\..\..\BugNet\src\BugNET_WAP\BugNET_WAP.csproj";
+			//string outputProjectPath = @"C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\ScrewturnWikiProxySample.csproj";
+			string outputProjectPath = @"..\..\..\BugNetProxySample\BugNetProxySample.csproj";
+			var sourceProject= ProxyGenerator.LoadWebPages(inputProjectPath);
+			ProxyGenerator.UpdateProxyProject(outputProjectPath, sourceProject);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new Form1());
