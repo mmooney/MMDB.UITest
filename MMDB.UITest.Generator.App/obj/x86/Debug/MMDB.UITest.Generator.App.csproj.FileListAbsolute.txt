@@ -24,3 +24,4 @@ C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.App\obj\x86\Debug\
 C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.App\obj\x86\Debug\MMDB.UITest.Generator.App.pdb
 C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.App\bin\Debug\ICSharpCode.NRefactory.CSharp.xml
 C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.App\bin\Debug\ICSharpCode.NRefactory.xml
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.Generator.App\bin\Debug\MMDB.Shared.dll

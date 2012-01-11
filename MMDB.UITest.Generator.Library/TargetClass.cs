@@ -6,11 +6,13 @@ using MMDB.UITest.DotNetParser;
 using MMDB.UITest.Core;
 using System.IO;
 using ICSharpCode.NRefactory.CSharp;
+using MMDB.Shared;
 
 namespace MMDB.UITest.Generator.Library
 {
 	public class TargetClass
 	{
+		public EnumTargetObjectType TargetObjectType { get; set; }
 		public string SourceClassFullName { get; set; }
 		public string TargetClassFullName { get; set; }
 		public List<TargetField> TargetFieldList { get; set; }
@@ -105,6 +107,7 @@ namespace MMDB.UITest.Generator.Library
 		public void AddFieldsToFile(string targetProjectPath, string relativeFilePath, List<TargetField> list)
 		{
 			CompilationUnit compilationUnit;
+			bool anyChanges = false;
 			string filePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), relativeFilePath);
 			using(StreamReader reader = new StreamReader(filePath))
 			{
@@ -120,18 +123,23 @@ namespace MMDB.UITest.Generator.Library
 			{
 				switch(field.TypeFullName)
 				{
-					case "System.Web.UI.WebControls.Literal":
-						TargetControlGenerator.AddLiteralControl(classObject, field);
-						break;
+					//case "System.Web.UI.WebControls.Literal":
+					//    TargetControlGenerator.AddLiteralControl(classObject, field);
+					//    anyChanges = true;
+					//    break;
 					case "System.Web.UI.WebControls.HyperLink":
 						TargetControlGenerator.AddHyperLinkControl(classObject, field, field.TypeFullName);
+						anyChanges = true;
 						break;
 				}
 			}
-			using(StreamWriter writer = new StreamWriter(filePath))
+			if(anyChanges)
 			{
-				CSharpOutputVisitor visitor = new CSharpOutputVisitor(writer, new CSharpFormattingOptions());
-				compilationUnit.AcceptVisitor(visitor);
+				using(StreamWriter writer = new StreamWriter(filePath))
+				{
+					CSharpOutputVisitor visitor = new CSharpOutputVisitor(writer, new CSharpFormattingOptions());
+					compilationUnit.AcceptVisitor(visitor);
+				}
 			}
 		}
 
@@ -179,13 +187,61 @@ namespace MMDB.UITest.Generator.Library
 			string designerFilePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), this.DesignerFilePath);
 			if (!File.Exists(designerFilePath))
 			{
-				this.CreateDesignerFile(designerFilePath);
+				switch(this.TargetObjectType)
+				{
+					case EnumTargetObjectType.MasterPage:
+						this.CreateDesignerMasterPageFile(designerFilePath);
+						break;
+					case EnumTargetObjectType.WebPage:
+						this.CreateWebPageFile(designerFilePath);
+						break;
+					default:
+						throw new UnknownEnumValueException(this.TargetObjectType);
+				}
 			}
 			CSProjectFile.EnsureFileInclude(targetProjectPath, this.UserFilePath, null);
 			CSProjectFile.EnsureFileInclude(targetProjectPath, this.DesignerFilePath, this.UserFilePath);
 		}
 
-		private void CreateDesignerFile(string designerFilePath)
+		private void CreateWebPageFile(string designerFilePath)
+		{
+			string typeName;
+			string typeNamespace;
+			DotNetParserHelper.SplitType(this.TargetClassFullName, out typeName, out typeNamespace);
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("using System;");
+			sb.AppendLine("using System.Collections.Generic;");
+			sb.AppendLine("using System.Linq;");
+			sb.AppendLine("using System.Text;");
+			sb.AppendLine("using MMDB.UITest.Core;");
+			sb.AppendLine("using WatiN.Core;");
+			sb.AppendLine();
+			sb.AppendLine(string.Format("namespace {0}", typeNamespace));
+			sb.AppendLine("{");
+			sb.AppendLine(string.Format("[{0}(\"{1}\")]", typeof(UIClientPageAttribute).FullName, this.SourceClassFullName));
+			sb.AppendLine(string.Format("partial class {0} : {1}", typeName, typeof(BasePageClient).FullName));
+			sb.AppendLine("{");
+			sb.AppendLine();
+			sb.AppendLine(string.Format("public {0} (Browser browser) : base(browser) {{}}", typeName));
+			sb.AppendLine();
+			sb.AppendLine(string.Format("protected override string ExpectedUrl {{ get {{ return \"{0}\"; }} }}", this.PageUrl));
+
+			sb.AppendLine("}");
+			sb.AppendLine("}");
+			CSharpParser parser = new CSharpParser();
+			var compilationUnit = parser.Parse(sb.ToString(), Path.GetFileName(designerFilePath));
+			if (!Directory.Exists(Path.GetDirectoryName(designerFilePath)))
+			{
+				Directory.CreateDirectory(Path.GetDirectoryName(designerFilePath));
+			}
+			using (StreamWriter writer = new StreamWriter(designerFilePath))
+			{
+				CSharpOutputVisitor outputVistor = new CSharpOutputVisitor(writer, new CSharpFormattingOptions());
+				compilationUnit.AcceptVisitor(outputVistor, null);
+			}
+		}
+
+		private void CreateDesignerMasterPageFile(string designerFilePath)
 		{
 			string typeName;
 			string typeNamespace;

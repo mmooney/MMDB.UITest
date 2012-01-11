@@ -42,7 +42,7 @@
       <HintPath>..\packages\ICSharpCode.NRefactory.5.0.0.3\lib\Net40\ICSharpCode.NRefactory.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=db7cfd3acb5ad44e, processorArchitecture=MSIL">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
       <Private>True</Private>
       <HintPath>..\packages\WatiN.2.1.0\lib\net40\Interop.SHDocVw.dll</HintPath>
     </Reference>
@@ -50,6 +50,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <Private>True</Private>
       <HintPath>..\packages\WatiN.2.1.0\lib\net40\Microsoft.mshtml.dll</HintPath>
+    </Reference>
+    <Reference Include="MMDB.Shared">
+      <HintPath>..\packages\MMDB.Shared.1.0.0.1\lib\net40\MMDB.Shared.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.9.5.2\lib\net40\Mono.Cecil.dll</HintPath>
@@ -76,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspxDefinition.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="TargetClass.cs" />
     <Compile Include="TargetControlGenerator.cs" />
     <Compile Include="TargetField.cs" />
@@ -103,6 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />

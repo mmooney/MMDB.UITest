@@ -33,9 +33,20 @@ namespace MMDB.UITest.Generator.Library
                         pageObject = new SourceMasterPage();
                         project.MasterPageList.Add(pageObject);
                     }
-                    ProxyGenerator.PopulatePageObject(pageObject, csClass);
+                    ProxyGenerator.PopulateMasterPageObject(pageObject, csClass);
                     pageObject.PageUrl = csClass.DependentUponFilePathList.Single(i => i.EndsWith(".master", StringComparison.CurrentCultureIgnoreCase));
                 }
+				else if (csClass.DependentUponFilePathList.Any(i=>i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase)))
+				{
+					var pageObject = project.WebPageList.SingleOrDefault(i=>i.ClassFullName == csClass.ClassFullName);
+					if(pageObject == null)
+					{
+						pageObject = SourceWebPage.TryLoad(csProjFilePath, csClass);
+						project.WebPageList.Add(pageObject);
+					}
+					ProxyGenerator.PopulateWebPageObject(pageObject, csClass);
+					pageObject.PageUrl = csClass.DependentUponFilePathList.Single(i => i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase));
+				}
             }
             return project;
         }
@@ -51,19 +62,30 @@ namespace MMDB.UITest.Generator.Library
 				var targetClass = targetProject.TargetClassList.SingleOrDefault(i=>i.SourceClassFullName == masterPage.ClassFullName);
 				if(targetClass == null)
 				{
+					//If does not exist, create it
 					targetClass = TargetClass.Create(targetProject, sourceProject, masterPage);
 					classesToAddToProject.Add(targetClass);
 				}
 				targetClass.PageUrl = masterPage.PageUrl;
+				targetClass.TargetObjectType = EnumTargetObjectType.MasterPage;
+				//For each missing field, add it
 				var comparison = UIObjectComparison.Compare(masterPage, targetClass);
 				targetClass.EnsureFiles(targetProjectPath);
 				targetClass.AddFieldsToFile(targetProjectPath, targetClass.DesignerFilePath, comparison.FieldsToAdd);
-				//If does not exist, create it
-				//For each missing field, add it
 			}
 			foreach(var webPage in sourceProject.WebPageList)
 			{
 				var targetClass = targetProject.TargetClassList.SingleOrDefault(i=>i.SourceClassFullName == webPage.ClassFullName);
+				if(targetClass == null)
+				{
+					targetClass = TargetClass.Create(targetProject, sourceProject, webPage);
+					classesToAddToProject.Add(targetClass);
+				}
+				targetClass.PageUrl = webPage.PageUrl;
+				targetClass.TargetObjectType = EnumTargetObjectType.WebPage;
+				var comparison = UIObjectComparison.Compare(webPage, targetClass);
+				targetClass.EnsureFiles(targetProjectPath);
+				targetClass.AddFieldsToFile(targetProjectPath, targetClass.DesignerFilePath, comparison.FieldsToAdd);
 			}
 		}
 
@@ -103,17 +125,32 @@ namespace MMDB.UITest.Generator.Library
 				{
 					var typeDefinitionNode = (TypeDeclaration)node;
 					CSClass classObject = CSClass.Parse(namespaceNode, typeDefinitionNode, pageObject.PageUrl);
-					PopulatePageObject(pageObject, classObject);
+					PopulateMasterPageObject(pageObject, classObject);
 				}
 			}
 		}
 
-		private static void PopulatePageObject(SourceMasterPage pageObject, CSClass classObject)
+		private static void PopulateMasterPageObject(SourceMasterPage pageObject, CSClass classObject)
 		{
 			pageObject.ClassFullName = classObject.ClassFullName;
 			foreach (var fieldObject in classObject.FieldList)
 			{
 				switch(fieldObject.TypeClassFullName)
+				{
+					case "System.Web.UI.WebControls.ContentPlaceHolder":
+						pageObject.ContentHolderIDs.Add(fieldObject.FieldName);
+						break;
+				}
+			}
+			PopulateWebPageObject(pageObject, classObject);
+		}
+
+		private static void PopulateWebPageObject(SourceWebPage pageObject, CSClass classObject)
+		{
+			pageObject.ClassFullName = classObject.ClassFullName;
+			foreach (var fieldObject in classObject.FieldList)
+			{
+				switch (fieldObject.TypeClassFullName)
 				{
 					case "System.Web.UI.WebControls.Literal":
 						{
@@ -124,10 +161,7 @@ namespace MMDB.UITest.Generator.Library
 								NamespaceName = fieldObject.TypeNamespaceName
 							};
 							pageObject.Controls.Add(control);
-						} 
-						break;
-					case "System.Web.UI.WebControls.ContentPlaceHolder":
-						pageObject.ContentHolderIDs.Add(fieldObject.FieldName);
+						}
 						break;
 					default:
 						{

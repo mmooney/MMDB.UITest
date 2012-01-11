@@ -73,6 +73,270 @@
     <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\MasterPageSAPageClient.designer.cs">
       <DependentUpon>MasterPageSAPageClient.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AccessDeniedPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AccessDeniedPageClient.designer.cs">
+      <DependentUpon>AccessDeniedPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminPageClient.designer.cs">
+      <DependentUpon>AdminPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminCategoriesPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminCategoriesPageClient.designer.cs">
+      <DependentUpon>AdminCategoriesPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CategoryRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CategoryRowPageClient.designer.cs">
+      <DependentUpon>CategoryRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminConfigPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminConfigPageClient.designer.cs">
+      <DependentUpon>AdminConfigPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminContentPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminContentPageClient.designer.cs">
+      <DependentUpon>AdminContentPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminGroupsPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminGroupsPageClient.designer.cs">
+      <DependentUpon>AdminGroupsPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UserGroupRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UserGroupRowPageClient.designer.cs">
+      <DependentUpon>UserGroupRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminHomePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminHomePageClient.designer.cs">
+      <DependentUpon>AdminHomePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\WantedPageRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\WantedPageRowPageClient.designer.cs">
+      <DependentUpon>WantedPageRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\IndexRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\IndexRowPageClient.designer.cs">
+      <DependentUpon>IndexRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminLogPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminLogPageClient.designer.cs">
+      <DependentUpon>AdminLogPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\LogEntryRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\LogEntryRowPageClient.designer.cs">
+      <DependentUpon>LogEntryRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminNamespacesPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminNamespacesPageClient.designer.cs">
+      <DependentUpon>AdminNamespacesPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\NamespaceRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\NamespaceRowPageClient.designer.cs">
+      <DependentUpon>NamespaceRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminNavPathsPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminNavPathsPageClient.designer.cs">
+      <DependentUpon>AdminNavPathsPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\NavigationPathRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\NavigationPathRowPageClient.designer.cs">
+      <DependentUpon>NavigationPathRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminPagesPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminPagesPageClient.designer.cs">
+      <DependentUpon>AdminPagesPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PageRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PageRowPageClient.designer.cs">
+      <DependentUpon>PageRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminPluginsPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminPluginsPageClient.designer.cs">
+      <DependentUpon>AdminPluginsPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\ProviderRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\ProviderRowPageClient.designer.cs">
+      <DependentUpon>ProviderRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminSnippetsPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminSnippetsPageClient.designer.cs">
+      <DependentUpon>AdminSnippetsPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SnippetTemplateRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SnippetTemplateRowPageClient.designer.cs">
+      <DependentUpon>SnippetTemplateRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminThemePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminThemePageClient.designer.cs">
+      <DependentUpon>AdminThemePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminUsersPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminUsersPageClient.designer.cs">
+      <DependentUpon>AdminUsersPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UserRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UserRowPageClient.designer.cs">
+      <DependentUpon>UserRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AllPagesPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AllPagesPageClient.designer.cs">
+      <DependentUpon>AllPagesPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminGlobalConfigPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminGlobalConfigPageClient.designer.cs">
+      <DependentUpon>AdminGlobalConfigPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminProvidersManagementPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminProvidersManagementPageClient.designer.cs">
+      <DependentUpon>AdminProvidersManagementPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminGlobalHomePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminGlobalHomePageClient.designer.cs">
+      <DependentUpon>AdminGlobalHomePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminImportExportPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\AdminImportExportPageClient.designer.cs">
+      <DependentUpon>AdminImportExportPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\StorageProviderRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\StorageProviderRowPageClient.designer.cs">
+      <DependentUpon>StorageProviderRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CreateMasterPasswordPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CreateMasterPasswordPageClient.designer.cs">
+      <DependentUpon>CreateMasterPasswordPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CreatePagesInBatchPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CreatePagesInBatchPageClient.designer.cs">
+      <DependentUpon>CreatePagesInBatchPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CaptchaPagePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CaptchaPagePageClient.designer.cs">
+      <DependentUpon>CaptchaPagePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CategoryPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\CategoryPageClient.designer.cs">
+      <DependentUpon>CategoryPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\DefaultPagePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\DefaultPagePageClient.designer.cs">
+      <DependentUpon>DefaultPagePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\DiffPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\DiffPageClient.designer.cs">
+      <DependentUpon>DiffPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\EditPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\EditPageClient.designer.cs">
+      <DependentUpon>EditPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\ErrorPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\ErrorPageClient.designer.cs">
+      <DependentUpon>ErrorPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\GetFilePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\GetFilePageClient.designer.cs">
+      <DependentUpon>GetFilePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\HistoryPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\HistoryPageClient.designer.cs">
+      <DependentUpon>HistoryPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\RevisionRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\RevisionRowPageClient.designer.cs">
+      <DependentUpon>RevisionRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\IFrameEditorPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\IFrameEditorPageClient.designer.cs">
+      <DependentUpon>IFrameEditorPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\ImageEditorPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\ImageEditorPageClient.designer.cs">
+      <DependentUpon>ImageEditorPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\LanguagePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\LanguagePageClient.designer.cs">
+      <DependentUpon>LanguagePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\LoginPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\LoginPageClient.designer.cs">
+      <DependentUpon>LoginPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\NavPathPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\NavPathPageClient.designer.cs">
+      <DependentUpon>NavPathPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\OperationPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\OperationPageClient.designer.cs">
+      <DependentUpon>OperationPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PageNotFoundPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PageNotFoundPageClient.designer.cs">
+      <DependentUpon>PageNotFoundPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PopupPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PopupPageClient.designer.cs">
+      <DependentUpon>PopupPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PopupWYSIWYGPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PopupWYSIWYGPageClient.designer.cs">
+      <DependentUpon>PopupWYSIWYGPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PostPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PostPageClient.designer.cs">
+      <DependentUpon>PostPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PreviewPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PreviewPageClient.designer.cs">
+      <DependentUpon>PreviewPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PrintPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\PrintPageClient.designer.cs">
+      <DependentUpon>PrintPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UserProfilePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UserProfilePageClient.designer.cs">
+      <DependentUpon>UserProfilePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\RandPagePageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\RandPagePageClient.designer.cs">
+      <DependentUpon>RandPagePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\RegisterPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\RegisterPageClient.designer.cs">
+      <DependentUpon>RegisterPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\RSSPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\RSSPageClient.designer.cs">
+      <DependentUpon>RSSPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SearchPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SearchPageClient.designer.cs">
+      <DependentUpon>SearchPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SearchResultRowPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SearchResultRowPageClient.designer.cs">
+      <DependentUpon>SearchResultRowPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SessionRefreshPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SessionRefreshPageClient.designer.cs">
+      <DependentUpon>SessionRefreshPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SitemapPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\SitemapPageClient.designer.cs">
+      <DependentUpon>SitemapPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\ThumbPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\ThumbPageClient.designer.cs">
+      <DependentUpon>ThumbPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UploadPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UploadPageClient.designer.cs">
+      <DependentUpon>UploadPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UserPageClient.cs" />
+    <Compile Include="ScrewturnWikiProxySample\Client\Pages\ScrewTurn\Wiki\UserPageClient.designer.cs">
+      <DependentUpon>UserPageClient.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MMDB.UITest.Core\MMDB.UITest.Core.csproj">
@@ -83,6 +347,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

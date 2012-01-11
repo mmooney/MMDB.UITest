@@ -16,10 +16,10 @@ namespace MMDB.UITest.Generator.Library
 			this.FieldsToDelete = new List<TargetField>();
 		}
 
-		public static UIObjectComparison Compare(SourceMasterPage masterPage, TargetClass targetClass)
+		public static UIObjectComparison Compare(SourceWebPage webPage, TargetClass targetClass)
 		{
 			UIObjectComparison comparison = new UIObjectComparison();
-			foreach(var control in masterPage.Controls)
+			foreach(var control in webPage.Controls)
 			{
 				var targetField = targetClass.TargetFieldList.FirstOrDefault(i=>i.FieldName == control.FieldName
 																		&& i.TypeFullName == control.ClassFullName);
