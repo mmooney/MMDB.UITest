@@ -45,13 +45,24 @@ namespace MMDB.UITest.DotNetParser
 				if(node is NamedExpression)
 				{
 					var namedExpressionNode = (NamedExpression)node;
-					var primitiveExpressionNode = (PrimitiveExpression)namedExpressionNode.Children.Single(i=>i is PrimitiveExpression);
-					var argument = new CSAttributeArgument
+					if(namedExpressionNode.Expression is PrimitiveExpression)
 					{
-						ArgumentName = namedExpressionNode.Identifier,
-						ArguementValue = primitiveExpressionNode.Value
-					};
-					returnValue.ArgumentList.Add(argument);
+						var primitiveExpressionNode = (PrimitiveExpression)namedExpressionNode.Expression;
+						var argument = new CSAttributeArgument
+						{
+							ArgumentName = namedExpressionNode.Identifier,
+							ArguementValue = primitiveExpressionNode.Value
+						};
+						returnValue.ArgumentList.Add(argument);
+					}
+					else if(namedExpressionNode.Expression is MemberReferenceExpression)
+					{
+						var memberReferenceExpressionNode = (MemberReferenceExpression)namedExpressionNode.Expression;
+					}
+					else 
+					{
+						throw new Exception("Unrecognized expression type: " + namedExpressionNode.Expression.GetType().FullName);
+					}
 				}
 			}
 			return returnValue;

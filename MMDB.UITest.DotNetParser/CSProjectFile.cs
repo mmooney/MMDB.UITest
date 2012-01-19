@@ -68,9 +68,13 @@ namespace MMDB.UITest.DotNetParser
 											returnValue.ClassList.Add(classObject);
 										}
 										classObject.Parse(typeDefinitionNode, classFile.FilePath);
-										if(!string.IsNullOrEmpty(classFile.DependentUponFilePath) && !classObject.DependentUponFilePathList.Contains(classFile.DependentUponFilePath, StringComparer.CurrentCultureIgnoreCase))
+										if(!string.IsNullOrEmpty(classFile.DependentUponFilePath))
 										{
-											classObject.DependentUponFilePathList.Add(classFile.DependentUponFilePath);
+											string relativeDependentUponFilePath = Path.Combine(Path.GetDirectoryName(classFile.FilePath), classFile.DependentUponFilePath);
+											if(!string.IsNullOrEmpty(classFile.DependentUponFilePath) && !classObject.DependentUponFilePathList.Contains(relativeDependentUponFilePath, StringComparer.CurrentCultureIgnoreCase))
+											{
+												classObject.DependentUponFilePathList.Add(relativeDependentUponFilePath);
+											}
 										}
 									}
 								}

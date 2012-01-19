@@ -34,7 +34,7 @@ namespace MMDB.UITest.Generator.Library
                         project.MasterPageList.Add(pageObject);
                     }
                     ProxyGenerator.PopulateMasterPageObject(pageObject, csClass);
-                    pageObject.PageUrl = csClass.DependentUponFilePathList.Single(i => i.EndsWith(".master", StringComparison.CurrentCultureIgnoreCase));
+                    pageObject.PageUrl = ConvertToUrl(csClass.DependentUponFilePathList.Single(i => i.EndsWith(".master", StringComparison.CurrentCultureIgnoreCase)));
                 }
 				else if (csClass.DependentUponFilePathList.Any(i=>i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase)))
 				{
@@ -45,11 +45,16 @@ namespace MMDB.UITest.Generator.Library
 						project.WebPageList.Add(pageObject);
 					}
 					ProxyGenerator.PopulateWebPageObject(pageObject, csClass);
-					pageObject.PageUrl = csClass.DependentUponFilePathList.Single(i => i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase));
+					pageObject.PageUrl = ConvertToUrl(csClass.DependentUponFilePathList.Single(i => i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase)));
 				}
             }
             return project;
         }
+
+		private static string ConvertToUrl(string filePath)
+		{
+			return filePath.Replace('\\','/');
+		}
         
         public static void UpdateProxyProject(string targetProjectPath, SourceWebProject sourceProject)
 		{

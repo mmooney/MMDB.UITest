@@ -22,15 +22,17 @@ namespace MMDB.UITest.Generator.Library
 				using (StreamReader reader = new StreamReader(Path.Combine(Path.GetDirectoryName(sourceProjectPath), aspxFile)))
 				{
 					aspxData = reader.ReadToEnd();
+					ICSharpCode.NRefactory.CSharp.CSharpParser parser = new ICSharpCode.NRefactory.CSharp.CSharpParser();
+					var unit = parser.Parse(reader, aspxFile);
 				}
-				Regex re = new Regex("<%@[ ]*Page .+ MasterPageFile=\\\"~/([\\w\\d]+\\.[\\w\\d]+)\\\"");
+				Regex re = new Regex("<%@( )*Page .+ MasterPageFile=\\\"~/([\\w\\d/.]+)\\\"");
 				var match = re.Match(aspxData);
-				if (match.Groups.Count > 1)
+				if (match.Groups.Count > 0)
 				{
 					returnValue = new SourceMasterContentPage()
 					{
 						ClassFullName = csClass.ClassFullName,
-						MasterPageUrl = match.Groups[match.Groups.Count - 1].Value
+						MasterPageUrl = match.Groups[match.Groups.Count-1].Value
 					};
 				}
 				else
