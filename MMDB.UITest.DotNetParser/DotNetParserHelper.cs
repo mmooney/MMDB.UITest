@@ -27,6 +27,18 @@ namespace MMDB.UITest.DotNetParser
 			}
 		}
 
+		public static string BuildFullName(string namespaceName, string className)
+		{
+			if(string.IsNullOrEmpty(namespaceName))
+			{
+				return className;
+			}
+			else 
+			{
+				return string.Format("{0}.{1}", namespaceName, className);
+			}
+		}
+
 		public static string BuildNamespace(MemberType memberTypeNode)
 		{
 			string returnValue = string.Empty;

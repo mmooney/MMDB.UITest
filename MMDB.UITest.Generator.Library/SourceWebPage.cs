@@ -22,6 +22,7 @@ namespace MMDB.UITest.Generator.Library
 				using (StreamReader reader = new StreamReader(Path.Combine(Path.GetDirectoryName(sourceProjectPath), aspxFile)))
 				{
 					aspxData = reader.ReadToEnd();
+					var x= new System.Web.UI.PageParser();
 					ICSharpCode.NRefactory.CSharp.CSharpParser parser = new ICSharpCode.NRefactory.CSharp.CSharpParser();
 					var unit = parser.Parse(reader, aspxFile);
 				}

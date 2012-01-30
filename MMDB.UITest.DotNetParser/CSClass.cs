@@ -10,7 +10,23 @@ namespace MMDB.UITest.DotNetParser
 {
 	public class CSClass
 	{
-		public string ClassFullName { get; set; }
+		public string NamespaceName { get; set; }
+		public string ClassName { get; set; }
+		public string ClassFullName 
+		{
+			get 
+			{
+				return DotNetParserHelper.BuildFullName(this.NamespaceName, this.ClassName);
+			}
+			set 
+			{
+				string className;
+				string namespaceName;
+				DotNetParserHelper.SplitType(value, out className, out namespaceName);
+				this.ClassName = className;
+				this.NamespaceName = namespaceName;
+			}
+		}
 		public EnumProtectionLevel ProtectionLevel { get; set; }
 		public List<string> FilePathList { get; set; }
 		public List<CSField> FieldList { get; set; }

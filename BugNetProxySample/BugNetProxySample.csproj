@@ -14,6 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\MMDB.UITest\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <BuildPackage>false</BuildPackage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,90 +66,6 @@
   <ItemGroup>
     <Compile Include="LoginTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\IssuePageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\IssuePageClient.designer.cs">
-      <DependentUpon>IssuePageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\IssueDetailPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\IssueDetailPageClient.designer.cs">
-      <DependentUpon>IssueDetailPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\SingleColumnPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\SingleColumnPageClient.designer.cs">
-      <DependentUpon>SingleColumnPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\SitePageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\SitePageClient.designer.cs">
-      <DependentUpon>SitePageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\FourColumnPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\FourColumnPageClient.designer.cs">
-      <DependentUpon>FourColumnPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\TwoColumnPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Shared\TwoColumnPageClient.designer.cs">
-      <DependentUpon>TwoColumnPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\ForgotPasswordPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\ForgotPasswordPageClient.designer.cs">
-      <DependentUpon>ForgotPasswordPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\LoginPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\LoginPageClient.designer.cs">
-      <DependentUpon>LoginPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\RegisterPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\RegisterPageClient.designer.cs">
-      <DependentUpon>RegisterPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\UserProfilePageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\UserProfilePageClient.designer.cs">
-      <DependentUpon>UserProfilePageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\VerifyPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Account\VerifyPageClient.designer.cs">
-      <DependentUpon>VerifyPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\AdminPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\AdminPageClient.designer.cs">
-      <DependentUpon>AdminPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Host\LogViewerPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Host\LogViewerPageClient.designer.cs">
-      <DependentUpon>LogViewerPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Host\SettingsPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Host\SettingsPageClient.designer.cs">
-      <DependentUpon>SettingsPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Projects\AddProjectPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Projects\AddProjectPageClient.designer.cs">
-      <DependentUpon>AddProjectPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Projects\CloneProjectPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Projects\CloneProjectPageClient.designer.cs">
-      <DependentUpon>CloneProjectPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Projects\EditProjectPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Projects\EditProjectPageClient.designer.cs">
-      <DependentUpon>EditProjectPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Projects\ProjectListPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Projects\ProjectListPageClient.designer.cs">
-      <DependentUpon>ProjectListPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Users\AddUserPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Users\AddUserPageClient.designer.cs">
-      <DependentUpon>AddUserPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Users\EditUserPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Users\EditUserPageClient.designer.cs">
-      <DependentUpon>EditUserPageClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Users\UserListPageClient.cs" />
-    <Compile Include="BugNetProxySample\Client\Pages\BugNET\Administration\Users\UserListPageClient.designer.cs">
-      <DependentUpon>UserListPageClient.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MMDB.UITest.Core\MMDB.UITest.Core.csproj">

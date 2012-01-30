@@ -14,7 +14,7 @@
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <BuildPackage>true</BuildPackage>
+    <BuildPackage>false</BuildPackage>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -83,6 +83,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MMDB.UITest.DotNetParser\MMDB.UITest.DotNetParser.csproj">
+      <Project>{40249B15-0986-4F23-AAC2-6516FE1B8C4E}</Project>
+      <Name>MMDB.UITest.DotNetParser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MMDB.UITest.Generator.Library\MMDB.UITest.Generator.Library.csproj">
       <Project>{4BA12186-253D-4CD9-B923-1C7D06EFDE04}</Project>
       <Name>MMDB.UITest.Generator.Library</Name>

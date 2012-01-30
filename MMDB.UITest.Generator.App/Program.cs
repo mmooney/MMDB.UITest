@@ -14,6 +14,8 @@ namespace MMDB.UITest.Generator.App
 		[STAThread]
 		static void Main()
 		{
+			MMDB.UITest.DotNetParser.TestClass.Test();
+			return;
 			//string inputProject = @"C:\Users\admin\Dropbox\Code\screwturn-screwturn-wiki-4-cf9155b27d4c\WebApplication\WebApplication.csproj";
 			string inputProjectPath = @"..\..\..\..\BugNet\src\BugNET_WAP\BugNET_WAP.csproj";
 			//string outputProjectPath = @"C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\ScrewturnWikiProxySample.csproj";
