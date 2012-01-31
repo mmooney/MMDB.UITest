@@ -20,8 +20,8 @@ namespace MMDB.UITest.Generator.Library
 			{
 				returnValue = new TargetField
 				{
-					FieldName = uiClientPropertyAttribute.GetAttributeParameter(0, "SourceFieldName", true),
-					TypeFullName = uiClientPropertyAttribute.GetAttributeParameter(1, "SourceFieldTypeFullName", true)
+					FieldName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(0, "SourceFieldName", true)),
+					TypeFullName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(1, "SourceFieldTypeFullName", true))
 				};
 			}
 			return returnValue;

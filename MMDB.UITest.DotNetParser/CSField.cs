@@ -10,13 +10,13 @@ namespace MMDB.UITest.DotNetParser
 	{
 		public EnumProtectionLevel ProtectionLevel { get; set; }
 		public string FieldName { get; set; }
-		public string TypeClassName { get; set; }
-		public string TypeNamespaceName { get; set; }
-		public string TypeClassFullName 
+		public string TypeName { get; set; }
+		public string TypeNamespace { get; set; }
+		public string TypeFullName 
 		{ 
 			get 
 			{
-				return this.TypeNamespaceName + "." + this.TypeClassName;
+				return DotNetParserHelper.BuildFullName(this.TypeNamespace, this.TypeName);
 			}
 		}
 
@@ -47,8 +47,8 @@ namespace MMDB.UITest.DotNetParser
 			{
 				CSField fieldObject = new CSField
 				{
-					TypeNamespaceName = typeNamespace,
-					TypeClassName = typeName,
+					TypeNamespace = typeNamespace,
+					TypeName = typeName,
 					FieldName = variableNode.Name,
 					ProtectionLevel = protectionLevel
 				};

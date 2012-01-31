@@ -140,7 +140,7 @@ namespace MMDB.UITest.Generator.Library
 			pageObject.ClassFullName = classObject.ClassFullName;
 			foreach (var fieldObject in classObject.FieldList)
 			{
-				switch(fieldObject.TypeClassFullName)
+				switch(fieldObject.TypeFullName)
 				{
 					case "System.Web.UI.WebControls.ContentPlaceHolder":
 						pageObject.ContentHolderIDs.Add(fieldObject.FieldName);
@@ -155,15 +155,15 @@ namespace MMDB.UITest.Generator.Library
 			pageObject.ClassFullName = classObject.ClassFullName;
 			foreach (var fieldObject in classObject.FieldList)
 			{
-				switch (fieldObject.TypeClassFullName)
+				switch (fieldObject.TypeFullName)
 				{
 					case "System.Web.UI.WebControls.Literal":
 						{
 							var control = new LiteralControl
 							{
 								FieldName = fieldObject.FieldName,
-								ClassName = fieldObject.TypeClassName,
-								NamespaceName = fieldObject.TypeNamespaceName
+								ClassName = fieldObject.TypeName,
+								NamespaceName = fieldObject.TypeNamespace
 							};
 							pageObject.Controls.Add(control);
 						}
@@ -173,8 +173,8 @@ namespace MMDB.UITest.Generator.Library
 							var control = new SourceWebControl()
 							{
 								FieldName = fieldObject.FieldName,
-								ClassName = fieldObject.TypeClassName,
-								NamespaceName = fieldObject.TypeNamespaceName
+								ClassName = fieldObject.TypeName,
+								NamespaceName = fieldObject.TypeNamespace
 							};
 							pageObject.Controls.Add(control);
 						}

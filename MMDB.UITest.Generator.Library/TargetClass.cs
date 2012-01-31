@@ -39,7 +39,7 @@ namespace MMDB.UITest.Generator.Library
 			{
 				returnValue = new TargetClass
 				{
-					SourceClassFullName = uiClientPageAttribute.GetAttributeParameter(0, "SourceClassFullName", true),
+					SourceClassFullName = Convert.ToString(uiClientPageAttribute.GetAttributeParameter(0, "SourceClassFullName", true)),
 					TargetClassFullName = csClass.ClassFullName
 				};
 

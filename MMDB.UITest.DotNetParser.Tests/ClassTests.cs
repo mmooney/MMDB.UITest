@@ -209,7 +209,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 			var classObject = classList[0];
 			Assert.AreEqual(3, classObject.AttributeList.Count);
 
-			Assert.AreEqual("TestAttribute1", classObject.AttributeList[0].TypeName);
+			Assert.AreEqual("Test", classObject.AttributeList[0].TypeName);
 			Assert.IsNullOrEmpty(classObject.AttributeList[0].TypeNamespace);
 			Assert.AreEqual("TestAttribute1", classObject.AttributeList[0].TypeFullName);
 
@@ -303,6 +303,64 @@ namespace MMDB.UITest.DotNetParser.Tests
 			Assert.Throws(typeof(ArgumentOutOfRangeException), delegate { classObject.AttributeList[4].GetAttributeParameter(2, "Something", true); });
 
 			Assert.AreEqual("TestAttribute6", classObject.AttributeList[5].TypeFullName);
+		}
+
+		[Test]
+		public void TestFields()
+		{
+			string data =
+			@"
+				using System;
+
+				namespace Test.Namespace
+				{
+					public class TestClass
+					{
+						public int TestField1 = 1;
+						private string TestField2 = ""abc"";
+						internal Test1.Test2.TestType TestField3;
+						protected int TestField4;
+					}
+				}
+			";
+			ClassParser parser = new ClassParser();
+			var classList = parser.ParseString(data.ToString());
+			Assert.AreEqual(1, classList.Count);
+			var classObject = classList[0];
+			Assert.IsEmpty(classObject.PropertyList);
+			Assert.AreEqual(4, classObject.FieldList.Count);
+			
+			Assert.AreEqual("TestField1", classObject.FieldList[0].FieldName);
+			Assert.AreEqual("int", classObject.FieldList[0].TypeName);
+			Assert.IsNullOrEmpty(classObject.FieldList[0].TypeNamespace);
+			Assert.AreEqual("int", classObject.FieldList[0].TypeFullName);
+			Assert.AreEqual(EnumProtectionLevel.Public, classObject.FieldList[0].ProtectionLevel);
+
+			Assert.AreEqual("TestField2", classObject.FieldList[1].FieldName);
+			Assert.AreEqual("string", classObject.FieldList[1].TypeName);
+			Assert.IsNullOrEmpty(classObject.FieldList[1].TypeNamespace);
+			Assert.AreEqual("string", classObject.FieldList[1].TypeFullName);
+			Assert.AreEqual(EnumProtectionLevel.Private, classObject.FieldList[1].ProtectionLevel);
+
+			Assert.AreEqual("TestField3", classObject.FieldList[2].FieldName);
+			Assert.AreEqual("TestType", classObject.FieldList[2].TypeName);
+			Assert.AreEqual("Test1.Test2", classObject.FieldList[2].TypeNamespace);
+			Assert.AreEqual("Test1.Test2.TestType", classObject.FieldList[2].TypeFullName);
+			Assert.AreEqual(EnumProtectionLevel.Internal, classObject.FieldList[2].ProtectionLevel);
+
+			Assert.AreEqual("TestField4", classObject.FieldList[3].FieldName);
+			Assert.AreEqual("int", classObject.FieldList[3].TypeName);
+			Assert.IsNullOrEmpty(classObject.FieldList[3].TypeNamespace);
+			Assert.AreEqual("int", classObject.FieldList[3].TypeFullName);
+			Assert.AreEqual(EnumProtectionLevel.Protected, classObject.FieldList[3].ProtectionLevel);
+
+			Assert.AreEqual("TestField2", classObject.FieldList[1].FieldName);
+			Assert.AreEqual("string", classObject.FieldList[1].TypeName);
+			Assert.IsNullOrEmpty(classObject.FieldList[1].TypeNamespace);
+			Assert.AreEqual("string", classObject.FieldList[1].TypeFullName);
+			Assert.AreEqual(EnumProtectionLevel.Private, classObject.FieldList[1].ProtectionLevel);
+
+
 
 		}
 	}
