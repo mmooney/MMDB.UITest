@@ -30,6 +30,7 @@ namespace MMDB.UITest.DotNetParser
 		public static CSProperty Parse(PropertyDeclaration propertyNode)
 		{
 			CSProperty returnValue = new CSProperty();
+			returnValue.ProtectionLevel = EnumProtectionLevel.Private;
 			if ((propertyNode.Modifiers & Modifiers.Public) == Modifiers.Public)
 			{
 				returnValue.ProtectionLevel = EnumProtectionLevel.Public;

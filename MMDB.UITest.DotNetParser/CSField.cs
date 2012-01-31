@@ -19,6 +19,13 @@ namespace MMDB.UITest.DotNetParser
 				return DotNetParserHelper.BuildFullName(this.TypeNamespace, this.TypeName);
 			}
 		}
+		public List<CSAttribute> AttributeList { get; set; }
+		public object FieldValue { get; set; }
+
+		public CSField()
+		{
+			this.AttributeList = new List<CSAttribute>();
+		}
 
 		public static List<CSField> Parse(FieldDeclaration fieldNode)
 		{
@@ -43,7 +50,7 @@ namespace MMDB.UITest.DotNetParser
 			string typeName;
 			string typeNamespace;
 			DotNetParserHelper.SplitType(fieldNode.ReturnType.ToString(), out typeName, out typeNamespace);
-			foreach(var variableNode in fieldNode.Variables)
+			foreach(VariableInitializer variableNode in fieldNode.Variables)
 			{
 				CSField fieldObject = new CSField
 				{
@@ -52,9 +59,26 @@ namespace MMDB.UITest.DotNetParser
 					FieldName = variableNode.Name,
 					ProtectionLevel = protectionLevel
 				};
+				if(variableNode.Initializer != null)
+				{
+					if(variableNode.Initializer is PrimitiveExpression)
+					{
+						PrimitiveExpression primitiveExpression = (PrimitiveExpression)variableNode.Initializer;
+						fieldObject.FieldValue = primitiveExpression.Value;
+					}
+				}
+				foreach (var attributeSectionNode in fieldNode.Attributes)
+				{
+					foreach (var attributeNode in attributeSectionNode.Attributes)
+					{
+						var attribute = CSAttribute.Parse(attributeNode);
+						fieldObject.AttributeList.Add(attribute);
+					}
+				}
 				returnList.Add(fieldObject);
 			}
 			return returnList;
 		}
+
 	}
 }

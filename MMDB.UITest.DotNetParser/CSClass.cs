@@ -50,7 +50,23 @@ namespace MMDB.UITest.DotNetParser
 		public void Parse(TypeDeclaration typeDefinitionNode, string filePath)
 		{
 			var fieldList = typeDefinitionNode.Children.Where(i=>i is FieldDeclaration);
-			foreach(FieldDeclaration fieldNode in fieldList)
+			if ((typeDefinitionNode.Modifiers & Modifiers.Public) == Modifiers.Public)
+			{
+				this.ProtectionLevel = EnumProtectionLevel.Public;
+			}
+			else if ((typeDefinitionNode.Modifiers & Modifiers.Private) == Modifiers.Private)
+			{
+				this.ProtectionLevel = EnumProtectionLevel.Private;
+			}
+			else if ((typeDefinitionNode.Modifiers & Modifiers.Protected) == Modifiers.Protected)
+			{
+				this.ProtectionLevel = EnumProtectionLevel.Protected;
+			}
+			else if ((typeDefinitionNode.Modifiers & Modifiers.Internal) == Modifiers.Internal)
+			{
+				this.ProtectionLevel = EnumProtectionLevel.Internal;
+			}
+			foreach (FieldDeclaration fieldNode in fieldList)
 			{
 				var fieldObjectList = CSField.Parse(fieldNode);
 				this.FieldList.AddRange(fieldObjectList);
