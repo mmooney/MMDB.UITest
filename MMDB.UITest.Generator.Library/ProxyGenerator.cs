@@ -109,32 +109,6 @@ namespace MMDB.UITest.Generator.Library
 			}
 		}
 
-
-		private static void ParseMasterPage(SourceMasterPage pageObject, CompilationUnit compilationUnit)
-		{
-			foreach(var node in compilationUnit.Children)
-			{
-				if(node is NamespaceDeclaration)
-				{
-					var namespaceNode = (NamespaceDeclaration)node;
-					LoadMasterPageNamespace(pageObject, namespaceNode);
-				}
-			}
-		}
-
-		private static void LoadMasterPageNamespace(SourceMasterPage pageObject, NamespaceDeclaration namespaceNode)
-		{
-			foreach(var node in namespaceNode.Children)
-			{
-				if(node is TypeDeclaration)
-				{
-					var typeDefinitionNode = (TypeDeclaration)node;
-					CSClass classObject = CSClass.Parse(namespaceNode, typeDefinitionNode, pageObject.PageUrl);
-					PopulateMasterPageObject(pageObject, classObject);
-				}
-			}
-		}
-
 		private static void PopulateMasterPageObject(SourceMasterPage pageObject, CSClass classObject)
 		{
 			pageObject.ClassFullName = classObject.ClassFullName;

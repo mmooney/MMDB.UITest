@@ -67,7 +67,7 @@ namespace MMDB.UITest.DotNetParser
 											};
 											returnValue.ClassList.Add(classObject);
 										}
-										classObject.Parse(typeDefinitionNode, classFile.FilePath);
+										ClassParser.BuildClass(classObject, typeDefinitionNode, classFile.FilePath);
 										if(!string.IsNullOrEmpty(classFile.DependentUponFilePath))
 										{
 											string relativeDependentUponFilePath = Path.Combine(Path.GetDirectoryName(classFile.FilePath), classFile.DependentUponFilePath);

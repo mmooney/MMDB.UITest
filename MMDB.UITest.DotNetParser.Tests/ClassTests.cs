@@ -24,7 +24,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual("Test.Namespace", classObject.NamespaceName);
@@ -59,7 +59,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(4, classList.Count);
 
 			Assert.AreEqual("PublicClass", classList[0].ClassName);
@@ -92,7 +92,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(2, classObject.PropertyList.Count);
@@ -123,7 +123,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(2, classObject.PropertyList.Count);
@@ -155,7 +155,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(1, classObject.AttributeList.Count);
@@ -181,7 +181,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(2, classObject.AttributeList.Count);
@@ -212,7 +212,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(3, classObject.AttributeList.Count);
@@ -251,7 +251,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(6, classObject.AttributeList.Count);
@@ -336,7 +336,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(3, classObject.PropertyList.Count);
@@ -386,7 +386,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(5, classObject.PropertyList.Count);
@@ -426,7 +426,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.IsEmpty(classObject.PropertyList);
@@ -486,7 +486,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(3, classObject.FieldList.Count);
@@ -531,7 +531,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data.ToString());
+			var classList = parser.ParseString(data.ToString(), "TestFileName.cs");
 			Assert.AreEqual(1, classList.Count);
 			var classObject = classList[0];
 			Assert.AreEqual(4, classObject.FieldList.Count);

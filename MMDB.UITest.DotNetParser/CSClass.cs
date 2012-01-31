@@ -36,61 +36,6 @@ namespace MMDB.UITest.DotNetParser
 			this.DependentUponFilePathList = new List<string>();
 		}
 
-		public static CSClass Parse(NamespaceDeclaration namespaceNode, TypeDeclaration typeDefinitionNode, string filePath)
-		{
-			CSClass classObject = new CSClass
-			{
-				NamespaceName = namespaceNode.FullName,
-				ClassName = typeDefinitionNode.Name
-			};
-			classObject.Parse(typeDefinitionNode, filePath);
-			return classObject;	
-		}
-
-		public void Parse(TypeDeclaration typeDefinitionNode, string filePath)
-		{
-			var fieldList = typeDefinitionNode.Children.Where(i=>i is FieldDeclaration);
-			if ((typeDefinitionNode.Modifiers & Modifiers.Public) == Modifiers.Public)
-			{
-				this.ProtectionLevel = EnumProtectionLevel.Public;
-			}
-			else if ((typeDefinitionNode.Modifiers & Modifiers.Private) == Modifiers.Private)
-			{
-				this.ProtectionLevel = EnumProtectionLevel.Private;
-			}
-			else if ((typeDefinitionNode.Modifiers & Modifiers.Protected) == Modifiers.Protected)
-			{
-				this.ProtectionLevel = EnumProtectionLevel.Protected;
-			}
-			else if ((typeDefinitionNode.Modifiers & Modifiers.Internal) == Modifiers.Internal)
-			{
-				this.ProtectionLevel = EnumProtectionLevel.Internal;
-			}
-			foreach (FieldDeclaration fieldNode in fieldList)
-			{
-				var fieldObjectList = CSField.Parse(fieldNode);
-				this.FieldList.AddRange(fieldObjectList);
-			}
-			var propertyList = typeDefinitionNode.Children.Where(i=>i is PropertyDeclaration);
-			foreach(PropertyDeclaration propertyNode in propertyList)
-			{
-				var propertyObject = CSProperty.Parse(propertyNode);
-				this.PropertyList.Add(propertyObject);
-			}
-			var attributeSectionList = typeDefinitionNode.Children.Where(i => i is AttributeSection);
-			foreach (AttributeSection attributeSectionNode in attributeSectionList)
-			{
-				foreach (var attributeNode in attributeSectionNode.Attributes)
-				{
-					var attribute = CSAttribute.Parse(attributeNode);
-					this.AttributeList.Add(attribute);
-				}
-			}
-			if (!this.FilePathList.Contains(filePath, StringComparer.CurrentCultureIgnoreCase))
-			{
-				this.FilePathList.Add(filePath);
-			}
-		}
 
 	}
 }
