@@ -209,7 +209,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 			var classObject = classList[0];
 			Assert.AreEqual(3, classObject.AttributeList.Count);
 
-			Assert.AreEqual("Test", classObject.AttributeList[0].TypeName);
+			Assert.AreEqual("TestAttribute1", classObject.AttributeList[0].TypeName);
 			Assert.IsNullOrEmpty(classObject.AttributeList[0].TypeNamespace);
 			Assert.AreEqual("TestAttribute1", classObject.AttributeList[0].TypeFullName);
 
