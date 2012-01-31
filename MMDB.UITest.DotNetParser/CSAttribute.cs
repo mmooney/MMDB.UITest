@@ -15,6 +15,13 @@ namespace MMDB.UITest.DotNetParser
 		}
 		public string TypeName { get; set; }
 		public string TypeNamespace { get; set; }
+		public string TypeFullName
+		{
+			get
+			{
+				return DotNetParserHelper.BuildFullName(this.TypeNamespace, this.TypeName);
+			}
+		}
 		public List<CSAttributeArgument> ArgumentList { get; set; }
 
 		public CSAttribute()
@@ -68,28 +75,44 @@ namespace MMDB.UITest.DotNetParser
 			return returnValue;
 		}
 
-		public string GetAttributeParameter(int ordinalPosition, string fieldName, bool required)
+		public object GetAttributeParameter(int ordinalPosition, string fieldName, bool required)
 		{
-			string returnValue = null;
+			object returnValue = null;
+			if(string.IsNullOrEmpty(fieldName))
+			{
+				throw new ArgumentNullException("fieldName required");
+			}
+			if(ordinalPosition < 0)
+			{
+				throw new ArgumentOutOfRangeException("ordinalPosition must be greater than 0");
+			}
+			else if (ordinalPosition >= this.ArgumentList.Count)
+			{
+				throw new ArgumentOutOfRangeException("ordinalPosition must be less than argument list count");
+			}
 			var argument = this.ArgumentList.SingleOrDefault(i=>i.ArgumentName == fieldName);
 			if(argument != null)
 			{
-				returnValue = Convert.ToString(argument.ArguementValue);
+				returnValue = argument.ArguementValue;
 			}
 			else 
 			{
 				if(this.ArgumentList.Count > ordinalPosition)
 				{
-					bool anyPrecedingNamedArguments = this.ArgumentList.Take(ordinalPosition).Any(i=>!string.IsNullOrEmpty(i.ArgumentName));
-					if(!anyPrecedingNamedArguments)
+					bool anyPrecedingOrCurrentNamedArguments = this.ArgumentList.Take(ordinalPosition+1).Any(i=>!string.IsNullOrEmpty(i.ArgumentName));
+					if (!anyPrecedingOrCurrentNamedArguments)
 					{
-						returnValue = Convert.ToString(this.ArgumentList[ordinalPosition].ArguementValue);
+						returnValue = this.ArgumentList[ordinalPosition].ArguementValue;
+					}
+					else if(required)
+					{
+						throw new ArgumentException(string.Format("Unable to load attribute parameter position \"{0}\" for attribute \"{1}\"", ordinalPosition, this.TypeName));
 					}
 				}
 			}
-			if(required && string.IsNullOrEmpty(returnValue))
+			if(required && returnValue == null)
 			{
-				throw new Exception(string.Format("Unable to load attribute parameter \"{0}\" for attribute \"{1}\"",fieldName,this.TypeName));
+				throw new ArgumentException(string.Format("Unable to load attribute parameter \"{0}\" for attribute \"{1}\"",fieldName,this.TypeName));
 			}
 			return returnValue;
 		}

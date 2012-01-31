@@ -51,5 +51,21 @@ namespace MMDB.UITest.DotNetParser
 			//}
 			//return returnValue;
 		}
+
+		public static string BuildFullName(string namespaceName, string className)
+		{
+			if(string.IsNullOrEmpty(namespaceName))
+			{
+				return className;
+			}
+			else if (string.IsNullOrEmpty(className))
+			{
+				throw new Exception("Class name cannot be null or empty");
+			}
+			else 
+			{
+				return string.Format("{0}.{1}", namespaceName, className);
+			}
+		}
 	}
 }

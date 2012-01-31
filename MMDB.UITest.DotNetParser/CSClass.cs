@@ -10,7 +10,15 @@ namespace MMDB.UITest.DotNetParser
 {
 	public class CSClass
 	{
-		public string ClassFullName { get; set; }
+		public string ClassName { get; set; }
+		public string NamespaceName { get; set; }
+		public string ClassFullName 
+		{
+			get 
+			{
+				return DotNetParserHelper.BuildFullName(this.NamespaceName, this.ClassName);
+			}
+		}
 		public EnumProtectionLevel ProtectionLevel { get; set; }
 		public List<string> FilePathList { get; set; }
 		public List<CSField> FieldList { get; set; }
@@ -32,7 +40,8 @@ namespace MMDB.UITest.DotNetParser
 		{
 			CSClass classObject = new CSClass
 			{
-				ClassFullName = namespaceNode.FullName + "." + typeDefinitionNode.Name
+				NamespaceName = namespaceNode.FullName,
+				ClassName = typeDefinitionNode.Name
 			};
 			classObject.Parse(typeDefinitionNode, filePath);
 			return classObject;	

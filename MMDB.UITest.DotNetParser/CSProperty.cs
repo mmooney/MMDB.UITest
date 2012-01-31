@@ -12,6 +12,14 @@ namespace MMDB.UITest.DotNetParser
 		public string PropertyName { get; set; }
 		public string TypeName { get; set; }
 		public string TypeNamespace { get; set; }
+		public string TypeFullName 
+		{ 
+			get
+			{
+				return DotNetParserHelper.BuildFullName(this.TypeNamespace, this.TypeName);
+			}
+		}
+
 		public List<CSAttribute> AttributeList { get; set; }
 
 		public CSProperty()

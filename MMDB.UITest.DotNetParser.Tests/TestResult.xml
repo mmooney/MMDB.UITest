@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\MMDB.UITest.DotNetParser.Tests.csproj" total="7" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-01-30" time="21:55:46">
+  <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.5448" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Projects\Vault\packages\NUnit.2.5.10.11092\tools" machine-name="MOONEYLAPTOP7" user="admin" user-domain="MOONEYLAPTOP7" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Project" name="C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\MMDB.UITest.DotNetParser.Tests.csproj" executed="True" result="Success" success="True" time="1.856" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\MMDB.UITest.DotNetParser.Tests.dll" executed="True" result="Success" success="True" time="1.841" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="MMDB" executed="True" result="Success" success="True" time="1.841" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="UITest" executed="True" result="Success" success="True" time="1.841" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="DotNetParser" executed="True" result="Success" success="True" time="1.840" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="1.840" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="ClassTests" executed="True" result="Success" success="True" time="1.838" asserts="0">
+                            <results>
+                              <test-case name="MMDB.UITest.DotNetParser.Tests.ClassTests.TestBasicClass" executed="True" result="Success" success="True" time="1.577" asserts="4" />
+                              <test-case name="MMDB.UITest.DotNetParser.Tests.ClassTests.TestClassAttributeParameters" executed="True" result="Success" success="True" time="0.173" asserts="50" />
+                              <test-case name="MMDB.UITest.DotNetParser.Tests.ClassTests.TestCompoundClassAttributes" executed="True" result="Success" success="True" time="0.005" asserts="11" />
+                              <test-case name="MMDB.UITest.DotNetParser.Tests.ClassTests.TestPropertyTypes" executed="True" result="Success" success="True" time="0.043" asserts="10" />
+                              <test-case name="MMDB.UITest.DotNetParser.Tests.ClassTests.TestSingleClassAttribute" executed="True" result="Success" success="True" time="0.001" asserts="5" />
+                              <test-case name="MMDB.UITest.DotNetParser.Tests.ClassTests.TestTwoClassAttributes" executed="True" result="Success" success="True" time="0.001" asserts="8" />
+                              <test-case name="MMDB.UITest.DotNetParser.Tests.ClassTests.TestTwoProperties" executed="True" result="Success" success="True" time="0.006" asserts="8" />
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

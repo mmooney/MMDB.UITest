@@ -16,9 +16,6 @@ namespace BugNetProxySample
 		{
 			using(var browser = new IE("http://localhost:59847/Default.aspx"))
 			{
-				using(var page = new _DefaultPageClient(browser))
-				{
-				}
 			}
 		}
 	}

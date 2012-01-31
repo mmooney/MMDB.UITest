@@ -1,0 +1,16 @@
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\MMDB.UITest.DotNetParser.Tests.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\MMDB.UITest.DotNetParser.Tests.pdb
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\MMDB.UITest.DotNetParser.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\nunit.framework.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\nunit.mocks.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\pnunit.framework.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\ICSharpCode.NRefactory.CSharp.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\ICSharpCode.NRefactory.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\Mono.Cecil.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\MMDB.UITest.DotNetParser.pdb
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\nunit.framework.xml
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\ICSharpCode.NRefactory.CSharp.xml
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\ICSharpCode.NRefactory.xml
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\obj\Debug\MMDB.UITest.DotNetParser.Tests.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\obj\Debug\MMDB.UITest.DotNetParser.Tests.pdb

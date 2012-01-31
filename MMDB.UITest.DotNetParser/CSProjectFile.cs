@@ -57,13 +57,13 @@ namespace MMDB.UITest.DotNetParser
 									if (node2 is TypeDeclaration)
 									{
 										var typeDefinitionNode = (TypeDeclaration)node2;
-										string fullTypeName = namespaceNode.FullName + "." + typeDefinitionNode.Name;
-										var classObject = returnValue.ClassList.SingleOrDefault(i=>i.ClassFullName == fullTypeName);
+										var classObject = returnValue.ClassList.SingleOrDefault(i => i.NamespaceName == namespaceNode.FullName && i.ClassName == typeDefinitionNode.Name);
 										if(classObject == null)
 										{
 											classObject = new CSClass
 											{
-												ClassFullName = fullTypeName
+												NamespaceName = namespaceNode.FullName,
+												ClassName = typeDefinitionNode.Name
 											};
 											returnValue.ClassList.Add(classObject);
 										}

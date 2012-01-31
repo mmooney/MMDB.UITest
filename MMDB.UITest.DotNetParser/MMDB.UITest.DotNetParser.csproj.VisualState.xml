@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="true">
+  <TopNode>[0-1000]C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser\MMDB.UITest.DotNetParser.csproj</TopNode>
+  <SelectedNode>[0-1000]C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser\MMDB.UITest.DotNetParser.csproj</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser\MMDB.UITest.DotNetParser.csproj" Expanded="true" />
+    <Node UniqueName="[0-1001]C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser\bin\Debug\MMDB.UITest.DotNetParser.dll" Expanded="true" />
+  </Nodes>
+</VisualState>
