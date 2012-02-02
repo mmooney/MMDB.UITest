@@ -14,3 +14,6 @@ C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug
 C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\obj\Debug\MMDB.UITest.DotNetParser.Tests.dll
 C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\obj\Debug\MMDB.UITest.DotNetParser.Tests.pdb
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\Moq.dll
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\Moq.pdb
+C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\Moq.xml

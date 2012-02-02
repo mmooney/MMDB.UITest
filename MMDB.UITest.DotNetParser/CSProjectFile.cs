@@ -24,11 +24,17 @@ namespace MMDB.UITest.DotNetParser
 			this.ClassList = new List<CSClass>();
 		}
 
-		public static CSProjectFile Parse(string projectFile)
+		public static CSProjectFile Parse(string projectFileName)
+		{
+			string data = File.ReadAllText(projectFileName);
+			return ParseString(data, projectFileName);
+		}
+
+		public static CSProjectFile ParseString(string data, string projectFilePath)
 		{
 			CSProjectFile returnValue = new CSProjectFile();
 			CSharpParser parser = new CSharpParser();
-			XDocument xdoc = XDocument.Load(projectFile);
+			XDocument xdoc = XDocument.Parse(data);
 			var rootNamespaceNode = xdoc.Descendants().FirstOrDefault(i=>i.Name.LocalName == "RootNamspace");
 			if(rootNamespaceNode != null)
 			{
@@ -36,13 +42,17 @@ namespace MMDB.UITest.DotNetParser
 			}
 			else 
 			{
-				returnValue.RootNamespace = Path.GetFileNameWithoutExtension(projectFile);
+				returnValue.RootNamespace = Path.GetFileNameWithoutExtension(projectFilePath);
 			}
 			var classFileList = GetFileList(xdoc, "Compile", ".cs");
 			foreach(var classFile in classFileList)
 			{
-				string filePath = Path.Combine(Path.GetDirectoryName(projectFile),classFile.FilePath);
-				if(File.Exists(filePath))
+				string filePath = Path.Combine(Path.GetDirectoryName(projectFilePath),classFile.FilePath);
+				if(!File.Exists(filePath))
+				{
+					throw new Exception("Class file not found: " + filePath);
+				}
+				else
 				{
 					using(var reader = new StreamReader(filePath))
 					{

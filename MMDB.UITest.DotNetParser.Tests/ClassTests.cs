@@ -552,5 +552,136 @@ namespace MMDB.UITest.DotNetParser.Tests
 			Assert.AreEqual("double", classObject.FieldList[3].TypeFullName);
 			Assert.IsNull(classObject.FieldList[3].FieldValue);
 		}
+
+		[Test]
+		public void UpdateExistingClass()
+		{
+			var existingClass1 = new CSClass()
+			{
+				ClassName = "TestClassLeaveAlone",
+				NamespaceName = "Test.Namespace",
+				PropertyList = new List<CSProperty>() 
+				{
+					new CSProperty {  TypeName = "int", PropertyName = "TestProperty1" },
+					new CSProperty {  TypeName = "int", PropertyName = "TestProperty2" }
+				},
+				FieldList = new List<CSField>()
+				{
+					new CSField {  TypeName = "int", FieldName = "TestField1" },
+					new CSField {  TypeName = "int", FieldName = "TestField2" }
+				}
+			};
+			var existingClass2 = new CSClass()
+			{
+				ClassName = "TestClassUpdate",
+				NamespaceName = "Test.Namespace",
+				PropertyList = new List<CSProperty>() 
+				{
+					new CSProperty {  TypeName = "int", PropertyName = "TestProperty1" },
+					new CSProperty {  TypeName = "int", PropertyName = "TestProperty2" }
+				},
+				FieldList = new List<CSField>()
+				{
+					new CSField {  TypeName = "int", FieldName = "TestField1" },
+					new CSField {  TypeName = "int", FieldName = "TestField2" }
+				}
+			};
+			List<CSClass> existingClassList = new List<CSClass>() { existingClass1, existingClass2 };
+			string data =
+			@"
+				using System;
+
+				namespace Test.Namespace
+				{
+					public class TestClassUpdate
+					{
+						public int TestProperty3 { get; set; }
+						public int TestProperty4 { get; set; }
+
+						public int TestField3;
+						public int TestField4;
+					}
+					public class TestClassNew
+					{
+						public int TestProperty1 { get; set; }
+						public int TestProperty2 { get; set; }
+
+						public int TestField1;
+						public int TestField2;
+					}
+				}
+			";
+			ClassParser parser = new ClassParser();
+			var newClassList = parser.ParseString(data, "TestFile.cs", existingClassList);
+
+			Assert.AreEqual(3, newClassList.Count);
+
+			var testClassLeaveAlone = newClassList[0];
+			Assert.AreEqual("Test.Namespace.TestClassLeaveAlone", testClassLeaveAlone.ClassFullName);
+			Assert.AreEqual(2, testClassLeaveAlone.PropertyList.Count);
+			Assert.AreEqual("TestProperty1", testClassLeaveAlone.PropertyList[0].PropertyName);
+			Assert.AreEqual("TestProperty2", testClassLeaveAlone.PropertyList[1].PropertyName);
+			Assert.AreEqual(2, testClassLeaveAlone.FieldList.Count);
+			Assert.AreEqual("TestField1", testClassLeaveAlone.FieldList[0].FieldName);
+			Assert.AreEqual("TestField2", testClassLeaveAlone.FieldList[1].FieldName);
+
+			var testClassUpdate = newClassList[1];
+			Assert.AreEqual("Test.Namespace.TestClassUpdate", testClassUpdate.ClassFullName);
+			Assert.AreEqual(4, testClassUpdate.PropertyList.Count);
+			Assert.AreEqual("TestProperty1", testClassUpdate.PropertyList[0].PropertyName);
+			Assert.AreEqual("TestProperty2", testClassUpdate.PropertyList[1].PropertyName);
+			Assert.AreEqual("TestProperty3", testClassUpdate.PropertyList[2].PropertyName);
+			Assert.AreEqual("TestProperty4", testClassUpdate.PropertyList[3].PropertyName);
+			Assert.AreEqual(4, testClassUpdate.FieldList.Count);
+			Assert.AreEqual("TestField1", testClassUpdate.FieldList[0].FieldName);
+			Assert.AreEqual("TestField2", testClassUpdate.FieldList[1].FieldName);
+			Assert.AreEqual("TestField3", testClassUpdate.FieldList[2].FieldName);
+			Assert.AreEqual("TestField4", testClassUpdate.FieldList[3].FieldName);
+
+			var testClassNew = newClassList[2];
+			Assert.AreEqual("Test.Namespace.TestClassNew", testClassNew.ClassFullName);
+			Assert.AreEqual(2, testClassNew.PropertyList.Count);
+			Assert.AreEqual("TestProperty1", testClassNew.PropertyList[0].PropertyName);
+			Assert.AreEqual("TestProperty2", testClassNew.PropertyList[1].PropertyName);
+			Assert.AreEqual(2, testClassNew.FieldList.Count);
+			Assert.AreEqual("TestField1", testClassNew.FieldList[0].FieldName);
+			Assert.AreEqual("TestField2", testClassNew.FieldList[1].FieldName);
+		}
+
+		[Test]
+		public void TestDependentUponFileList()
+		{
+			string data1 =
+			@"
+				using System;
+
+				namespace Test.Namespace
+				{
+					public class TestClass
+					{
+					}
+				}
+			";
+			string data2 =
+			@"
+				using System;
+
+				namespace Test.Namespace
+				{
+					public class TestClass
+					{
+					}
+				}
+			";
+			ClassParser parser = new ClassParser();
+			var classList = parser.ParseString(data1, "TestFile.cs", null, new string[] { "DependentUponFile1.cs", "DependentUponFile2.cs"});
+			classList = parser.ParseString(data2, "TestFile2.cs", classList, new string[] { "DependentUponFile3.cs" });
+
+			Assert.AreEqual(1, classList.Count);
+			Assert.AreEqual(3, classList[0].DependentUponFilePathList.Count);
+			Assert.AreEqual("DependentUponFile1.cs", classList[0].DependentUponFilePathList[0]);
+			Assert.AreEqual("DependentUponFile2.cs", classList[0].DependentUponFilePathList[1]);
+			Assert.AreEqual("DependentUponFile3.cs", classList[0].DependentUponFilePathList[2]);
+		}
 	}
 }

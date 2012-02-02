@@ -3,14 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ICSharpCode.NRefactory.CSharp;
+using System.IO;
 
 namespace MMDB.UITest.DotNetParser
 {
-	public class ClassParser
+	public class ClassParser : IClassParser
 	{
-		public List<CSClass> ParseString(string data, string fileName)
+		public List<CSClass> ParseFile(string filePath, IEnumerable<CSClass> existingClassList = null, IEnumerable<string> dependentUponFileList = null)
 		{
-			List<CSClass> returnValue = new List<CSClass>();
+			if(!File.Exists(filePath))
+			{
+				throw new Exception("Class file does not exist: " + filePath);
+			}
+			string data = File.ReadAllText(filePath);
+			return ParseString(data, filePath, existingClassList, dependentUponFileList);
+		}
+
+		public List<CSClass> ParseString(string data, string filePath, IEnumerable<CSClass> existingClassList = null, IEnumerable<string> dependentUponFileList = null)
+		{
+			string fileName = Path.GetFileName(filePath);
+			List<CSClass> returnValue = new List<CSClass>(existingClassList ?? new CSClass[]{} );
 			var parser = new CSharpParser();
 			var compilationUnit = parser.Parse(data, fileName);
 			var namespaceNodeList = compilationUnit.Children.Where(i=>i is NamespaceDeclaration);
@@ -19,13 +31,22 @@ namespace MMDB.UITest.DotNetParser
 				var typeDeclarationNodeList = namespaceNode.Children.Where(i=>i is TypeDeclaration);
 				foreach(TypeDeclaration typeDeclarationNode in typeDeclarationNodeList)
 				{
-					CSClass classObject = new CSClass
+					var classObject = returnValue.SingleOrDefault(i=>i.ClassName == typeDeclarationNode.Name && i.NamespaceName == namespaceNode.FullName);
+					if(classObject == null)
 					{
-						NamespaceName = namespaceNode.FullName,
-						ClassName = typeDeclarationNode.Name
-					};
+						classObject = new CSClass
+						{
+							NamespaceName = namespaceNode.FullName,
+							ClassName = typeDeclarationNode.Name
+						};
+						returnValue.Add(classObject);
+					}
 					ClassParser.BuildClass(classObject, typeDeclarationNode, fileName);
-					returnValue.Add(classObject);
+
+					if(dependentUponFileList != null)
+					{
+						classObject.DependentUponFilePathList.AddRange(dependentUponFileList);
+					}
 				}
 			}
 			return returnValue;

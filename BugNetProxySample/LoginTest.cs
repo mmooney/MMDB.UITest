@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using WatiN.Core;
-using BugNetProxySample.Client.Pages.BugNET;
 
 namespace BugNetProxySample
 {
