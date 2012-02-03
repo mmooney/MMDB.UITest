@@ -7,9 +7,9 @@ using System.IO;
 
 namespace MMDB.UITest.DotNetParser
 {
-	public class ClassParser : IClassParser
+	public class ClassParser 
 	{
-		public List<CSClass> ParseFile(string filePath, IEnumerable<CSClass> existingClassList = null, IEnumerable<string> dependentUponFileList = null)
+		public virtual List<CSClass> ParseFile(string filePath, IEnumerable<CSClass> existingClassList = null, IEnumerable<string> dependentUponFileList = null)
 		{
 			if(!File.Exists(filePath))
 			{
@@ -19,7 +19,7 @@ namespace MMDB.UITest.DotNetParser
 			return ParseString(data, filePath, existingClassList, dependentUponFileList);
 		}
 
-		public List<CSClass> ParseString(string data, string filePath, IEnumerable<CSClass> existingClassList = null, IEnumerable<string> dependentUponFileList = null)
+		public virtual List<CSClass> ParseString(string data, string filePath, IEnumerable<CSClass> existingClassList = null, IEnumerable<string> dependentUponFileList = null)
 		{
 			string fileName = Path.GetFileName(filePath);
 			List<CSClass> returnValue = new List<CSClass>(existingClassList ?? new CSClass[]{} );
@@ -45,7 +45,17 @@ namespace MMDB.UITest.DotNetParser
 
 					if(dependentUponFileList != null)
 					{
-						classObject.DependentUponFilePathList.AddRange(dependentUponFileList);
+						foreach(string dependentUponFilePath in dependentUponFileList)
+						{
+							if(!string.IsNullOrEmpty(dependentUponFilePath))
+							{
+								string relativeDependentUponFilePath = Path.Combine(Path.GetDirectoryName(filePath), dependentUponFilePath);
+								if (!classObject.DependentUponFilePathList.Contains(relativeDependentUponFilePath, StringComparer.CurrentCultureIgnoreCase))
+								{
+									classObject.DependentUponFilePathList.Add(relativeDependentUponFilePath);
+								}
+							}
+						}
 					}
 				}
 			}

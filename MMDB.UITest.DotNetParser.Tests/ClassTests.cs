@@ -674,14 +674,54 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			";
 			ClassParser parser = new ClassParser();
-			var classList = parser.ParseString(data1, "TestFile.cs", null, new string[] { "DependentUponFile1.cs", "DependentUponFile2.cs"});
-			classList = parser.ParseString(data2, "TestFile2.cs", classList, new string[] { "DependentUponFile3.cs" });
+			var classList = parser.ParseString(data1, "TestFile.cs", null, new string[] { "DependentUponFile1.cs", "DependentUponFile2.cs", "Duplicate.cs" });
+			classList = parser.ParseString(data2, "TestFile2.cs", classList, new string[] { "DependentUponFile3.cs", "Duplicate.cs" });
 
 			Assert.AreEqual(1, classList.Count);
-			Assert.AreEqual(3, classList[0].DependentUponFilePathList.Count);
+			Assert.AreEqual(4, classList[0].DependentUponFilePathList.Count);
 			Assert.AreEqual("DependentUponFile1.cs", classList[0].DependentUponFilePathList[0]);
 			Assert.AreEqual("DependentUponFile2.cs", classList[0].DependentUponFilePathList[1]);
-			Assert.AreEqual("DependentUponFile3.cs", classList[0].DependentUponFilePathList[2]);
+			Assert.AreEqual("Duplicate.cs", classList[0].DependentUponFilePathList[2]);
+			Assert.AreEqual("DependentUponFile3.cs", classList[0].DependentUponFilePathList[3]);
+		}
+
+		public void TestRelativeDependentUponFilePath()
+		{
+			string data1 =
+			@"
+				using System;
+
+				namespace Test.Namespace
+				{
+					public class TestClass1
+					{
+					}
+				}
+			";
+			string data2 =
+			@"
+				using System;
+
+				namespace Test.Namespace
+				{
+					public class TestClass2
+					{
+					}
+				}
+			";
+			ClassParser parser = new ClassParser();
+			var classList = parser.ParseString(data1, "C:\\Test\\TestDirectory\\TestClass1.cs", null, new string[] { "DependentUponFile1.cs" });
+			classList = parser.ParseString(data2, "C:\\Test\\TestDirectory1\\TestDirectory2\\TestClass2.cs", classList, new string[] { "DependentUponFile2.cs"});
+
+			Assert.AreEqual(2, classList.Count);
+
+			Assert.AreEqual("Test.Namespace.TestClass1", classList[0].ClassFullName);
+			Assert.AreEqual(1, classList[0].DependentUponFilePathList.Count);
+			Assert.AreEqual("C:\\Test\\TestDirectory\\DependentUponFile1.cs", classList[0].DependentUponFilePathList[0]);
+
+			Assert.AreEqual("Test.Namespace.TestClass2", classList[1].ClassFullName);
+			Assert.AreEqual(1, classList[1].DependentUponFilePathList.Count);
+			Assert.AreEqual("C:\\Test\\TestDirectory1\\TestDirectory2\\DependentUponFile2.cs", classList[1].DependentUponFilePathList[0]);
 		}
 	}
 }

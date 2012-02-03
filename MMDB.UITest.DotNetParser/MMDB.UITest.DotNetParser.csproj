@@ -70,7 +70,6 @@
     <Compile Include="CSProperty.cs" />
     <Compile Include="DotNetParserHelper.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="IClassParser.cs" />
     <Compile Include="ProjectParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

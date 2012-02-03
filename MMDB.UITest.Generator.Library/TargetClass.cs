@@ -84,7 +84,11 @@ namespace MMDB.UITest.Generator.Library
 			DotNetParserHelper.SplitType(sourcePage.ClassFullName, out sourceTypeName, out sourceTypeNamespace);
 
 			string relativeSourceNamespace;
-			if(sourceTypeNamespace.StartsWith(sourceProject.RootNamespace))
+			if(sourceTypeNamespace == sourceProject.RootNamespace)
+			{
+				relativeSourceNamespace = string.Empty;
+			}
+			else if(sourceTypeNamespace.StartsWith(sourceProject.RootNamespace))
 			{
 				relativeSourceNamespace = sourceTypeNamespace.Substring(sourceProject.RootNamespace.Length + 1);
 			}
@@ -199,8 +203,9 @@ namespace MMDB.UITest.Generator.Library
 						throw new UnknownEnumValueException(this.TargetObjectType);
 				}
 			}
-			CSProjectFile.EnsureFileInclude(targetProjectPath, this.UserFilePath, null);
-			CSProjectFile.EnsureFileInclude(targetProjectPath, this.DesignerFilePath, this.UserFilePath);
+			
+			ProjectParser.EnsureFileInclude(targetProjectPath, this.UserFilePath, null);
+			ProjectParser.EnsureFileInclude(targetProjectPath, this.DesignerFilePath, this.UserFilePath);
 		}
 
 		private void CreateWebPageFile(string designerFilePath)

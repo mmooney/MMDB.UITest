@@ -22,7 +22,8 @@ namespace MMDB.UITest.Generator.Library
 
 		public static TargetProject Load(string targetProjectPath)
 		{
-			CSProjectFile csProject = CSProjectFile.Parse(targetProjectPath);
+			ProjectParser parser = new ProjectParser();
+			CSProjectFile csProject = parser.ParseFile(targetProjectPath);
 			TargetProject returnValue = new TargetProject()
 			{
 				Directory = Path.GetDirectoryName(targetProjectPath),

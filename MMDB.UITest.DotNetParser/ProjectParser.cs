@@ -9,7 +9,7 @@ namespace MMDB.UITest.DotNetParser
 {
 	public class ProjectParser
 	{
-		private IClassParser ClassParser { get; set; }
+		private ClassParser ClassParser { get; set; }
 
 		private class CSProjectCompileElement
 		{
@@ -22,28 +22,36 @@ namespace MMDB.UITest.DotNetParser
 			this.ClassParser = new ClassParser();
 		}
 
-		public ProjectParser(IClassParser classParser)
+		public ProjectParser(ClassParser classParser)
 		{
 			this.ClassParser = classParser;
 		}
 
-		public CSProjectFile ParseString(string data, string projectFilePath)
+		public virtual CSProjectFile ParseFile(string projectFilePath)
 		{
+			string data = File.ReadAllText(projectFilePath);
+			return ParseString(data, projectFilePath);
+		}
+
+		public virtual CSProjectFile ParseString(string data, string projectFilePath)
+		{
+			string workingProjectFilePath = Path.GetFullPath(projectFilePath);
 			CSProjectFile returnValue = new CSProjectFile();
 			XDocument xdoc = XDocument.Parse(data);
-			var rootNamespaceNode = xdoc.Descendants().FirstOrDefault(i => i.Name.LocalName == "RootNamspace");
+			var rootNamespaceNode = xdoc.Descendants().FirstOrDefault(i => i.Name.LocalName == "RootNamespace");
 			if (rootNamespaceNode != null)
 			{
 				returnValue.RootNamespace = rootNamespaceNode.Value;
 			}
 			else
 			{
-				returnValue.RootNamespace = Path.GetFileNameWithoutExtension(projectFilePath);
+				returnValue.RootNamespace = Path.GetFileNameWithoutExtension(workingProjectFilePath);
 			}
 			var classFileList = GetFileList(xdoc, "Compile", ".cs");
 			foreach (var classFile in classFileList)
 			{
-				string filePath = Path.Combine(Path.GetDirectoryName(projectFilePath), classFile.FilePath);
+				string filePath = Path.Combine(Path.GetDirectoryName(workingProjectFilePath), classFile.FilePath);
+				filePath = Path.GetFullPath(filePath);
 				returnValue.ClassList = this.ClassParser.ParseFile(filePath, returnValue.ClassList, new string[] {classFile.DependentUponFilePath});
 			}
 			return returnValue;
@@ -66,5 +74,77 @@ namespace MMDB.UITest.DotNetParser
 			}
 			return returnValue;
 		}
+
+		public static void EnsureFileInclude(string projectPath, string includeFilePath, string dependentFilePath)
+		{
+			using(var stream = new FileStream(projectPath, FileMode.Open))
+			{
+				EnsureFileInclude(stream, projectPath, includeFilePath, dependentFilePath);
+			}
+		}
+
+		public static void EnsureFileInclude(Stream stream, string projectPath, string includeFilePath, string dependentFilePath)
+		{
+			string workingFilePath = includeFilePath;
+			if (workingFilePath.StartsWith(Path.GetDirectoryName(projectPath), StringComparison.CurrentCultureIgnoreCase))
+			{
+				workingFilePath = workingFilePath.Substring(Path.GetDirectoryName(projectPath).Length + 1);
+			}
+			string workingDependentFilePath = dependentFilePath;
+			if (!string.IsNullOrEmpty(workingDependentFilePath))
+			{
+				workingDependentFilePath = Path.GetFileName(workingDependentFilePath);
+			}
+
+			stream.Position = 0;
+			XDocument xdoc = XDocument.Load(stream);
+			bool anyChange = false;
+			var compileNode = xdoc.Descendants().SingleOrDefault(i => i.Name.LocalName == "Compile" && i.Attributes().Any(j => j.Name.LocalName == "Include" && string.Equals(j.Value, workingFilePath, StringComparison.CurrentCultureIgnoreCase)));
+			if (compileNode == null)
+			{
+				var itemGroupNode = xdoc.Descendants().Where(i => i.Name.LocalName == "ItemGroup").OrderByDescending(i => i.Descendants().Any(j => j.Name.LocalName == "Compile")).First();
+				if (itemGroupNode == null)
+				{
+					throw new Exception("Unable to find ItemGroup node");
+				}
+				compileNode = new XElement(XName.Get("Compile", itemGroupNode.Name.NamespaceName));
+				compileNode.Add(new XAttribute("Include", workingFilePath));
+				itemGroupNode.Add(compileNode);
+				anyChange = true;
+			}
+			var dependentUponNode = compileNode.Elements().SingleOrDefault(i => i.Name.LocalName == "DependentUpon");
+			if (dependentUponNode != null)
+			{
+				if (!string.IsNullOrEmpty(workingDependentFilePath))
+				{
+					if (!string.Equals(dependentUponNode.Value, workingDependentFilePath, StringComparison.CurrentCultureIgnoreCase))
+					{
+						dependentUponNode.Value = workingDependentFilePath;
+						anyChange = true;
+					}
+				}
+				else
+				{
+					dependentUponNode.Remove();
+					anyChange = true;
+				}
+			}
+			else
+			{
+				if (!string.IsNullOrEmpty(workingDependentFilePath))
+				{
+					dependentUponNode = new XElement(XName.Get("DependentUpon", compileNode.Name.NamespaceName));
+					dependentUponNode.Value = workingDependentFilePath;
+					compileNode.Add(dependentUponNode);
+					anyChange = true;
+				}
+			}
+			if (anyChange)
+			{
+				stream.Position = 0;
+				xdoc.Save(stream);
+			}
+		}
+
 	}
 }

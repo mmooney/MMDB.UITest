@@ -20,7 +20,8 @@ namespace MMDB.UITest.Generator.Library
             List<SourceWebPage> returnList = new List<SourceWebPage>();
             XDocument xdoc = XDocument.Load(csProjFilePath);
 
-            CSProjectFile csProject = CSProjectFile.Parse(csProjFilePath);
+			var projectParser = new ProjectParser();
+			CSProjectFile csProject = projectParser.ParseFile(csProjFilePath);
             project.RootNamespace = csProject.RootNamespace;
 
             foreach (var csClass in csProject.ClassList)
