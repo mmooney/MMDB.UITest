@@ -57,6 +57,7 @@
     <Compile Include="ClassTests.cs" />
     <Compile Include="ProjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlAssert.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MMDB.UITest.DotNetParser\MMDB.UITest.DotNetParser.csproj">

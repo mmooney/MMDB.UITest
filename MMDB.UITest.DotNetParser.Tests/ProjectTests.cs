@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Moq;
+using System.IO;
+using System.Xml.Linq;
 
 namespace MMDB.UITest.DotNetParser.Tests
 {
@@ -230,7 +232,105 @@ namespace MMDB.UITest.DotNetParser.Tests
 		[Test]
 		public void TestEnsureFileInclude()
 		{
-			Assert.Fail();
+			string data =
+			@"<?xml version=""1.0"" encoding=""utf-8""?>
+				<Project DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"" ToolsVersion=""4.0"">
+				</Project>
+			";
+			ProjectParser parser = new ProjectParser();
+			bool anyChange;
+			string actualResult = parser.EnsureFileInclude(data, "C:\\Test\\TestProject.csproj", "C:\\Test\\TestDirectory\\TestClass1.aspx.cs", "C:\\Test\\TestDirectory\\TestClass1.aspx", out anyChange);
+			Assert.IsTrue(anyChange);
+			string expectedResult =
+			@"<?xml version=""1.0"" encoding=""utf-8""?>
+				<Project DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"" ToolsVersion=""4.0"">
+					<ItemGroup>
+						<Compile Include=""TestDirectory\TestClass1.aspx.cs"">
+						  <DependentUpon>TestClass1.aspx</DependentUpon>
+						</Compile>
+					</ItemGroup>
+				</Project>
+			";
+			this.CompareXml(expectedResult, actualResult);
+		}
+
+		[Test]
+		public void TestEnsureFileIncludeRemoveDependentNode()
+		{
+			string data =
+			@"<?xml version=""1.0"" encoding=""utf-8""?>
+				<Project DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"" ToolsVersion=""4.0"">
+					<ItemGroup>
+						<Compile Include=""TestDirectory\TestClass1.aspx.cs"">
+						  <DependentUpon>SomethingElse.aspx</DependentUpon>
+						</Compile>
+					</ItemGroup>
+				</Project>
+			";
+			ProjectParser parser = new ProjectParser();
+			bool anyChange;
+			string actualResult = parser.EnsureFileInclude(data, "C:\\Test\\TestProject.csproj", "C:\\Test\\TestDirectory\\TestClass1.aspx.cs", null, out anyChange);
+			Assert.IsTrue(anyChange);
+			string expectedResult =
+			@"<?xml version=""1.0"" encoding=""utf-8""?>
+				<Project DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"" ToolsVersion=""4.0"">
+					<ItemGroup>
+						<Compile Include=""TestDirectory\TestClass1.aspx.cs""/>
+					</ItemGroup>
+				</Project>
+			";
+			this.CompareXml(expectedResult, actualResult);
+		}
+
+		[Test]
+		public void TestEnsureFileIncludeExistingDependentNode()
+		{
+			string data =
+			@"<?xml version=""1.0"" encoding=""utf-8""?>
+				<Project DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"" ToolsVersion=""4.0"">
+					<ItemGroup>
+						<Compile Include=""TestDirectory\TestClass1.aspx.cs"">
+						  <DependentUpon>SomethingElse.aspx</DependentUpon>
+						</Compile>
+					</ItemGroup>
+				</Project>
+			";
+			ProjectParser parser = new ProjectParser();
+			bool anyChange;
+			string actualResult = parser.EnsureFileInclude(data, "C:\\Test\\TestProject.csproj", "C:\\Test\\TestDirectory\\TestClass1.aspx.cs", "C:\\Test\\TestDirectory\\TestClass1.aspx", out anyChange);
+			Assert.IsTrue(anyChange);
+			string expectedResult =
+			@"<?xml version=""1.0"" encoding=""utf-8""?>
+				<Project DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"" ToolsVersion=""4.0"">
+					<ItemGroup>
+						<Compile Include=""TestDirectory\TestClass1.aspx.cs"">
+						  <DependentUpon>TestClass1.aspx</DependentUpon>
+						</Compile>
+					</ItemGroup>
+				</Project>
+			";
+			this.CompareXml(expectedResult, actualResult);
+		}
+
+		[Test]
+		public void TestEnsureFileIncludeInvalidProjectFile()
+		{
+			var data =
+			@"<?xml version=""1.0"" encoding=""utf-8""?>
+				<test>
+				</test>
+			";
+
+			ProjectParser parser = new ProjectParser();
+			bool anyChange;
+			Assert.Throws(typeof(InvalidDataException), ()=>{parser.EnsureFileInclude(data, "C:\\Test\\Test.csproj", "C:\\Test\\TestFile.aspx", null, out anyChange);});
+		} 
+
+		private void CompareXml(string expectedResult, string actualResult)
+		{
+			var expectedResultXml = XDocument.Parse(expectedResult);
+			var actualResultXml = XDocument.Parse(actualResult);
+			XmlAssert.AreEqual(expectedResultXml.Root, actualResultXml.Root);
 		}
 
 		private List<CSClass> AppendClassToList(IEnumerable<CSClass> inputClassList, CSClass classObject)

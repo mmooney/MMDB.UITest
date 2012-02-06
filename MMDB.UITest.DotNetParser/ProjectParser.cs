@@ -11,7 +11,7 @@ namespace MMDB.UITest.DotNetParser
 	{
 		private ClassParser ClassParser { get; set; }
 
-		private class CSProjectCompileElement
+		public class CSProjectDependency
 		{
 			public string FilePath { get; set; }
 			public string DependentUponFilePath { get; set; }
@@ -57,13 +57,13 @@ namespace MMDB.UITest.DotNetParser
 			return returnValue;
 		}
 
-		private static List<CSProjectCompileElement> GetFileList(XDocument xdoc, string elementName, string extension)
+		private static List<CSProjectDependency> GetFileList(XDocument xdoc, string elementName, string extension)
 		{
-			var returnValue = new List<CSProjectCompileElement>();
+			var returnValue = new List<CSProjectDependency>();
 			var nodes = xdoc.Descendants().Where(i => i.Name.LocalName == elementName && i.Attributes().Any(j => j.Name.LocalName == "Include" && j.Value.EndsWith(extension)));
 			foreach (var node in nodes)
 			{
-				var item = new CSProjectCompileElement();
+				var item = new CSProjectDependency();
 				item.FilePath = node.Attributes().Single(i => i.Name.LocalName == "Include").Value;
 				var dependentUponNode = node.Elements().SingleOrDefault(i=>i.Name.LocalName == "DependentUpon");
 				if(dependentUponNode != null)
@@ -75,15 +75,18 @@ namespace MMDB.UITest.DotNetParser
 			return returnValue;
 		}
 
-		public static void EnsureFileInclude(string projectPath, string includeFilePath, string dependentFilePath)
+		public void EnsureFileInclude(string projectPath, string includeFilePath, string dependentFilePath)
 		{
-			using(var stream = new FileStream(projectPath, FileMode.Open))
+			string data = File.ReadAllText(projectPath);
+			bool anyChange;
+			string result = EnsureFileInclude(data, projectPath, includeFilePath, dependentFilePath, out anyChange);
+			if(anyChange)
 			{
-				EnsureFileInclude(stream, projectPath, includeFilePath, dependentFilePath);
+				File.WriteAllText(projectPath, result);
 			}
 		}
 
-		public static void EnsureFileInclude(Stream stream, string projectPath, string includeFilePath, string dependentFilePath)
+		public string EnsureFileInclude(string data, string projectPath, string includeFilePath, string dependentFilePath, out bool anyChange)
 		{
 			string workingFilePath = includeFilePath;
 			if (workingFilePath.StartsWith(Path.GetDirectoryName(projectPath), StringComparison.CurrentCultureIgnoreCase))
@@ -96,16 +99,21 @@ namespace MMDB.UITest.DotNetParser
 				workingDependentFilePath = Path.GetFileName(workingDependentFilePath);
 			}
 
-			stream.Position = 0;
-			XDocument xdoc = XDocument.Load(stream);
-			bool anyChange = false;
+			XDocument xdoc = XDocument.Parse(data);
+			anyChange = false;
 			var compileNode = xdoc.Descendants().SingleOrDefault(i => i.Name.LocalName == "Compile" && i.Attributes().Any(j => j.Name.LocalName == "Include" && string.Equals(j.Value, workingFilePath, StringComparison.CurrentCultureIgnoreCase)));
 			if (compileNode == null)
 			{
-				var itemGroupNode = xdoc.Descendants().Where(i => i.Name.LocalName == "ItemGroup").OrderByDescending(i => i.Descendants().Any(j => j.Name.LocalName == "Compile")).First();
+				var itemGroupNode = xdoc.Descendants().Where(i => i.Name.LocalName == "ItemGroup").OrderByDescending(i => i.Descendants().Any(j => j.Name.LocalName == "Compile")).FirstOrDefault();
 				if (itemGroupNode == null)
 				{
-					throw new Exception("Unable to find ItemGroup node");
+					var projectNode = xdoc.Root;
+					if(projectNode.Name.LocalName != "Project")
+					{
+						throw new InvalidDataException("Cannot parse Project root node, found " + projectNode.Name.LocalName);
+					}
+					itemGroupNode = new XElement(XName.Get("ItemGroup", projectNode.Name.NamespaceName));
+					projectNode.Add(itemGroupNode);
 				}
 				compileNode = new XElement(XName.Get("Compile", itemGroupNode.Name.NamespaceName));
 				compileNode.Add(new XAttribute("Include", workingFilePath));
@@ -139,11 +147,7 @@ namespace MMDB.UITest.DotNetParser
 					anyChange = true;
 				}
 			}
-			if (anyChange)
-			{
-				stream.Position = 0;
-				xdoc.Save(stream);
-			}
+			return xdoc.ToString();
 		}
 
 	}

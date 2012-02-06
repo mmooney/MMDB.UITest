@@ -204,8 +204,9 @@ namespace MMDB.UITest.Generator.Library
 				}
 			}
 			
-			ProjectParser.EnsureFileInclude(targetProjectPath, this.UserFilePath, null);
-			ProjectParser.EnsureFileInclude(targetProjectPath, this.DesignerFilePath, this.UserFilePath);
+			ProjectParser parser = new ProjectParser();
+			parser.EnsureFileInclude(targetProjectPath, this.UserFilePath, null);
+			parser.EnsureFileInclude(targetProjectPath, this.DesignerFilePath, this.UserFilePath);
 		}
 
 		private void CreateWebPageFile(string designerFilePath)
