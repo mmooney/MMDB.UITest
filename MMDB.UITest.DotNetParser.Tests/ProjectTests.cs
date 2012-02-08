@@ -81,10 +81,6 @@ namespace MMDB.UITest.DotNetParser.Tests
 				PropertyList = new List<CSProperty>() 
 				{
 					new CSProperty { PropertyName = "TestProperty1", TypeName = "int" }
-				},
-				DependentUponFilePathList = new List<string>()
-				{
-					"TestClass1.aspx"
 				}
 			};
 			var testClass1SomethingElse = new CSClass()
@@ -94,10 +90,6 @@ namespace MMDB.UITest.DotNetParser.Tests
 				PropertyList = new List<CSProperty>() 
 				{
 					new CSProperty { PropertyName = "TestProperty2", TypeName = "int" }
-				},
-				DependentUponFilePathList = new List<string>()
-				{
-					"TestClass1.aspx"
 				}
 			};
 			var testClass2 = new CSClass()
@@ -107,10 +99,6 @@ namespace MMDB.UITest.DotNetParser.Tests
 				PropertyList = new List<CSProperty>()
 				{
 					new CSProperty { PropertyName = "TestProperty3", TypeName = "int" }
-				},
-				DependentUponFilePathList = new List<string>()
-				{
-					"TestClass2.aspx"
 				}
 			};
 			classList.Add(testClass1);
@@ -142,13 +130,21 @@ namespace MMDB.UITest.DotNetParser.Tests
 
 			Assert.AreEqual("Test.Test1.TestClass1", project.ClassList[0].ClassFullName);
 			Assert.AreEqual(2, project.ClassList[0].PropertyList.Count);
-			Assert.AreEqual(1, project.ClassList[0].DependentUponFilePathList.Count);
-			Assert.AreEqual("TestClass1.aspx", project.ClassList[0].DependentUponFilePathList[0]);
 
 			Assert.AreEqual("Test.Test2.TestClass2", project.ClassList[1].ClassFullName);
 			Assert.AreEqual(1, project.ClassList[1].PropertyList.Count);
-			Assert.AreEqual(1, project.ClassList[1].DependentUponFilePathList.Count);
-			Assert.AreEqual("TestClass2.aspx", project.ClassList[1].DependentUponFilePathList[0]);
+
+			Assert.AreEqual(2, project.ClassFileDependencyList.Count);
+
+			Assert.AreEqual("TestClass1", project.ClassFileDependencyList[0].ClassName);
+			Assert.AreEqual("Test.Test1", project.ClassFileDependencyList[0].NamespaceName);
+			Assert.AreEqual("Test.Test1.TestClass1", project.ClassFileDependencyList[0].ClassFullName);
+			Assert.AreEqual("TestClass1.aspx", project.ClassFileDependencyList[0].DependentUponFile);
+
+			Assert.AreEqual("TestClass2", project.ClassFileDependencyList[1].ClassName);
+			Assert.AreEqual("Test.Test2", project.ClassFileDependencyList[1].NamespaceName);
+			Assert.AreEqual("Test.Test2.TestClass2", project.ClassFileDependencyList[1].ClassFullName);
+			Assert.AreEqual("TestClass2.aspx", project.ClassFileDependencyList[1].DependentUponFile);
 		}
 
 		[Test] 
@@ -180,10 +176,6 @@ namespace MMDB.UITest.DotNetParser.Tests
 				PropertyList = new List<CSProperty>() 
 				{
 					new CSProperty { PropertyName = "TestProperty1", TypeName = "int" }
-				},
-				DependentUponFilePathList = new List<string>()
-				{
-					"TestDirectory\\TestClass1.aspx"
 				}
 			};
 			var testClass2 = new CSClass()
@@ -193,10 +185,6 @@ namespace MMDB.UITest.DotNetParser.Tests
 				PropertyList = new List<CSProperty>()
 				{
 					new CSProperty { PropertyName = "TestProperty3", TypeName = "int" }
-				},
-				DependentUponFilePathList = new List<string>()
-				{
-					"TestDirectory1\\TestDirectory2\\TestClass2.aspx"
 				}
 			};
 			classList.Add(testClass1);
@@ -221,12 +209,13 @@ namespace MMDB.UITest.DotNetParser.Tests
 			Assert.AreEqual(2, project.ClassList.Count);
 
 			Assert.AreEqual("Test.Test1.TestClass1", project.ClassList[0].ClassFullName);
-			Assert.AreEqual(1, project.ClassList[0].DependentUponFilePathList.Count);
-			Assert.AreEqual("TestDirectory\\TestClass1.aspx", project.ClassList[0].DependentUponFilePathList[0]);
-
 			Assert.AreEqual("Test.Test2.TestClass2", project.ClassList[1].ClassFullName);
-			Assert.AreEqual(1, project.ClassList[1].DependentUponFilePathList.Count);
-			Assert.AreEqual("TestDirectory1\\TestDirectory2\\TestClass2.aspx", project.ClassList[1].DependentUponFilePathList[0]);
+
+			Assert.AreEqual(2, project.ClassFileDependencyList.Count);
+			Assert.AreEqual("Test.Test1.TestClass1", project.ClassFileDependencyList[0].ClassFullName);
+			Assert.AreEqual("TestDirectory\\TestClass1.aspx", project.ClassFileDependencyList[0].DependentUponFile);
+			Assert.AreEqual("Test.Test2.TestClass2", project.ClassFileDependencyList[1].ClassFullName);
+			Assert.AreEqual("TestDirectory1\\TestDirectory2\\TestClass2.aspx", project.ClassFileDependencyList[1].DependentUponFile);
 		}
 
 		[Test]
@@ -344,7 +333,6 @@ namespace MMDB.UITest.DotNetParser.Tests
 			else 
 			{
 				existingClass.AttributeList = existingClass.AttributeList.Union(classObject.AttributeList).ToList();
-				existingClass.DependentUponFilePathList = existingClass.DependentUponFilePathList.Union(classObject.DependentUponFilePathList, StringComparer.CurrentCultureIgnoreCase).ToList();
 				existingClass.PropertyList = existingClass.PropertyList.Union(classObject.PropertyList).ToList();
 				existingClass.FieldList = existingClass.FieldList.Union(classObject.FieldList).ToList();
 			}

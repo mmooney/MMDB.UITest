@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassFileDependency.cs" />
     <Compile Include="ClassParser.cs" />
     <Compile Include="CSAttribute.cs" />
     <Compile Include="CSClass.cs" />

@@ -8,19 +8,17 @@ using System.Text.RegularExpressions;
 
 namespace MMDB.UITest.Generator.Library
 {
-	public class SourceWebPage : SourceContainer
+	public class SourceWebModelParser
 	{
-		public string PageUrl { get; set; }
-
-		public static SourceWebPage TryLoad(string sourceProjectPath, CSClass csClass)
+		public SourceWebPage TryLoad(string projectPath, CSClass classObject)
 		{
 			throw new NotImplementedException();
 			//SourceWebPage returnValue = null;
-			//string aspxFile = csClass.DependentUponFilePathList.SingleOrDefault(i => i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase));
+			//string aspxFile = classObject.DependentUponFilePathList.SingleOrDefault(i => i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase));
 			//if (aspxFile != null)
 			//{
 			//    string aspxData;
-			//    using (StreamReader reader = new StreamReader(Path.Combine(Path.GetDirectoryName(sourceProjectPath), aspxFile)))
+			//    using (StreamReader reader = new StreamReader(Path.Combine(Path.GetDirectoryName(projectPath), aspxFile)))
 			//    {
 			//        aspxData = reader.ReadToEnd();
 			//        ICSharpCode.NRefactory.CSharp.CSharpParser parser = new ICSharpCode.NRefactory.CSharp.CSharpParser();
@@ -32,15 +30,15 @@ namespace MMDB.UITest.Generator.Library
 			//    {
 			//        returnValue = new SourceMasterContentPage()
 			//        {
-			//            ClassFullName = csClass.ClassFullName,
-			//            MasterPageUrl = match.Groups[match.Groups.Count-1].Value
+			//            ClassFullName = classObject.ClassFullName,
+			//            MasterPageUrl = match.Groups[match.Groups.Count - 1].Value
 			//        };
 			//    }
 			//    else
 			//    {
 			//        returnValue = new SourceWebPage
 			//        {
-			//            ClassFullName = csClass.ClassFullName
+			//            ClassFullName = classObject.ClassFullName
 			//        };
 			//    }
 			//}

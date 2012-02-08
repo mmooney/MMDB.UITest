@@ -24,7 +24,6 @@ namespace MMDB.UITest.DotNetParser
 		public List<CSField> FieldList { get; set; }
 		public List<CSProperty> PropertyList { get; set; }
 		public List<CSAttribute> AttributeList { get; set; }
-		public List<string> DependentUponFilePathList { get; set; }
 
 
 		public CSClass()
@@ -33,7 +32,6 @@ namespace MMDB.UITest.DotNetParser
 			this.PropertyList = new List<CSProperty>();
 			this.FilePathList = new List<string>();
 			this.AttributeList = new List<CSAttribute>();
-			this.DependentUponFilePathList = new List<string>();
 		}
 
 

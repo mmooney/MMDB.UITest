@@ -42,21 +42,6 @@ namespace MMDB.UITest.DotNetParser
 						returnValue.Add(classObject);
 					}
 					ClassParser.BuildClass(classObject, typeDeclarationNode, fileName);
-
-					if(dependentUponFileList != null)
-					{
-						foreach(string dependentUponFilePath in dependentUponFileList)
-						{
-							if(!string.IsNullOrEmpty(dependentUponFilePath))
-							{
-								string relativeDependentUponFilePath = Path.Combine(Path.GetDirectoryName(filePath), dependentUponFilePath);
-								if (!classObject.DependentUponFilePathList.Contains(relativeDependentUponFilePath, StringComparer.CurrentCultureIgnoreCase))
-								{
-									classObject.DependentUponFilePathList.Add(relativeDependentUponFilePath);
-								}
-							}
-						}
-					}
 				}
 			}
 			return returnValue;
