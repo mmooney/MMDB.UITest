@@ -35,5 +35,10 @@ namespace MMDB.UITest.DotNetParser
 		}
 
 
+
+		public void Merge(CSClass newClass)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

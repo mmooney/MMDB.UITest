@@ -52,7 +52,30 @@ namespace MMDB.UITest.DotNetParser
 			{
 				string filePath = Path.Combine(Path.GetDirectoryName(workingProjectFilePath), classFile.FilePath);
 				filePath = Path.GetFullPath(filePath);
-				returnValue.ClassList = this.ClassParser.ParseFile(filePath, returnValue.ClassList, new string[] {classFile.DependentUponFilePath});
+				//ClassParser returns new class list
+				var newClassList = this.ClassParser.ParseFile(filePath, null);
+				//Then cycle trough and try to merge them, while building dependency list
+				foreach(var newClass in newClassList)
+				{
+					var existingClass = returnValue.ClassList.SingleOrDefault(i=>i.ClassFullName == newClass.ClassFullName);
+					if(existingClass != null)
+					{
+						existingClass.Merge(newClass);
+					}
+					else 
+					{
+						returnValue.ClassList.Add(newClass);
+					}
+				}
+				this.ClassParser.ParseFile(filePath, returnValue.ClassList, returnValue.ClassFileDependencyList);
+				if(!string.IsNullOrEmpty(classFile.DependentUponFilePath))
+				{
+					ClassFileDependency dependency = new ClassFileDependency()
+					{
+						ClassName = 
+					}
+					returnValue.ClassFileDependencyList.Add(classFile)
+				}
 			}
 			return returnValue;
 		}

@@ -33,6 +33,90 @@ namespace MMDB.UITest.DotNetParser.Tests
 		}		
 
 		[Test]
+		public void TestClassMerge()
+		{
+			var targetClass = new CSClass()
+			{
+				ClassName = "TestClass",
+				NamespaceName = "Test.Namespace",
+				AttributeList = new List<CSAttribute>()
+				{
+					new CSAttribute { TypeName = "TestAttribute1" },
+					new CSAttribute 
+					{ 
+						TypeName = "TestAttribute2", ArgumentList = new List<CSAttribute.CSAttributeArgument>() 
+						{ 
+							new CSAttribute.CSAttributeArgument
+							{
+								ArgumentName = "TestArgumentName",
+								ArguementValue = "TestArgumentValue"
+							}
+						}
+					}
+				},
+				PropertyList = new List<CSProperty>() 
+				{
+					new CSProperty {  TypeName = "int", PropertyName = "TestProperty1" },
+					new CSProperty {  TypeName = "int", PropertyName = "TestProperty2" }
+				},
+				FieldList = new List<CSField>()
+				{
+					new CSField {  TypeName = "int", FieldName = "TestField1" },
+					new CSField {  TypeName = "int", FieldName = "TestField2" }
+				}
+			};
+			var newClass = new CSClass()
+			{
+				ClassName = "TestClass",
+				NamespaceName = "Test.Namespace",
+				AttributeList = new List<CSAttribute>()
+				{
+					new CSAttribute { TypeName = "TestAttribute3" }
+				},
+				PropertyList = new List<CSProperty>() 
+				{
+					new CSProperty {  TypeName = "int", PropertyName = "TestProperty3" },
+				},
+				FieldList = new List<CSField>()
+				{
+					new CSField {  TypeName = "int", FieldName = "TestField3" },
+				}
+			};
+			var wrongClass = new CSClass()
+			{
+				ClassName = "TestClass2",
+				NamespaceName = "Test.Namespace",
+				PropertyList = new List<CSProperty>() 
+				{
+					new CSProperty {  TypeName = "int", PropertyName = "TestProperty1" },
+					new CSProperty {  TypeName = "int", PropertyName = "TestProperty2" }
+				},
+				FieldList = new List<CSField>()
+				{
+					new CSField {  TypeName = "int", FieldName = "TestField1" },
+					new CSField {  TypeName = "int", FieldName = "TestField2" }
+				}
+			};
+
+			Assert.Throws(typeof(ArgumentException), delegate { targetClass.Merge(wrongClass); });
+
+			targetClass.Merge(newClass);
+			Assert.AreEqual("Test.Namespace.TestClass", targetClass.ClassFullName);
+
+			Assert.AreEqual(3, targetClass.AttributeList.Count);
+			Assert.AreEqual("TestAttribute1", targetClass.AttributeList[0].TypeFullName);
+			Assert.AreEqual(0, targetClass.AttributeList[0].ArgumentList.Count);
+			Assert.AreEqual("TestAttribute2", targetClass.AttributeList[1].TypeFullName);
+			Assert.AreEqual(1, targetClass.AttributeList[1].ArgumentList.Count);
+			Assert.AreEqual("TestArgumentName", targetClass.AttributeList[1].ArgumentList[0].ArgumentName);
+			Assert.AreEqual("TestArgumentValue", targetClass.AttributeList[1].ArgumentList[0].ArguementValue);
+			Assert.AreEqual("TestAttribute3", targetClass.AttributeList[2].TypeFullName);
+			Assert.AreEqual(0, targetClass.AttributeList[2].ArgumentList.Count);
+
+			Assert.AreEqual(
+		}
+
+		[Test]
 		public void TestClassProtectionLevel()
 		{
 			string data =

@@ -9,17 +9,17 @@ namespace MMDB.UITest.DotNetParser
 {
 	public class ClassParser 
 	{
-		public virtual List<CSClass> ParseFile(string filePath, IEnumerable<CSClass> existingClassList = null, IEnumerable<string> dependentUponFileList = null)
+		public virtual List<CSClass> ParseFile(string filePath, IEnumerable<CSClass> existingClassList = null)
 		{
 			if(!File.Exists(filePath))
 			{
 				throw new Exception("Class file does not exist: " + filePath);
 			}
 			string data = File.ReadAllText(filePath);
-			return ParseString(data, filePath, existingClassList, dependentUponFileList);
+			return ParseString(data, filePath, existingClassList);
 		}
 
-		public virtual List<CSClass> ParseString(string data, string filePath, IEnumerable<CSClass> existingClassList = null, IEnumerable<string> dependentUponFileList = null)
+		public virtual List<CSClass> ParseString(string data, string filePath, IEnumerable<CSClass> existingClassList = null)
 		{
 			string fileName = Path.GetFileName(filePath);
 			List<CSClass> returnValue = new List<CSClass>(existingClassList ?? new CSClass[]{} );

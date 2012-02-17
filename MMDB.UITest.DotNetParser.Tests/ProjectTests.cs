@@ -38,7 +38,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 				NamespaceName = "Test.Test1"
 			};
 			classList.Add(testClass1);
-			classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.cs", It.IsAny<IEnumerable<CSClass>>(), It.IsAny<IEnumerable<string>>())).Returns(classList);
+			classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.cs", It.IsAny<IEnumerable<CSClass>>())).Returns(classList);
 
 			ProjectParser parser = new ProjectParser(classParser.Object);
 
@@ -102,23 +102,23 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			};
 			classList.Add(testClass1);
-			classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.cs", It.IsAny<IEnumerable<CSClass>>(), It.IsAny<IEnumerable<string>>()))
+			classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.cs", It.IsAny<IEnumerable<CSClass>>()))
 						.Returns
 						(
-							(string filePath, IEnumerable<CSClass> inputClassList, IEnumerable<string> inputDependentUponFileList)
+							(string filePath, IEnumerable<CSClass> inputClassList)
 								=>AppendClassToList(inputClassList, testClass1)
 						);
-			classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.SomethingElse.cs", It.IsAny<IEnumerable<CSClass>>(), It.IsAny<IEnumerable<string>>()))
+			classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.SomethingElse.cs", It.IsAny<IEnumerable<CSClass>>()))
 						.Returns
 						(
-							(string filePath, IEnumerable<CSClass> inputClassList, IEnumerable<string> inputDependentUponFileList)
+							(string filePath, IEnumerable<CSClass> inputClassList)
 								=> AppendClassToList(inputClassList, testClass1SomethingElse)
 						);
 
-			classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass2.aspx.cs", It.IsAny<IEnumerable<CSClass>>(), It.IsAny<IEnumerable<string>>()))
+			classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass2.aspx.cs", It.IsAny<IEnumerable<CSClass>>()))
 						.Returns
 						(
-							(string filePath, IEnumerable<CSClass> inputClassList, IEnumerable<string> inputDependentUponFileList)
+							(string filePath, IEnumerable<CSClass> inputClassList)
 								=> AppendClassToList(inputClassList, testClass2)
 						);
 
@@ -188,17 +188,17 @@ namespace MMDB.UITest.DotNetParser.Tests
 				}
 			};
 			classList.Add(testClass1);
-			classParser.Setup(i => i.ParseFile("C:\\Test\\TestDirectory\\TestClass1.aspx.cs", It.IsAny<IEnumerable<CSClass>>(), It.IsAny<IEnumerable<string>>()))
+			classParser.Setup(i => i.ParseFile("C:\\Test\\TestDirectory\\TestClass1.aspx.cs", It.IsAny<IEnumerable<CSClass>>()))
 						.Returns
 						(
-							(string filePath, IEnumerable<CSClass> inputClassList, IEnumerable<string> inputDependentUponFileList)
+							(string filePath, IEnumerable<CSClass> inputClassList)
 								=> AppendClassToList(inputClassList, testClass1)
 						);
 
-			classParser.Setup(i => i.ParseFile("C:\\Test\\TestDirectory1\\TestDirectory2\\TestClass2.aspx.cs", It.IsAny<IEnumerable<CSClass>>(), It.IsAny<IEnumerable<string>>()))
+			classParser.Setup(i => i.ParseFile("C:\\Test\\TestDirectory1\\TestDirectory2\\TestClass2.aspx.cs", It.IsAny<IEnumerable<CSClass>>()))
 						.Returns
 						(
-							(string filePath, IEnumerable<CSClass> inputClassList, IEnumerable<string> inputDependentUponFileList)
+							(string filePath, IEnumerable<CSClass> inputClassList)
 								=> AppendClassToList(inputClassList, testClass2)
 						);
 

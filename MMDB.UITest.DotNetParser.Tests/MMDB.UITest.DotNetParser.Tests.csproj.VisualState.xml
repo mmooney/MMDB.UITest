@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="true">
+  <TopNode>[0-1000]C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\MMDB.UITest.DotNetParser.Tests.csproj</TopNode>
+  <SelectedNode>[0-1000]C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\MMDB.UITest.DotNetParser.Tests.csproj</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\MMDB.UITest.DotNetParser.Tests.csproj" Expanded="true" />
+    <Node UniqueName="[0-1024]C:\Users\admin\Dropbox\Code\MMDB.UITest\MMDB.UITest.DotNetParser.Tests\bin\Debug\MMDB.UITest.DotNetParser.Tests.dll" Expanded="true" />
+    <Node UniqueName="[0-1025]MMDB" Expanded="true" />
+    <Node UniqueName="[0-1026]MMDB.UITest" Expanded="true" />
+    <Node UniqueName="[0-1027]MMDB.UITest.DotNetParser" Expanded="true" />
+    <Node UniqueName="[0-1028]MMDB.UITest.DotNetParser.Tests" Expanded="true" />
+    <Node UniqueName="[0-1009]MMDB.UITest.DotNetParser.Tests.ClassTests" Expanded="true" />
+    <Node UniqueName="[0-1001]MMDB.UITest.DotNetParser.Tests.ProjectTests" Expanded="true" />
+  </Nodes>
+</VisualState>
