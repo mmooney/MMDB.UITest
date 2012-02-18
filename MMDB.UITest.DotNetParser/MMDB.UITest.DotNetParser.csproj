@@ -55,6 +55,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.RegularExpressions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +74,10 @@
     <Compile Include="Enums.cs" />
     <Compile Include="ProjectParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebForms\IWebFormsNode.cs" />
+    <Compile Include="WebForms\WebFormFile.cs" />
+    <Compile Include="WebForms\WebFormParser.cs" />
+    <Compile Include="WebForms\WebFormsNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
