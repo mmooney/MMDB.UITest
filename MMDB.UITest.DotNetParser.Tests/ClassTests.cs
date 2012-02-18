@@ -113,7 +113,15 @@ namespace MMDB.UITest.DotNetParser.Tests
 			Assert.AreEqual("TestAttribute3", targetClass.AttributeList[2].TypeFullName);
 			Assert.AreEqual(0, targetClass.AttributeList[2].ArgumentList.Count);
 
-			Assert.AreEqual(
+			Assert.AreEqual(3, targetClass.PropertyList.Count);
+			Assert.AreEqual("TestProperty1", targetClass.PropertyList[0].PropertyName);
+			Assert.AreEqual("TestProperty2", targetClass.PropertyList[1].PropertyName);
+			Assert.AreEqual("TestProperty3", targetClass.PropertyList[2].PropertyName);
+
+			Assert.AreEqual(3, targetClass.FieldList.Count);
+			Assert.AreEqual("TestField1", targetClass.FieldList[0].FieldName);
+			Assert.AreEqual("TestField2", targetClass.FieldList[1].FieldName);
+			Assert.AreEqual("TestField3", targetClass.FieldList[2].FieldName);
 		}
 
 		[Test]

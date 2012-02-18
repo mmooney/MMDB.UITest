@@ -66,15 +66,21 @@ namespace MMDB.UITest.DotNetParser
 					{
 						returnValue.ClassList.Add(newClass);
 					}
-				}
-				this.ClassParser.ParseFile(filePath, returnValue.ClassList, returnValue.ClassFileDependencyList);
-				if(!string.IsNullOrEmpty(classFile.DependentUponFilePath))
-				{
-					ClassFileDependency dependency = new ClassFileDependency()
+					if(!string.IsNullOrEmpty(classFile.DependentUponFilePath))
 					{
-						ClassName = 
+						var anyDependency = returnValue.ClassFileDependencyList.Any(i=>i.ClassFullName == newClass.ClassFullName
+																						&& i.DependentUponFile.Equals(classFile.DependentUponFilePath, StringComparison.CurrentCultureIgnoreCase));
+						if(!anyDependency)
+						{
+							var newDepdendency = new ClassFileDependency()
+							{
+								ClassName = newClass.ClassName,
+								NamespaceName = newClass.NamespaceName,
+								DependentUponFile = classFile.DependentUponFilePath
+							};
+							returnValue.ClassFileDependencyList.Add(newDepdendency);
+						}
 					}
-					returnValue.ClassFileDependencyList.Add(classFile)
 				}
 			}
 			return returnValue;
@@ -91,7 +97,13 @@ namespace MMDB.UITest.DotNetParser
 				var dependentUponNode = node.Elements().SingleOrDefault(i=>i.Name.LocalName == "DependentUpon");
 				if(dependentUponNode != null)
 				{
-					item.DependentUponFilePath = dependentUponNode.Value;
+					string relativeDirectory = Path.GetDirectoryName(item.FilePath);
+					string dependentUponPath = dependentUponNode.Value;
+					if(!string.IsNullOrEmpty(relativeDirectory))
+					{
+						dependentUponPath = Path.Combine(relativeDirectory, dependentUponNode.Value);
+					}
+					item.DependentUponFilePath = dependentUponPath;
 				}
 				returnValue.Add(item);
 			}

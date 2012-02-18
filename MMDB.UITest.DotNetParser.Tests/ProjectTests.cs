@@ -324,6 +324,10 @@ namespace MMDB.UITest.DotNetParser.Tests
 
 		private List<CSClass> AppendClassToList(IEnumerable<CSClass> inputClassList, CSClass classObject)
 		{
+			if(inputClassList == null)
+			{
+				inputClassList = new List<CSClass>();
+			}
 			var newList = new List<CSClass>(inputClassList??new CSClass[]{});
 			var existingClass = inputClassList.SingleOrDefault(i=>i.ClassFullName == classObject.ClassFullName);
 			if(existingClass == null)

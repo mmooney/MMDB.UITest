@@ -35,10 +35,15 @@ namespace MMDB.UITest.DotNetParser
 		}
 
 
-
 		public void Merge(CSClass newClass)
 		{
-			throw new NotImplementedException();
+			if(newClass.ClassFullName != this.ClassFullName)
+			{
+				throw new ArgumentException(string.Format("Class names do not match, expected \"{0}\", found \"{1}\"", this.ClassFullName, newClass.ClassFullName));
+			}
+			this.AttributeList.AddRange(newClass.AttributeList);
+			this.PropertyList.AddRange(newClass.PropertyList);
+			this.FieldList.AddRange(newClass.FieldList);
 		}
 	}
 }
