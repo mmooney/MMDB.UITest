@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A8B12C
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telerik.RazorConverter", "razor-converter\Telerik.RazorConverter\Telerik.RazorConverter.csproj", "{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebApplication", "TestWebApplication\TestWebApplication.csproj", "{280944F9-2A27-41BA-AC65-B8AC04B219F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +105,26 @@ Global
 		{C9C60C43-4C98-4C04-BF54-3654BF975358}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C9C60C43-4C98-4C04-BF54-3654BF975358}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C9C60C43-4C98-4C04-BF54-3654BF975358}.Release|x86.ActiveCfg = Release|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{88630458-D5BE-43B0-A7FB-BC0DFE6CB62E}.Release|x86.ActiveCfg = Release|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{280944F9-2A27-41BA-AC65-B8AC04B219F7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
