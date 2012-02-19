@@ -7,12 +7,19 @@ using System.Web.RegularExpressions;
 using Telerik.RazorConverter.WebForms.Parsing;
 using Telerik.RazorConverter.WebForms.Filters;
 using Telerik.RazorConverter.WebForms.DOM;
+using System.IO;
 
 namespace MMDB.UITest.DotNetParser.WebForms
 {
 	public class CSWebFormParser
 	{
-		public WebFormContainer ParseString(string input)
+		public virtual WebFormContainer ParseFile(string filePath)
+		{
+			string data = File.ReadAllText(filePath);
+			return this.ParseString(data);
+		}
+
+		public virtual WebFormContainer ParseString(string input)
 		{
 			WebFormContainer returnValue;
 			var nodeFactory = new WebFormsNodeFactory();
@@ -33,13 +40,17 @@ namespace MMDB.UITest.DotNetParser.WebForms
 			};
 			if (directiveNode.Attributes.ContainsKey("page"))
 			{
-				returnValue.ContainerType = WebFormContainer.EnumWebFormContainerType.WebPage;
+				returnValue.ContainerType = EnumWebFormContainerType.WebPage;
 			}
 			else if (directiveNode.Attributes.ContainsKey("master"))
 			{
-				returnValue.ContainerType = WebFormContainer.EnumWebFormContainerType.MasterPage;
+				returnValue.ContainerType = EnumWebFormContainerType.MasterPage;
 			}
-			else 
+			else if(directiveNode.Attributes.ContainsKey("control"))
+			{
+				returnValue.ContainerType = EnumWebFormContainerType.UserControl;
+			}
+			else
 			{
 				throw new Exception("Unrecognized directive");
 			}
@@ -57,7 +68,8 @@ namespace MMDB.UITest.DotNetParser.WebForms
 			{
 				"asp:panel"
 			};
-			if(controlNode.Attributes.ContainsKey("id"))
+			string newPrefix = prefix ?? string.Empty;
+			if (controlNode.Attributes.ContainsKey("id"))
 			{
 				var controlItem = new WebFormServerControl
 				{
@@ -66,11 +78,10 @@ namespace MMDB.UITest.DotNetParser.WebForms
 					Prefix = prefix
 				};
 				container.Controls.Add(controlItem);
-			}
-			string newPrefix = prefix ?? string.Empty;
-			if(prependingTagNames.Contains(controlItem.TagName, StringComparer.CurrentCultureIgnoreCase))
-			{
-				newPrefix += controlItem.ControlID + "_";
+				if (prependingTagNames.Contains(controlItem.TagName, StringComparer.CurrentCultureIgnoreCase))
+				{
+					newPrefix += controlItem.ControlID + "_";
+				}
 			}
 			var childControlNodeList = controlNode.Children.Where(i=>i is ServerControlNode);
 			foreach(ServerControlNode childControlNode in childControlNodeList)
@@ -78,5 +89,6 @@ namespace MMDB.UITest.DotNetParser.WebForms
 				this.LoadControl(childControlNode, container, newPrefix);
 			}
 		}
+
 	}
 }

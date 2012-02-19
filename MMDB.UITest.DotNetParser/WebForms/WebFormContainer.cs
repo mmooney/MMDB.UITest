@@ -5,16 +5,16 @@ using System.Text;
 
 namespace MMDB.UITest.DotNetParser.WebForms
 {
+	public enum EnumWebFormContainerType
+	{
+		Unknown,
+		WebPage,
+		MasterPage,
+		UserControl
+	}
+
 	public class WebFormContainer
 	{
-		public enum EnumWebFormContainerType
-		{
-			Unknown,
-			WebPage,
-			MasterPage,
-			UserControl
-		}
-
 		public List<WebFormServerControl> Controls { get; set; }
 		public EnumWebFormContainerType ContainerType { get; set; }
 		public string CodeBehindFile { get; set; }

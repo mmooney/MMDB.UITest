@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.IO;
+using MMDB.UITest.DotNetParser.WebForms;
 
 namespace MMDB.UITest.DotNetParser
 {
 	public class ProjectParser
 	{
 		private ClassParser ClassParser { get; set; }
+		private CSWebFormParser WebFormParser { get; set; }
 
 		public class CSProjectDependency
 		{
@@ -17,14 +19,10 @@ namespace MMDB.UITest.DotNetParser
 			public string DependentUponFilePath { get; set; }
 		}
 
-		public ProjectParser()
+		public ProjectParser(ClassParser classParser = null, CSWebFormParser webFormParser = null )
 		{
-			this.ClassParser = new ClassParser();
-		}
-
-		public ProjectParser(ClassParser classParser)
-		{
-			this.ClassParser = classParser;
+			this.ClassParser = classParser ?? new ClassParser();
+			this.WebFormParser = webFormParser ?? new CSWebFormParser();
 		}
 
 		public virtual CSProjectFile ParseFile(string projectFilePath)
@@ -83,13 +81,27 @@ namespace MMDB.UITest.DotNetParser
 					}
 				}
 			}
+			var contentFileList = GetFileList(xdoc, "Content", new string[] {".aspx", ".ascx", ".master" });
+			foreach(var contentFile in contentFileList)
+			{
+				string filePath = Path.Combine(Path.GetDirectoryName(workingProjectFilePath), contentFile.FilePath);
+				filePath = Path.GetFullPath(filePath);
+				//ClassParser returns new class list
+				var webFormContainer = this.WebFormParser.ParseFile(filePath);
+				returnValue.WebFormContainers.Add(webFormContainer);
+			}
 			return returnValue;
 		}
 
 		private static List<CSProjectDependency> GetFileList(XDocument xdoc, string elementName, string extension)
 		{
+			return GetFileList(xdoc, elementName, new string[] { extension });
+		}
+
+		private static List<CSProjectDependency> GetFileList(XDocument xdoc, string elementName, string[] extensionList)
+		{
 			var returnValue = new List<CSProjectDependency>();
-			var nodes = xdoc.Descendants().Where(i => i.Name.LocalName == elementName && i.Attributes().Any(j => j.Name.LocalName == "Include" && j.Value.EndsWith(extension)));
+			var nodes = xdoc.Descendants().Where(i => i.Name.LocalName == elementName && i.Attributes().Any(j => j.Name.LocalName == "Include" && extensionList.Contains(Path.GetExtension(j.Value), StringComparer.CurrentCultureIgnoreCase)));
 			foreach (var node in nodes)
 			{
 				var item = new CSProjectDependency();

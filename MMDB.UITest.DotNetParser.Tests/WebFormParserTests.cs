@@ -32,7 +32,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 			Assert.IsNotNull(result);
 			Assert.AreEqual("TestWebApplication.SimplePage", result.ClassFullName);
 			Assert.AreEqual("SimplePage.aspx.cs", result.CodeBehindFile);
-			Assert.AreEqual(WebFormContainer.EnumWebFormContainerType.WebPage, result.ContainerType);
+			Assert.AreEqual(EnumWebFormContainerType.WebPage, result.ContainerType);
 			Assert.AreEqual(3, result.Controls.Count);
 
 			Assert.AreEqual("form", result.Controls[0].TagName);
@@ -178,7 +178,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 			var result = parser.ParseString(data);
 			Assert.AreEqual("TestMasterPage.master.cs", result.CodeBehindFile);
 			Assert.AreEqual("TestWebApplication.TestMasterPage", result.ClassFullName);
-			Assert.AreEqual(WebFormContainer.EnumWebFormContainerType.MasterPage, result.ContainerType);
+			Assert.AreEqual(EnumWebFormContainerType.MasterPage, result.ContainerType);
 		}
 
 		[Test]
@@ -194,15 +194,27 @@ namespace MMDB.UITest.DotNetParser.Tests
 			";
 			var parser = new CSWebFormParser();
 			var result = parser.ParseString(data);
-			Assert.AreEqual(WebFormContainer.EnumWebFormContainerType.UserControl, result.ContainerType);
+			Assert.AreEqual(EnumWebFormContainerType.UserControl, result.ContainerType);
 			Assert.AreEqual("SimpleUserControl.ascx.cs", result.CodeBehindFile);
 			Assert.AreEqual("TestWebApplication.SimpleUserControl", result.ClassFullName);
 
 			Assert.AreEqual(4, result.Controls.Count);
-			
+
 			Assert.AreEqual("asp:Label", result.Controls[0].TagName);
 			Assert.AreEqual("_lblTest1", result.Controls[0].ControlID);
 			Assert.IsNullOrEmpty(result.Controls[0].Prefix);
+
+			Assert.AreEqual("asp:TextBox", result.Controls[1].TagName);
+			Assert.AreEqual("_txtTest1", result.Controls[1].ControlID);
+			Assert.IsNullOrEmpty(result.Controls[1].Prefix);
+
+			Assert.AreEqual("asp:Label", result.Controls[2].TagName);
+			Assert.AreEqual("_lblTest2", result.Controls[2].ControlID);
+			Assert.IsNullOrEmpty(result.Controls[2].Prefix);
+
+			Assert.AreEqual("asp:TextBox", result.Controls[3].TagName);
+			Assert.AreEqual("_txtTest2", result.Controls[3].ControlID);
+			Assert.IsNullOrEmpty(result.Controls[3].Prefix);
 		}
 
 		[Test]

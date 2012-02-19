@@ -59,6 +59,7 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="SimplePage.aspx" />
+    <Content Include="SimpleUserControl.ascx" />
     <Content Include="Styles\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -126,6 +127,13 @@
     </Compile>
     <Compile Include="SimplePage.aspx.designer.cs">
       <DependentUpon>SimplePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleUserControl.ascx.cs">
+      <DependentUpon>SimpleUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SimpleUserControl.ascx.designer.cs">
+      <DependentUpon>SimpleUserControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

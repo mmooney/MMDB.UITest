@@ -18,6 +18,14 @@ namespace MMDB.UITest.DotNetParser
 			{
 				return DotNetParserHelper.BuildFullName(this.NamespaceName, this.ClassName);
 			}
+			set 
+			{
+				string className;
+				string namespaceName;
+				DotNetParserHelper.SplitType(value, out className, out namespaceName);
+				this.ClassName = className;
+				this.NamespaceName = namespaceName;
+			}
 		}
 		public EnumProtectionLevel ProtectionLevel { get; set; }
 		public List<string> FilePathList { get; set; }
