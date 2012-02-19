@@ -30,6 +30,9 @@ namespace MMDB.UITest.DotNetParser.Tests
 			var parser = new CSWebFormParser();
 			var result = parser.ParseString(data);
 			Assert.IsNotNull(result);
+			Assert.AreEqual("TestWebApplication.SimplePage", result.ClassFullName);
+			Assert.AreEqual("SimplePage.aspx.cs", result.CodeBehindFile);
+			Assert.AreEqual(WebFormContainer.EnumWebFormContainerType.WebPage, result.ContainerType);
 			Assert.AreEqual(3, result.Controls.Count);
 
 			Assert.AreEqual("form", result.Controls[0].TagName);
@@ -145,8 +148,61 @@ namespace MMDB.UITest.DotNetParser.Tests
 			Assert.AreEqual("_pnlPanel1__pnlPanel2_", result.Controls[5].Prefix);
 
 			Assert.AreEqual("asp:Label", result.Controls[6].TagName);
-			Assert.AreEqual("_lblOutside1", result.Controls[6].ControlID);
+			Assert.AreEqual("_lblOutside2", result.Controls[6].ControlID);
 			Assert.IsNullOrEmpty(result.Controls[6].Prefix);
+		}
+
+		[Test]
+		public void TestMasterPage()
+		{
+			string data = 
+			@"
+				<%@ Master Language=""C#"" AutoEventWireup=""true"" CodeBehind=""TestMasterPage.master.cs"" Inherits=""TestWebApplication.TestMasterPage"" %>
+				<html xmlns=""http://www.w3.org/1999/xhtml"">
+				<head runat=""server"">
+					<title></title>
+					<asp:ContentPlaceHolder ID=""head"" runat=""server"">
+					</asp:ContentPlaceHolder>
+				</head>
+				<body>
+					<form id=""form1"" runat=""server"">
+					<div>
+						<asp:ContentPlaceHolder ID=""ContentPlaceHolder1"" runat=""server"">
+						</asp:ContentPlaceHolder>
+					</div>
+					</form>
+				</body>
+				</html>
+			";
+			var parser = new CSWebFormParser();
+			var result = parser.ParseString(data);
+			Assert.AreEqual("TestMasterPage.master.cs", result.CodeBehindFile);
+			Assert.AreEqual("TestWebApplication.TestMasterPage", result.ClassFullName);
+			Assert.AreEqual(WebFormContainer.EnumWebFormContainerType.MasterPage, result.ContainerType);
+		}
+
+		[Test]
+		public void TestUserControl()
+		{
+			string data = 
+			@"
+				<%@ Control Language=""C#"" AutoEventWireup=""true"" CodeBehind=""SimpleUserControl.ascx.cs"" Inherits=""TestWebApplication.SimpleUserControl"" %>
+				<asp:Label ID=""_lblTest1"" runat=""server""/>
+				<asp:TextBox ID=""_txtTest1"" runat=""server"" />
+				<asp:Label ID=""_lblTest2"" runat=""server""/>
+				<asp:TextBox ID=""_txtTest2"" runat=""server"" />
+			";
+			var parser = new CSWebFormParser();
+			var result = parser.ParseString(data);
+			Assert.AreEqual(WebFormContainer.EnumWebFormContainerType.UserControl, result.ContainerType);
+			Assert.AreEqual("SimpleUserControl.ascx.cs", result.CodeBehindFile);
+			Assert.AreEqual("TestWebApplication.SimpleUserControl", result.ClassFullName);
+
+			Assert.AreEqual(4, result.Controls.Count);
+			
+			Assert.AreEqual("asp:Label", result.Controls[0].TagName);
+			Assert.AreEqual("_lblTest1", result.Controls[0].ControlID);
+			Assert.IsNullOrEmpty(result.Controls[0].Prefix);
 		}
 
 		[Test]

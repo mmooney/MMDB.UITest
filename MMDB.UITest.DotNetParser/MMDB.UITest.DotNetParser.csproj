@@ -76,9 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForms\CSWebFormParser.cs" />
     <Compile Include="WebForms\WebFormContainer.cs" />
-    <Compile Include="WebForms\WebFormPage.cs" />
     <Compile Include="WebForms\WebFormServerControl.cs" />
-    <Compile Include="WebForms\WebFormUserControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
