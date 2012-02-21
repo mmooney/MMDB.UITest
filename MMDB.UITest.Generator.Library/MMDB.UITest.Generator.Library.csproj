@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="AspxDefinition.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="SourceUserControl.cs" />
     <Compile Include="SourceWebModelParser.cs" />
     <Compile Include="TargetClass.cs" />
     <Compile Include="TargetControlGenerator.cs" />

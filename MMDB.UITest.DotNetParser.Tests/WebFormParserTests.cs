@@ -28,11 +28,13 @@ namespace MMDB.UITest.DotNetParser.Tests
 				</html>
 			";
 			var parser = new CSWebFormParser();
-			var result = parser.ParseString(data);
+			var result = parser.ParseString(data, "C:\\Test\\Test.aspx");
 			Assert.IsNotNull(result);
 			Assert.AreEqual("TestWebApplication.SimplePage", result.ClassFullName);
 			Assert.AreEqual("SimplePage.aspx.cs", result.CodeBehindFile);
 			Assert.AreEqual(EnumWebFormContainerType.WebPage, result.ContainerType);
+			Assert.AreEqual("C:\\Test\\Test.aspx", result.FilePath);
+
 			Assert.AreEqual(3, result.Controls.Count);
 
 			Assert.AreEqual("form", result.Controls[0].TagName);
@@ -70,8 +72,10 @@ namespace MMDB.UITest.DotNetParser.Tests
 				</html>
 			";
 			var parser = new CSWebFormParser();
-			var result = parser.ParseString(data);
+			var result = parser.ParseString(data, "C:\\Test\\Test.aspx");
 			Assert.IsNotNull(result);
+			Assert.AreEqual("C:\\Test\\Test.aspx", result.FilePath);
+
 			Assert.AreEqual(5, result.Controls.Count);
 
 			Assert.AreEqual("form", result.Controls[0].TagName);
@@ -119,8 +123,10 @@ namespace MMDB.UITest.DotNetParser.Tests
 				</html>
 			";
 			var parser = new CSWebFormParser();
-			var result = parser.ParseString(data);
+			var result = parser.ParseString(data, "C:\\Test\\Test.aspx");
 			Assert.IsNotNull(result);
+			Assert.AreEqual("C:\\Test\\Test.aspx", result.FilePath);
+
 			Assert.AreEqual(7, result.Controls.Count);
 
 			Assert.AreEqual("form", result.Controls[0].TagName);
@@ -175,10 +181,11 @@ namespace MMDB.UITest.DotNetParser.Tests
 				</html>
 			";
 			var parser = new CSWebFormParser();
-			var result = parser.ParseString(data);
+			var result = parser.ParseString(data, "C\\Test\\Test.Master");
 			Assert.AreEqual("TestMasterPage.master.cs", result.CodeBehindFile);
 			Assert.AreEqual("TestWebApplication.TestMasterPage", result.ClassFullName);
 			Assert.AreEqual(EnumWebFormContainerType.MasterPage, result.ContainerType);
+			Assert.AreEqual("C\\Test\\Test.Master", result.FilePath);
 		}
 
 		[Test]
@@ -193,10 +200,11 @@ namespace MMDB.UITest.DotNetParser.Tests
 				<asp:TextBox ID=""_txtTest2"" runat=""server"" />
 			";
 			var parser = new CSWebFormParser();
-			var result = parser.ParseString(data);
+			var result = parser.ParseString(data, "C\\Test\\Test.ascx");
 			Assert.AreEqual(EnumWebFormContainerType.UserControl, result.ContainerType);
 			Assert.AreEqual("SimpleUserControl.ascx.cs", result.CodeBehindFile);
 			Assert.AreEqual("TestWebApplication.SimpleUserControl", result.ClassFullName);
+			Assert.AreEqual("C\\Test\\Test.ascx", result.FilePath);
 
 			Assert.AreEqual(4, result.Controls.Count);
 
@@ -222,7 +230,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 		{
 			string data = "this data is noooo gooooood";
 			var parser = new CSWebFormParser();
-			Assert.Throws(typeof(ArgumentException), delegate { parser.ParseString(data); });
+			Assert.Throws(typeof(ArgumentException), delegate { parser.ParseString(data, "C\\Test\\Test.aspx"); });
 		}
 	}
 }

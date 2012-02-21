@@ -5,14 +5,73 @@ using System.Text;
 using MMDB.UITest.DotNetParser;
 using System.IO;
 using System.Text.RegularExpressions;
+using MMDB.UITest.DotNetParser.WebForms;
 
 namespace MMDB.UITest.Generator.Library
 {
 	public class SourceWebModelParser
 	{
-		public SourceWebPage TryLoad(string projectPath, CSClass classObject)
+		private ProjectParser ProjectParser { get; set; }
+
+		public SourceWebModelParser(ProjectParser projectParser = null)
 		{
-			throw new NotImplementedException();
+			this.ProjectParser = projectParser ?? new ProjectParser();
+		}
+
+		public SourceWebProject LoadFile(string projectFilePath)
+		{
+			string data = File.ReadAllText(projectFilePath);
+			return this.LoadString(data, projectFilePath);
+		}
+
+		public SourceWebProject LoadString(string projectFileData, string projectFilePath)
+		{
+			var csProject = this.ProjectParser.ParseString(projectFileData, projectFilePath);
+			SourceWebProject returnValue = new SourceWebProject()
+			{
+				RootNamespace = csProject.RootNamespace
+			};
+			var webPageList = csProject.WebFormContainers.Where(i=>i.ContainerType == EnumWebFormContainerType.WebPage);
+			foreach(var webPage in webPageList)
+			{
+				SourceWebPage sourceWebPage = new SourceWebPage()
+				{
+					ClassFullName = webPage.ClassFullName,
+					PageUrl = ConvertToUrl(webPage.FilePath, projectFilePath)
+				};
+				returnValue.WebPageList.Add(sourceWebPage);
+			}
+			var masterPageList = csProject.WebFormContainers.Where(i=>i.ContainerType == EnumWebFormContainerType.MasterPage);
+			foreach(var masterPage in masterPageList)
+			{
+				SourceMasterPage sourceMasterPage = new SourceMasterPage()
+				{
+					ClassFullName = masterPage.ClassFullName,
+					PageUrl = ConvertToUrl(masterPage.FilePath, projectFilePath)
+				};
+				returnValue.MasterPageList.Add(sourceMasterPage);
+			}
+			var userControlList = csProject.WebFormContainers.Where(i=>i.ContainerType == EnumWebFormContainerType.UserControl);
+			foreach(var userControl in userControlList)
+			{
+				SourceUserControl sourceUserControl = new SourceUserControl()
+				{
+					ClassFullName = userControl.ClassFullName
+				};
+				returnValue.UserControlList.Add(sourceUserControl);
+			}
+			return returnValue;
+		}
+
+		private string ConvertToUrl(string filePath, string projectFilePath)
+		{
+			string projectDirectory = Path.GetDirectoryName(projectFilePath);
+			string relativeFilePath = filePath.Replace(projectDirectory, "");
+			return relativeFilePath.Replace("\\","/");
+		}
+
+		public void DummyFunction()
+		{
 			//SourceWebPage returnValue = null;
 			//string aspxFile = classObject.DependentUponFilePathList.SingleOrDefault(i => i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase));
 			//if (aspxFile != null)

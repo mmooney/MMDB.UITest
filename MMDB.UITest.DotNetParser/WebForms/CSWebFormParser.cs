@@ -16,10 +16,10 @@ namespace MMDB.UITest.DotNetParser.WebForms
 		public virtual WebFormContainer ParseFile(string filePath)
 		{
 			string data = File.ReadAllText(filePath);
-			return this.ParseString(data);
+			return this.ParseString(data, filePath);
 		}
 
-		public virtual WebFormContainer ParseString(string input)
+		public virtual WebFormContainer ParseString(string input, string filePath)
 		{
 			WebFormContainer returnValue;
 			var nodeFactory = new WebFormsNodeFactory();
@@ -36,7 +36,8 @@ namespace MMDB.UITest.DotNetParser.WebForms
 			returnValue = new WebFormContainer
 			{
 				CodeBehindFile = directiveNode.Attributes["codebehind"],
-				ClassFullName = directiveNode.Attributes["inherits"]
+				ClassFullName = directiveNode.Attributes["inherits"],
+				FilePath = filePath
 			};
 			if (directiveNode.Attributes.ContainsKey("page"))
 			{

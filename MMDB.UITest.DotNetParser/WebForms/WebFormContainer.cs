@@ -17,6 +17,7 @@ namespace MMDB.UITest.DotNetParser.WebForms
 	{
 		public List<WebFormServerControl> Controls { get; set; }
 		public EnumWebFormContainerType ContainerType { get; set; }
+		public string FilePath { get; set; }
 		public string CodeBehindFile { get; set; }
 		public string ClassName { get; set; }
 		public string NamespaceName { get; set; }
@@ -40,6 +41,7 @@ namespace MMDB.UITest.DotNetParser.WebForms
 		{
 			this.Controls = new List<WebFormServerControl>();
 		}
+
 
 	}
 }
