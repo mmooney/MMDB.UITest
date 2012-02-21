@@ -34,12 +34,17 @@ namespace MMDB.UITest.Generator.Library
 			var webPageList = csProject.WebFormContainers.Where(i=>i.ContainerType == EnumWebFormContainerType.WebPage);
 			foreach(var webPage in webPageList)
 			{
-				SourceWebPage sourceWebPage = new SourceWebPage()
+				var csClass = csProject.ClassList.SingleOrDefault(i=>i.ClassFullName == webPage.ClassFullName);
+				if(csClass != null)
 				{
-					ClassFullName = webPage.ClassFullName,
-					PageUrl = ConvertToUrl(webPage.FilePath, projectFilePath)
-				};
-				returnValue.WebPageList.Add(sourceWebPage);
+					SourceWebPage sourceWebPage = new SourceWebPage()
+					{
+						ClassFullName = webPage.ClassFullName,
+						PageUrl = ConvertToUrl(webPage.FilePath, projectFilePath),
+						Controls = LoadControls(webPage, csClass)
+					};
+					returnValue.WebPageList.Add(sourceWebPage);
+				}
 			}
 			var masterPageList = csProject.WebFormContainers.Where(i=>i.ContainerType == EnumWebFormContainerType.MasterPage);
 			foreach(var masterPage in masterPageList)
@@ -61,6 +66,25 @@ namespace MMDB.UITest.Generator.Library
 				returnValue.UserControlList.Add(sourceUserControl);
 			}
 			return returnValue;
+		}
+
+		private List<SourceWebControl> LoadControls(WebFormContainer webPage, CSClass csClass)
+		{
+			List<SourceWebControl> returnList = new List<SourceWebControl>();
+			foreach(var serverControl in webPage.Controls)
+			{
+				var classField = csClass.FieldList.SingleOrDefault(i=>i.FieldName == serverControl.ControlID);
+				if(classField != null)
+				{
+					SourceWebControl sourceWebControl = new SourceWebControl
+					{
+						ClassFullName = classField.TypeFullName,
+						FieldName = classField.FieldName
+					};
+					returnList.Add(sourceWebControl);
+				}
+			}
+			return returnList;
 		}
 
 		private string ConvertToUrl(string filePath, string projectFilePath)

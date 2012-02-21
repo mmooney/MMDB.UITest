@@ -18,6 +18,14 @@ namespace MMDB.UITest.DotNetParser
 			{
 				return DotNetParserHelper.BuildFullName(this.TypeNamespace, this.TypeName);
 			}
+			set 
+			{
+				string typeName;
+				string typeNamespace;
+				DotNetParserHelper.SplitType(value, out typeName, out typeNamespace);
+				this.TypeName = typeName;
+				this.TypeNamespace = typeNamespace;
+			}
 		}
 		public List<CSAttribute> AttributeList { get; set; }
 		public object FieldValue { get; set; }

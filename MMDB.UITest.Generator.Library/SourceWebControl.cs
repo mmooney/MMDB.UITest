@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MMDB.UITest.DotNetParser;
 
 namespace MMDB.UITest.Generator.Library
 {
@@ -15,7 +16,15 @@ namespace MMDB.UITest.Generator.Library
 		{ 
 			get
 			{
-				return this.NamespaceName + "." + this.ClassName;
+				return DotNetParserHelper.BuildFullName(this.NamespaceName, this.ClassName);
+			}
+			set 
+			{
+				string className;
+				string namespaceName;
+				DotNetParserHelper.SplitType(value, out className, out namespaceName);
+				this.ClassName = className;
+				this.NamespaceName = namespaceName;	
 			}
 		}
 	}
