@@ -161,7 +161,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 		[Test]
 		public void TestMasterPage()
 		{
-			string data = 
+			string data =
 			@"
 				<%@ Master Language=""C#"" AutoEventWireup=""true"" CodeBehind=""TestMasterPage.master.cs"" Inherits=""TestWebApplication.TestMasterPage"" %>
 				<html xmlns=""http://www.w3.org/1999/xhtml"">
@@ -175,6 +175,10 @@ namespace MMDB.UITest.DotNetParser.Tests
 					<div>
 						<asp:ContentPlaceHolder ID=""ContentPlaceHolder1"" runat=""server"">
 						</asp:ContentPlaceHolder>
+						<asp:Panel id=""_pnlTest"" runat=""server"">
+							<asp:ContentPlaceHolder ID=""ContentPlaceHolder2"" runat=""server"">
+							</asp:ContentPlaceHolder>
+						</asp:Panel>
 					</div>
 					</form>
 				</body>
@@ -186,6 +190,28 @@ namespace MMDB.UITest.DotNetParser.Tests
 			Assert.AreEqual("TestWebApplication.TestMasterPage", result.ClassFullName);
 			Assert.AreEqual(EnumWebFormContainerType.MasterPage, result.ContainerType);
 			Assert.AreEqual("C\\Test\\Test.Master", result.FilePath);
+			
+			Assert.AreEqual(5, result.Controls.Count);
+		
+			Assert.AreEqual("asp:ContentPlaceHolder", result.Controls[0].TagName);
+			Assert.AreEqual("head", result.Controls[0].ControlID);
+			Assert.IsNullOrEmpty(result.Controls[0].Prefix);
+
+			Assert.AreEqual("form", result.Controls[1].TagName);
+			Assert.AreEqual("form1", result.Controls[1].ControlID);
+			Assert.IsNullOrEmpty(result.Controls[1].Prefix);
+
+			Assert.AreEqual("asp:ContentPlaceHolder", result.Controls[2].TagName);
+			Assert.AreEqual("ContentPlaceHolder1", result.Controls[2].ControlID);
+			Assert.IsNullOrEmpty(result.Controls[2].Prefix);
+
+			Assert.AreEqual("asp:Panel", result.Controls[3].TagName);
+			Assert.AreEqual("_pnlTest", result.Controls[3].ControlID);
+			Assert.IsNullOrEmpty(result.Controls[3].Prefix);
+
+			Assert.AreEqual("asp:ContentPlaceHolder", result.Controls[4].TagName);
+			Assert.AreEqual("ContentPlaceHolder2", result.Controls[4].ControlID);
+			Assert.AreEqual("_pnlTest_", result.Controls[4].Prefix);
 		}
 
 		[Test]

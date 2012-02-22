@@ -18,24 +18,17 @@ namespace MMDB.UITest.Generator.Library
 			this.ProjectParser = projectParser ?? new ProjectParser();
 		}
 
-		public SourceWebProject LoadFile(string projectFilePath)
+		public SourceWebProject LoadFromProjectFile(CSProjectFile csProject, string projectFilePath)
 		{
-			string data = File.ReadAllText(projectFilePath);
-			return this.LoadString(data, projectFilePath);
-		}
-
-		public SourceWebProject LoadString(string projectFileData, string projectFilePath)
-		{
-			var csProject = this.ProjectParser.ParseString(projectFileData, projectFilePath);
 			SourceWebProject returnValue = new SourceWebProject()
 			{
 				RootNamespace = csProject.RootNamespace
 			};
-			var webPageList = csProject.WebFormContainers.Where(i=>i.ContainerType == EnumWebFormContainerType.WebPage);
-			foreach(var webPage in webPageList)
+			var webPageList = csProject.WebFormContainers.Where(i => i.ContainerType == EnumWebFormContainerType.WebPage);
+			foreach (var webPage in webPageList)
 			{
-				var csClass = csProject.ClassList.SingleOrDefault(i=>i.ClassFullName == webPage.ClassFullName);
-				if(csClass != null)
+				var csClass = csProject.ClassList.SingleOrDefault(i => i.ClassFullName == webPage.ClassFullName);
+				if (csClass != null)
 				{
 					SourceWebPage sourceWebPage = new SourceWebPage()
 					{
@@ -46,8 +39,8 @@ namespace MMDB.UITest.Generator.Library
 					returnValue.WebPageList.Add(sourceWebPage);
 				}
 			}
-			var masterPageList = csProject.WebFormContainers.Where(i=>i.ContainerType == EnumWebFormContainerType.MasterPage);
-			foreach(var masterPage in masterPageList)
+			var masterPageList = csProject.WebFormContainers.Where(i => i.ContainerType == EnumWebFormContainerType.MasterPage);
+			foreach (var masterPage in masterPageList)
 			{
 				SourceMasterPage sourceMasterPage = new SourceMasterPage()
 				{
@@ -56,12 +49,14 @@ namespace MMDB.UITest.Generator.Library
 				};
 				returnValue.MasterPageList.Add(sourceMasterPage);
 			}
-			var userControlList = csProject.WebFormContainers.Where(i=>i.ContainerType == EnumWebFormContainerType.UserControl);
-			foreach(var userControl in userControlList)
+			var userControlList = csProject.WebFormContainers.Where(i => i.ContainerType == EnumWebFormContainerType.UserControl);
+			foreach (var userControl in userControlList)
 			{
+				var csClass = csProject.ClassList.SingleOrDefault(i => i.ClassFullName == userControl.ClassFullName);
 				SourceUserControl sourceUserControl = new SourceUserControl()
 				{
-					ClassFullName = userControl.ClassFullName
+					ClassFullName = userControl.ClassFullName,
+					Controls = LoadControls(userControl, csClass)
 				};
 				returnValue.UserControlList.Add(sourceUserControl);
 			}
@@ -79,7 +74,7 @@ namespace MMDB.UITest.Generator.Library
 					SourceWebControl sourceWebControl = new SourceWebControl
 					{
 						ClassFullName = classField.TypeFullName,
-						FieldName = classField.FieldName
+						FieldName = (serverControl.Prefix??string.Empty) + classField.FieldName
 					};
 					returnList.Add(sourceWebControl);
 				}

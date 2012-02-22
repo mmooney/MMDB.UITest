@@ -38,10 +38,8 @@ namespace MMDB.UITest.Generator.Tests
 					new ClassFileDependency { ClassFullName="Test1.TestUserControl", DependentUponFile="TestUserControl.ascx" }
 				}
 			};
-			Mock<ProjectParser> projectParser = new Mock<ProjectParser>(null,null);
-			projectParser.Setup(i=>i.ParseString(It.IsAny<string>(), It.IsAny<string>())).Returns(projectFile);
-			SourceWebModelParser parser = new SourceWebModelParser(projectParser.Object);
-			SourceWebProject result = parser.LoadString(string.Empty, "C:\\Test\\Test.csproj");
+			SourceWebModelParser parser = new SourceWebModelParser();
+			SourceWebProject result = parser.LoadFromProjectFile(projectFile, "C:\\Test\\Test.csproj");
 			Assert.IsNotNull(result);
 			Assert.AreEqual(projectFile.RootNamespace, result.RootNamespace);
 			
@@ -60,7 +58,6 @@ namespace MMDB.UITest.Generator.Tests
 		[Test]
 		public void BasicPageControls()
 		{
-			var projectParser = new Mock<ProjectParser>(null,null);
 			CSProjectFile projectFile = new CSProjectFile()
 			{
 				ClassList = new List<CSClass>()
@@ -95,9 +92,8 @@ namespace MMDB.UITest.Generator.Tests
 					new ClassFileDependency { ClassFullName="Test1.TestClass1", DependentUponFile="TestClass.aspx"}
 				}
 			};
-			projectParser.Setup(i=>i.ParseString(It.IsAny<string>(), It.IsAny<string>())).Returns(projectFile);
-			var parser = new SourceWebModelParser(projectParser.Object);
-			var result = parser.LoadString(string.Empty, "C:\\Test\\Test.csproj");
+			var parser = new SourceWebModelParser();
+			var result = parser.LoadFromProjectFile(projectFile, "C:\\Test\\Test.csproj");
 
 			Assert.AreEqual(1, result.WebPageList.Count);
 			Assert.AreEqual("/TestClass.aspx", result.WebPageList[0].PageUrl);
@@ -111,9 +107,86 @@ namespace MMDB.UITest.Generator.Tests
 		}
 
 		[Test]
+		public void NestedPageControls()
+		{
+			CSProjectFile projectFile = new CSProjectFile()
+			{
+				ClassList = new List<CSClass>()
+				{
+					new CSClass 
+					{
+						ClassFullName = "Test1.TestClass1",
+						FieldList = new List<CSField>()
+						{
+							new CSField { FieldName="form1", ProtectionLevel=EnumProtectionLevel.Protected, TypeFullName="global::System.Web.UI.HtmlControls.HtmlForm"},
+							new CSField { FieldName="_lblOuter1", ProtectionLevel=EnumProtectionLevel.Protected, TypeFullName="global::System.Web.UI.WebControls.Label" },
+							new CSField { FieldName="_pnlTest1", ProtectionLevel=EnumProtectionLevel.Protected, TypeFullName="global::System.Web.UI.WebControls.Panel" },
+							new CSField { FieldName="_lblInner1", ProtectionLevel=EnumProtectionLevel.Protected, TypeFullName="global::System.Web.UI.WebControls.Label" },
+							new CSField { FieldName="_pnlTest2", ProtectionLevel=EnumProtectionLevel.Protected, TypeFullName="global::System.Web.UI.WebControls.Panel" },
+							new CSField { FieldName="_lblInner2", ProtectionLevel=EnumProtectionLevel.Protected, TypeFullName="global::System.Web.UI.WebControls.Label" },
+							new CSField { FieldName="_lblOuter2", ProtectionLevel=EnumProtectionLevel.Protected, TypeFullName="global::System.Web.UI.WebControls.Label" }
+						}
+					}
+				},
+				WebFormContainers = new List<WebFormContainer>()
+				{
+					new WebFormContainer 
+					{
+						ClassFullName="Test1.TestClass1", 
+						CodeBehindFile="TestClass.aspx.cs", 
+						FilePath="C:\\Test\\TestClass.aspx", 
+						ContainerType= EnumWebFormContainerType.WebPage,
+						Controls = new List<WebFormServerControl>()
+						{
+							new WebFormServerControl { TagName="form", ControlID="form1" },
+							new WebFormServerControl { TagName="asp:label", ControlID="_lblOuter1" },
+							new WebFormServerControl { TagName="asp:panel", ControlID="_pnlTest1" },
+							new WebFormServerControl { TagName="asp:label", ControlID="_lblInner1", Prefix="_pnlTest1_"},
+							new WebFormServerControl { TagName="asp:panel", ControlID="_pnlTest2", Prefix="_pnlTest1_" },
+							new WebFormServerControl { TagName="asp:label", ControlID="_lblInner2", Prefix="_pnlTest1__pnlTest2_" },
+							new WebFormServerControl { TagName="asp:label", ControlID="_lblOuter2" }
+						}
+					}
+				},
+				ClassFileDependencyList = new List<ClassFileDependency>()
+				{
+					new ClassFileDependency { ClassFullName="Test1.TestClass1", DependentUponFile="TestClass.aspx"}
+				}
+			};
+			var parser = new SourceWebModelParser();
+			var result = parser.LoadFromProjectFile(projectFile, "C:\\Test\\Test.csproj");
+
+			Assert.AreEqual(1, result.WebPageList.Count);
+			Assert.AreEqual("/TestClass.aspx", result.WebPageList[0].PageUrl);
+			Assert.AreEqual("Test1.TestClass1", result.WebPageList[0].ClassFullName);
+
+			Assert.AreEqual(7, result.WebPageList[0].Controls.Count);
+
+			Assert.AreEqual("System.Web.UI.HtmlControls.HtmlForm", result.WebPageList[0].Controls[0].ClassFullName);
+			Assert.AreEqual("form1", result.WebPageList[0].Controls[0].FieldName);
+
+			Assert.AreEqual("System.Web.UI.WebControls.Label", result.WebPageList[0].Controls[1].ClassFullName);
+			Assert.AreEqual("_lblOuter1", result.WebPageList[0].Controls[1].FieldName);
+
+			Assert.AreEqual("System.Web.UI.WebControls.Panel", result.WebPageList[0].Controls[2].ClassFullName);
+			Assert.AreEqual("_pnlTest1", result.WebPageList[0].Controls[2].FieldName);
+
+			Assert.AreEqual("System.Web.UI.WebControls.Label", result.WebPageList[0].Controls[3].ClassFullName);
+			Assert.AreEqual("_pnlTest1__lblInner1", result.WebPageList[0].Controls[3].FieldName);
+
+			Assert.AreEqual("System.Web.UI.WebControls.Panel", result.WebPageList[0].Controls[4].ClassFullName);
+			Assert.AreEqual("_pnlTest1__pnlTest2", result.WebPageList[0].Controls[4].FieldName);
+
+			Assert.AreEqual("System.Web.UI.WebControls.Label", result.WebPageList[0].Controls[5].ClassFullName);
+			Assert.AreEqual("_pnlTest1__pnlTest2__lblInner2", result.WebPageList[0].Controls[5].FieldName);
+
+			Assert.AreEqual("System.Web.UI.WebControls.Label", result.WebPageList[0].Controls[6].ClassFullName);
+			Assert.AreEqual("_lblOuter2", result.WebPageList[0].Controls[6].FieldName);
+		}
+
+		[Test]
 		public void BasicUserControlControls()
 		{
-			var projectParser = new Mock<ProjectParser>(null, null);
 			CSProjectFile projectFile = new CSProjectFile()
 			{
 				ClassList = new List<CSClass>()
@@ -148,9 +221,8 @@ namespace MMDB.UITest.Generator.Tests
 					new ClassFileDependency { ClassFullName="Test1.TestClass1", DependentUponFile="TestClass.ascx"}
 				}
 			};
-			projectParser.Setup(i => i.ParseString(It.IsAny<string>(), It.IsAny<string>())).Returns(projectFile);
-			var parser = new SourceWebModelParser(projectParser.Object);
-			var result = parser.LoadString(string.Empty, "C:\\Test\\Test.csproj");
+			var parser = new SourceWebModelParser();
+			var result = parser.LoadFromProjectFile(projectFile, "C:\\Test\\Test.csproj");
 
 			Assert.AreEqual(1, result.UserControlList.Count);
 			Assert.AreEqual("Test1.TestClass1", result.UserControlList[0].ClassFullName);
@@ -160,6 +232,65 @@ namespace MMDB.UITest.Generator.Tests
 			Assert.AreEqual("_lblTest", result.UserControlList[0].Controls[0].FieldName);
 			Assert.AreEqual("System.Web.UI.WebControls.TextBox", result.UserControlList[0].Controls[1].ClassFullName);
 			Assert.AreEqual("_txtTest", result.UserControlList[0].Controls[1].FieldName);
+		}
+
+		[Test]
+		public void TestMasterContentPage()
+		{
+			Assert.Fail();
+			CSProjectFile projectFile = new CSProjectFile()
+			{
+				ClassList = new List<CSClass>()
+				{
+					new CSClass 
+					{
+						ClassFullName = "Test1.TestClass1",
+						FieldList = new List<CSField>()
+						{
+							new CSField { FieldName="form1", ProtectionLevel=EnumProtectionLevel.Protected, TypeFullName="global::System.Web.UI.HtmlControls.HtmlForm"},
+							new CSField { FieldName="_lblTest", ProtectionLevel=EnumProtectionLevel.Protected, TypeFullName="global::System.Web.UI.WebControls.Label" }
+						}
+					}
+				},
+				WebFormContainers = new List<WebFormContainer>()
+				{
+					new WebFormContainer 
+					{
+						ClassFullName="Test1.TestClass1", 
+						CodeBehindFile="TestClass.aspx.cs", 
+						FilePath="C:\\Test\\TestClass.aspx", 
+						ContainerType= EnumWebFormContainerType.WebPage,
+						Controls = new List<WebFormServerControl>()
+						{
+							new WebFormServerControl { TagName="form", ControlID="form1" },
+							new WebFormServerControl { TagName="asp:label", ControlID="_lblTest" }
+						}
+					},
+					new WebFormContainer
+					{
+						ClassFullName="Test1.TestMaster",
+						CodeBehindFile="Test1.TestMaster.Master.cs",
+						FilePath="C:\\Test\\TestMaster.Master",
+						ContainerType = EnumWebFormContainerType.MasterPage
+					}
+				},
+				ClassFileDependencyList = new List<ClassFileDependency>()
+				{
+					new ClassFileDependency { ClassFullName="Test1.TestClass1", DependentUponFile="TestClass.aspx"}
+				}
+			};
+			var parser = new SourceWebModelParser();
+			var result = parser.LoadFromProjectFile(projectFile, "C:\\Test\\Test.csproj");
+
+			Assert.AreEqual(1, result.WebPageList.Count);
+			Assert.AreEqual("/TestClass.aspx", result.WebPageList[0].PageUrl);
+			Assert.AreEqual("Test1.TestClass1", result.WebPageList[0].ClassFullName);
+
+			Assert.AreEqual(2, result.WebPageList[0].Controls.Count);
+			Assert.AreEqual("System.Web.UI.HtmlControls.HtmlForm", result.WebPageList[0].Controls[0].ClassFullName);
+			Assert.AreEqual("form1", result.WebPageList[0].Controls[0].FieldName);
+			Assert.AreEqual("System.Web.UI.WebControls.Label", result.WebPageList[0].Controls[1].ClassFullName);
+			Assert.AreEqual("_lblTest", result.WebPageList[0].Controls[1].FieldName);
 		}
 	}
 }
