@@ -1,5 +1,7 @@
 *.suo
 *.userprefs
+*.user
+*.cache
 */bin/**
 */obj/**
 */packages/**
