@@ -83,10 +83,13 @@
     <Compile Include="SourceUserControl.cs" />
     <Compile Include="SourceWebModelParser.cs" />
     <Compile Include="TargetClass.cs" />
+    <Compile Include="TargetClassManager.cs" />
     <Compile Include="TargetControlGenerator.cs" />
     <Compile Include="TargetField.cs" />
+    <Compile Include="TargetModelGenerator.cs" />
     <Compile Include="TargetProject.cs" />
-    <Compile Include="UIObjectComparison.cs" />
+    <Compile Include="TargetProjectComparisonResult.cs" />
+    <Compile Include="TargetClassComparisonResult.cs" />
     <Compile Include="WebControls\LiteralControl.cs" />
     <Compile Include="SourceContainer.cs" />
     <Compile Include="SourceMasterContentPage.cs" />

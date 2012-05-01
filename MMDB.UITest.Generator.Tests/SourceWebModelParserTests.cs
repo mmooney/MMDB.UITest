@@ -237,7 +237,6 @@ namespace MMDB.UITest.Generator.Tests
 		[Test]
 		public void TestMasterContentPage()
 		{
-			Assert.Fail();
 			CSProjectFile projectFile = new CSProjectFile()
 			{
 				ClassList = new List<CSClass>()

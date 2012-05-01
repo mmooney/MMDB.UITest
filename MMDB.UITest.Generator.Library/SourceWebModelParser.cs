@@ -11,13 +11,6 @@ namespace MMDB.UITest.Generator.Library
 {
 	public class SourceWebModelParser
 	{
-		private ProjectParser ProjectParser { get; set; }
-
-		public SourceWebModelParser(ProjectParser projectParser = null)
-		{
-			this.ProjectParser = projectParser ?? new ProjectParser();
-		}
-
 		public SourceWebProject LoadFromProjectFile(CSProjectFile csProject, string projectFilePath)
 		{
 			SourceWebProject returnValue = new SourceWebProject()

@@ -57,6 +57,7 @@
     <Compile Include="ProxyGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceWebModelParserTests.cs" />
+    <Compile Include="TargetModelGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
