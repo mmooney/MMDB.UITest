@@ -209,7 +209,7 @@ namespace MMDB.UITest.Generator.Tests
 		public class UpdateClass
 		{
 			[Test]
-			public void NewTargetClass() 
+			public void NewTargetClassWithLink() 
 			{
 				SourceWebPage sourceWebPage = new SourceWebPage
 				{
@@ -220,29 +220,192 @@ namespace MMDB.UITest.Generator.Tests
 				        new SourceWebControl
 				        {
 				            ClassFullName = "System.Web.UI.WebControls.HyperLink",
-				            FieldName = "TestLink"
+				            FieldName = "ExistingTargetField"
 				        }
 				    }
 				};
+				TargetClass targetClass = new TargetClass();
 				var targetModelGenerator = new TargetModelGenerator();
-				TargetClass targetClass = targetModelGenerator.UpdateClass(sourceWebPage, new TargetClass());
+				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
 				Assert.IsTrue(targetClass.TargetFieldList[0].IsDirty);
 				Assert.AreEqual("System.Web.UI.WebControls.HyperLink", targetClass.TargetFieldList[0].SourceClassFullName);
-				Assert.AreEqual("TestLink", targetClass.TargetFieldList[0].SourceFieldName);
+				Assert.AreEqual("ExistingTargetField", targetClass.TargetFieldList[0].SourceFieldName);
 				Assert.AreEqual(EnumTargetControlType.Link, targetClass.TargetFieldList[0].TargetControlType);
 			}
 
 			[Test]
-			public void ExistingClassNewFields() 
+			public void NewTargetClassWithTextBox()
 			{
-				Assert.Fail();
+				SourceWebPage sourceWebPage = new SourceWebPage
+				{
+					ClassFullName = "Test1.TestSourceClass",
+					PageUrl = "TestSourceClass.aspx",
+					Controls = new List<SourceWebControl>()
+				    {
+						new SourceWebControl
+						{
+				            ClassFullName = "System.Web.UI.WebControls.TextBox",
+				            FieldName = "TestTargetField"
+						}
+				    }
+				};
+				TargetClass targetClass = new TargetClass();
+				var targetModelGenerator = new TargetModelGenerator();
+				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
+				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
+				Assert.IsTrue(targetClass.TargetFieldList[0].IsDirty);
+				Assert.AreEqual("System.Web.UI.WebControls.TextBox", targetClass.TargetFieldList[0].SourceClassFullName);
+				Assert.AreEqual("TestTargetField", targetClass.TargetFieldList[0].SourceFieldName);
+				Assert.AreEqual(EnumTargetControlType.TextBox, targetClass.TargetFieldList[0].TargetControlType);
 			}
 
 			[Test]
-			public void ExistingClassExistingFields()
+			public void NewTargetClassWithLabel()
 			{
-				Assert.Fail();
+				SourceWebPage sourceWebPage = new SourceWebPage
+				{
+					ClassFullName = "Test1.TestSourceClass",
+					PageUrl = "TestSourceClass.aspx",
+					Controls = new List<SourceWebControl>()
+				    {
+						new SourceWebControl
+						{
+				            ClassFullName = "System.Web.UI.WebControls.Label",
+				            FieldName = "TestTargetField"
+						}
+				    }
+				};
+				TargetClass targetClass = new TargetClass();
+				var targetModelGenerator = new TargetModelGenerator();
+				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
+				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
+				Assert.IsTrue(targetClass.TargetFieldList[0].IsDirty);
+				Assert.AreEqual("System.Web.UI.WebControls.Label", targetClass.TargetFieldList[0].SourceClassFullName);
+				Assert.AreEqual("TestTargetField", targetClass.TargetFieldList[0].SourceFieldName);
+				Assert.AreEqual(EnumTargetControlType.Label, targetClass.TargetFieldList[0].TargetControlType);
+			}
+
+			[Test]
+			public void ExistingClassExistingIrrelevantFields() 
+			{
+				SourceWebPage sourceWebPage = new SourceWebPage
+				{
+					ClassFullName = "Test1.TestSourceClass",
+					PageUrl = "TestSourceClass.aspx",
+					Controls = new List<SourceWebControl>()
+				    {
+				        new SourceWebControl
+				        {
+				            ClassFullName = "System.Web.UI.WebControls.HyperLink",
+				            FieldName = "NewTargetField"
+				        }
+				    }
+				};
+				var targetClass = new TargetClass()
+				{
+					TargetFieldList = new List<TargetField>() 
+					{
+						new TargetField
+						{
+							IsDirty = false,
+							SourceClassFullName = "TestSourcenamespace.TestSourceClass",
+							SourceFieldName = "ExistingTargetField",
+							TargetControlType = EnumTargetControlType.Unknown
+						}
+					}
+				};
+				var targetModelGenerator = new TargetModelGenerator();
+				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
+				Assert.AreEqual(2, targetClass.TargetFieldList.Count);
+
+				Assert.IsFalse(targetClass.TargetFieldList[0].IsDirty);
+				Assert.AreEqual("TestSourcenamespace.TestSourceClass", targetClass.TargetFieldList[0].SourceClassFullName);
+				Assert.AreEqual("ExistingTargetField", targetClass.TargetFieldList[0].SourceFieldName);
+				Assert.AreEqual(EnumTargetControlType.Unknown, targetClass.TargetFieldList[0].TargetControlType);
+
+				Assert.IsTrue(targetClass.TargetFieldList[1].IsDirty);
+				Assert.AreEqual("System.Web.UI.WebControls.HyperLink", targetClass.TargetFieldList[1].SourceClassFullName);
+				Assert.AreEqual("NewTargetField", targetClass.TargetFieldList[1].SourceFieldName);
+				Assert.AreEqual(EnumTargetControlType.Link, targetClass.TargetFieldList[1].TargetControlType);
+			}
+
+			[Test]
+			public void ExistingClassExistingField()
+			{
+				SourceWebPage sourceWebPage = new SourceWebPage
+				{
+					ClassFullName = "Test1.TestSourceClass",
+					PageUrl = "TestSourceClass.aspx",
+					Controls = new List<SourceWebControl>()
+				    {
+				        new SourceWebControl
+				        {
+				            ClassFullName = "System.Web.UI.WebControls.HyperLink",
+				            FieldName = "TestTargetField"
+				        }
+				    }
+				};
+				var targetClass = new TargetClass()
+				{
+					TargetFieldList = new List<TargetField>() 
+					{
+						new TargetField
+						{
+							IsDirty = false,
+							SourceClassFullName = "System.Web.UI.WebControls.HyperLink",
+							SourceFieldName = "TestTargetField",
+							TargetControlType = EnumTargetControlType.Link
+						}
+					}
+				};
+				var targetModelGenerator = new TargetModelGenerator();
+				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
+				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
+
+				Assert.IsFalse(targetClass.TargetFieldList[0].IsDirty);
+				Assert.AreEqual("System.Web.UI.WebControls.HyperLink", targetClass.TargetFieldList[0].SourceClassFullName);
+				Assert.AreEqual("TestTargetField", targetClass.TargetFieldList[0].SourceFieldName);
+				Assert.AreEqual(EnumTargetControlType.Link, targetClass.TargetFieldList[0].TargetControlType);
+			}
+
+			[Test]
+			public void ExistingClassExistingFieldChangedSourceType()
+			{
+				SourceWebPage sourceWebPage = new SourceWebPage
+				{
+					ClassFullName = "Test1.TestSourceClass",
+					PageUrl = "TestSourceClass.aspx",
+					Controls = new List<SourceWebControl>()
+				    {
+				        new SourceWebControl
+				        {
+				            ClassFullName = "System.Web.UI.WebControls.HyperLink",
+				            FieldName = "TestTargetField"
+				        }
+				    }
+				};
+				var targetClass = new TargetClass()
+				{
+					TargetFieldList = new List<TargetField>() 
+					{
+						new TargetField
+						{
+							IsDirty = false,
+							SourceClassFullName = "System.Web.UI.WebControls.TextBox",
+							SourceFieldName = "TestTargetField",
+							TargetControlType = EnumTargetControlType.Link
+						}
+					}
+				};
+				var targetModelGenerator = new TargetModelGenerator();
+				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
+				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
+
+				Assert.IsTrue(targetClass.TargetFieldList[0].IsDirty);
+				Assert.AreEqual("System.Web.UI.WebControls.HyperLink", targetClass.TargetFieldList[0].SourceClassFullName);
+				Assert.AreEqual("TestTargetField", targetClass.TargetFieldList[0].SourceFieldName);
+				Assert.AreEqual(EnumTargetControlType.Link, targetClass.TargetFieldList[0].TargetControlType);
 			}
 
 			[Test]

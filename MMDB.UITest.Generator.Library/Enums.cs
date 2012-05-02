@@ -13,9 +13,11 @@ namespace MMDB.UITest.Generator.Library
 		UserControl
 	}
 
-	public enum EnumTargetControlType 
+	public enum EnumTargetControlType
 	{
 		Unknown,
-		Link
+		Link,
+		TextBox,
+		Label
 	}
 }

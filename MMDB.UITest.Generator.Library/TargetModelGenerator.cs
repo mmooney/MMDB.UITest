@@ -119,6 +119,12 @@ namespace MMDB.UITest.Generator.Library
 				case "System.Web.UI.WebControls.HyperLink":
 					returnValue = EnumTargetControlType.Link;
 					break;
+				case "System.Web.UI.WebControls.TextBox":
+					returnValue = EnumTargetControlType.TextBox;
+					break;
+				case "System.Web.UI.WebControls.Label":
+					returnValue = EnumTargetControlType.Label;
+					break;
 			}
 			return returnValue;
 		}
