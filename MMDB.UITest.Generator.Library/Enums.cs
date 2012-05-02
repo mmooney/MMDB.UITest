@@ -12,4 +12,10 @@ namespace MMDB.UITest.Generator.Library
 		MasterPage,
 		UserControl
 	}
+
+	public enum EnumTargetControlType 
+	{
+		Unknown,
+		Link
+	}
 }

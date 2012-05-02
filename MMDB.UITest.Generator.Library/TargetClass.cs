@@ -125,14 +125,14 @@ namespace MMDB.UITest.Generator.Library
 			var classObject = (TypeDeclaration)compilationUnit.Descendants.Single(i=>i is TypeDeclaration && ((TypeDeclaration)i).Name == typeName);
 			foreach(var field in list)
 			{
-				switch(field.TypeFullName)
+				switch(field.SourceClassFullName)
 				{
 					//case "System.Web.UI.WebControls.Literal":
 					//    TargetControlGenerator.AddLiteralControl(classObject, field);
 					//    anyChanges = true;
 					//    break;
 					case "System.Web.UI.WebControls.HyperLink":
-						TargetControlGenerator.AddHyperLinkControl(classObject, field, field.TypeFullName);
+						TargetControlGenerator.AddHyperLinkControl(classObject, field, field.SourceClassFullName);
 						anyChanges = true;
 						break;
 				}

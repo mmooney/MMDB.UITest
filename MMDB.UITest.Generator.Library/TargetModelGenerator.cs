@@ -8,11 +8,8 @@ namespace MMDB.UITest.Generator.Library
 {
 	public class TargetModelGenerator
 	{
-		public TargetClassManager TargetClassManager { get; set; }
-
-		public TargetModelGenerator(TargetClassManager targetClassManager)
+		public TargetModelGenerator()
 		{
-			this.TargetClassManager = targetClassManager;
 		}
 
 		//public TargetProjectComparisonResult CompareProject(TargetProject targetProject, SourceWebProject sourceProject)
@@ -87,6 +84,43 @@ namespace MMDB.UITest.Generator.Library
 				}
 			}
 			return targetProject;
+		}
+
+		public TargetClass UpdateClass(SourceWebPage sourceClass, TargetClass targetClass)
+		{
+			foreach(var sourceControl in sourceClass.Controls)
+			{
+				var targetControl = targetClass.TargetFieldList.SingleOrDefault(i=>i.SourceFieldName == sourceControl.FieldName);
+				if(targetControl == null)
+				{
+				    targetControl = new TargetField
+				    {
+				        SourceClassFullName = sourceControl.ClassFullName,
+				        SourceFieldName = sourceControl.FieldName,
+						TargetControlType = GetTargetControlType(sourceControl.ClassFullName),
+				        IsDirty = true,
+				    };
+				    targetClass.TargetFieldList.Add(targetControl);
+				}
+				else if(targetControl.SourceClassFullName != sourceControl.ClassFullName)
+				{
+				    targetControl.SourceClassFullName = sourceControl.ClassFullName;
+				    targetControl.IsDirty = true;
+				}
+			}
+			return targetClass;
+		}
+
+		private EnumTargetControlType GetTargetControlType(string sourceClassFullName)
+		{
+			EnumTargetControlType returnValue = EnumTargetControlType.Unknown;
+			switch(sourceClassFullName)
+			{
+				case "System.Web.UI.WebControls.HyperLink":
+					returnValue = EnumTargetControlType.Link;
+					break;
+			}
+			return returnValue;
 		}
 	}
 }

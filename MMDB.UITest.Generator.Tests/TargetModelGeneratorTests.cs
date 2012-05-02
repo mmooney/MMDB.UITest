@@ -32,8 +32,7 @@ namespace MMDB.UITest.Generator.Tests
 				{
 					RootNamespace = "TestTargetNamespace"
 				};
-				TargetClassManager targetClassManager = new TargetClassManager();
-				var targetModelGenerator = new TargetModelGenerator(targetClassManager);
+				var targetModelGenerator = new TargetModelGenerator();
 				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
 				Assert.AreEqual(1, targetProject.TargetClassList.Count);
 				Assert.AreEqual(@"Client\Pages\Test1\TestItemPageClient.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
@@ -64,8 +63,7 @@ namespace MMDB.UITest.Generator.Tests
 				{
 					RootNamespace = "TestTargetNamespace"
 				};
-				TargetClassManager targetClassManager = new TargetClassManager();
-				var targetModelGenerator = new TargetModelGenerator(targetClassManager);
+				var targetModelGenerator = new TargetModelGenerator();
 				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
 				Assert.AreEqual(1, targetProject.TargetClassList.Count);
 				Assert.AreEqual(@"Client\Pages\SomeOtherNamespace\Test1\TestItemPageClient.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
@@ -108,8 +106,7 @@ namespace MMDB.UITest.Generator.Tests
 						}
 					}
 				};
-				TargetClassManager targetClassManager = new TargetClassManager();
-				var targetModelGenerator = new TargetModelGenerator(targetClassManager);
+				var targetModelGenerator = new TargetModelGenerator();
 				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
 				Assert.AreEqual(1, targetProject.TargetClassList.Count);
 				Assert.AreEqual(@"Client\Pages\Test1\TestItemPageClient.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
@@ -152,8 +149,7 @@ namespace MMDB.UITest.Generator.Tests
 						}
 					}
 				};
-				TargetClassManager targetClassManager = new TargetClassManager();
-				var targetModelGenerator = new TargetModelGenerator(targetClassManager);
+				var targetModelGenerator = new TargetModelGenerator();
 				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
 				Assert.AreEqual(1, targetProject.TargetClassList.Count);
 				Assert.AreEqual(@"SomeOtherLocation\TestItemPageClient.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
@@ -196,8 +192,7 @@ namespace MMDB.UITest.Generator.Tests
 						}
 					}
 				};
-				TargetClassManager targetClassManager = new TargetClassManager();
-				var targetModelGenerator = new TargetModelGenerator(targetClassManager);
+				var targetModelGenerator = new TargetModelGenerator();
 				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
 				Assert.AreEqual(1, targetProject.TargetClassList.Count);
 				Assert.AreEqual(@"SomeOtherLocation\SomeOtherClassName.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
@@ -215,6 +210,49 @@ namespace MMDB.UITest.Generator.Tests
 		{
 			[Test]
 			public void NewTargetClass() 
+			{
+				SourceWebPage sourceWebPage = new SourceWebPage
+				{
+					ClassFullName = "Test1.TestSourceClass",
+					PageUrl = "TestSourceClass.aspx",
+					Controls = new List<SourceWebControl>()
+				    {
+				        new SourceWebControl
+				        {
+				            ClassFullName = "System.Web.UI.WebControls.HyperLink",
+				            FieldName = "TestLink"
+				        }
+				    }
+				};
+				var targetModelGenerator = new TargetModelGenerator();
+				TargetClass targetClass = targetModelGenerator.UpdateClass(sourceWebPage, new TargetClass());
+				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
+				Assert.IsTrue(targetClass.TargetFieldList[0].IsDirty);
+				Assert.AreEqual("System.Web.UI.WebControls.HyperLink", targetClass.TargetFieldList[0].SourceClassFullName);
+				Assert.AreEqual("TestLink", targetClass.TargetFieldList[0].SourceFieldName);
+				Assert.AreEqual(EnumTargetControlType.Link, targetClass.TargetFieldList[0].TargetControlType);
+			}
+
+			[Test]
+			public void ExistingClassNewFields() 
+			{
+				Assert.Fail();
+			}
+
+			[Test]
+			public void ExistingClassExistingFields()
+			{
+				Assert.Fail();
+			}
+
+			[Test]
+			public void ExistingClassChangedTargetFieldName()
+			{
+				Assert.Fail();
+			}
+
+			[Test]
+			public void ExistingClassChangedTargetFieldType()
 			{
 				Assert.Fail();
 			}

@@ -18,9 +18,9 @@ namespace MMDB.UITest.Generator.Library
 		public static void AddHyperLinkControl(TypeDeclaration classObject, TargetField field, string fullTypeName)
 		{
 			StringBuilder sb = new StringBuilder();
-			sb.AppendFormat("[{0}(\"{1}\",\"{2}\")] ", typeof(UIClientPropertyAttribute).FullName, field.FieldName, fullTypeName);
-			sb.AppendFormat("public Link {0}", field.FieldName);
-			sb.AppendFormat("{{ get {{ return this.TryGetLink(\"ctrl00_{0}\"); }} }}", field.FieldName);
+			sb.AppendFormat("[{0}(\"{1}\",\"{2}\")] ", typeof(UIClientPropertyAttribute).FullName, field.SourceFieldName, fullTypeName);
+			sb.AppendFormat("public Link {0}", field.SourceFieldName);
+			sb.AppendFormat("{{ get {{ return this.TryGetLink(\"ctrl00_{0}\"); }} }}", field.SourceFieldName);
 			using(StringReader reader = new StringReader(sb.ToString()))
 			{
 				CSharpParser parser = new CSharpParser();

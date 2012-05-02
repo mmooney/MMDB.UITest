@@ -9,8 +9,26 @@ namespace MMDB.UITest.Generator.Library
 {
 	public class TargetField
 	{
-		public string FieldName { get; set; }
-		public string TypeFullName { get; set; }
+		public string SourceFieldName { get; set; }
+		public string SourceClassFullName 
+		{ 
+			get 
+			{
+				return DotNetParserHelper.BuildFullName(this.SourceNamespaceName, this.SourceClassName);
+			}
+			set 
+			{
+				string className;
+				string namespaceName;
+				DotNetParserHelper.SplitType(value, out className, out namespaceName);
+				this.SourceClassName = className;
+				this.SourceNamespaceName = namespaceName;
+			}
+		}
+		public string SourceClassName { get; set; }
+		public string SourceNamespaceName { get; set; }
+		public EnumTargetControlType TargetControlType { get; set; }
+		public bool IsDirty { get; set; }
 
 		public static TargetField TryLoad(CSProperty csProperty)
 		{
@@ -20,8 +38,8 @@ namespace MMDB.UITest.Generator.Library
 			{
 				returnValue = new TargetField
 				{
-					FieldName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(0, "SourceFieldName", true)),
-					TypeFullName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(1, "SourceFieldTypeFullName", true))
+					SourceFieldName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(0, "SourceFieldName", true)),
+					SourceClassFullName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(1, "SourceFieldTypeFullName", true))
 				};
 			}
 			return returnValue;

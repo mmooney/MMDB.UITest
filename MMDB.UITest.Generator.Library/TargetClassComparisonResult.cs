@@ -24,14 +24,14 @@ namespace MMDB.UITest.Generator.Library
 			TargetClassComparisonResult comparison = new TargetClassComparisonResult();
 			foreach(var control in webPage.Controls)
 			{
-				var targetField = targetClass.TargetFieldList.FirstOrDefault(i=>i.FieldName == control.FieldName
-																		&& i.TypeFullName == control.ClassFullName);
+				var targetField = targetClass.TargetFieldList.FirstOrDefault(i=>i.SourceFieldName == control.FieldName
+																		&& i.SourceClassFullName == control.ClassFullName);
 				if(targetField == null)
 				{
 					targetField = new TargetField()
 					{
-						FieldName = control.FieldName,
-						TypeFullName = control.ClassFullName
+						SourceFieldName = control.FieldName,
+						SourceClassFullName = control.ClassFullName
 					};
 					comparison.FieldsToAdd.Add(targetField);
 				}
