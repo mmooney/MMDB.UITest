@@ -511,7 +511,7 @@ namespace MMDB.UITest.Generator.Tests
 											isDirty: false,
 											sourceClassFullName: "System.Web.UI.WebControls.HyperLink",
 											sourceFieldName: "TestTargetField",
-											targetControlType: EnumTargetControlType.Link,
+											targetControlType: EnumTargetControlType.TextBox,
 											targetFieldName: "TestTargetField");
 			}
 		}
@@ -523,6 +523,9 @@ namespace MMDB.UITest.Generator.Tests
 			public void LoadBasicFile()
 			{
 				Assert.Fail();
+				string data = @"test";
+				var targetModelGenerator = new TargetModelGenerator();
+				//var targetProject = targetModelGenerator..LoadProjectFile(data);
 			}
 		}
 

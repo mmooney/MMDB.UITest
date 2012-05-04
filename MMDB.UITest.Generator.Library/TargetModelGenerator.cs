@@ -3,13 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using MMDB.UITest.DotNetParser;
 
 namespace MMDB.UITest.Generator.Library
 {
 	public class TargetModelGenerator
 	{
-		public TargetModelGenerator()
+		protected TargetClassManager TargetClassManager { get; set; }
+
+		public TargetModelGenerator(TargetClassManager targetClassManager = null)
 		{
+			this.TargetClassManager = targetClassManager ?? new TargetClassManager();
+		}
+
+		public TargetProject LoadFromProjectFile(CSProjectFile csProject, string targetProjectPath)
+		{
+			TargetProject returnValue = new TargetProject()
+			{
+				Directory = Path.GetDirectoryName(targetProjectPath),
+				FileName = Path.GetFileName(targetProjectPath),
+				RootNamespace = csProject.RootNamespace
+			};
+			foreach (var csClass in csProject.ClassList)
+			{
+				var targetClass = this.TargetClassManager.TryLoadTargetClass(csClass);
+				if (targetClass != null)
+				{
+					returnValue.TargetClassList.Add(targetClass);
+				}
+			}
+			return returnValue;
 		}
 
 		//public TargetProjectComparisonResult CompareProject(TargetProject targetProject, SourceWebProject sourceProject)

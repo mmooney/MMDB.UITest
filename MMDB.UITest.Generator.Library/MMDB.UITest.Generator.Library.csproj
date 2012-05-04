@@ -83,6 +83,7 @@
     <Compile Include="SourceUserControl.cs" />
     <Compile Include="SourceWebModelParser.cs" />
     <Compile Include="TargetClass.cs" />
+    <Compile Include="TargetClassManager.cs" />
     <Compile Include="TargetControlGenerator.cs" />
     <Compile Include="TargetField.cs" />
     <Compile Include="TargetModelGenerator.cs" />
