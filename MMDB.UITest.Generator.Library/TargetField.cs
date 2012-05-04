@@ -28,6 +28,7 @@ namespace MMDB.UITest.Generator.Library
 		public string SourceClassName { get; set; }
 		public string SourceNamespaceName { get; set; }
 		public EnumTargetControlType TargetControlType { get; set; }
+		public string TargetFieldName { get; set; }
 		public bool IsDirty { get; set; }
 
 		public static TargetField TryLoad(CSProperty csProperty)

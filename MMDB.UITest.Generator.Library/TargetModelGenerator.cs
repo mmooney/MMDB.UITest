@@ -99,6 +99,7 @@ namespace MMDB.UITest.Generator.Library
 				        SourceFieldName = sourceControl.FieldName,
 						TargetControlType = GetTargetControlType(sourceControl.ClassFullName),
 				        IsDirty = true,
+						TargetFieldName = sourceControl.FieldName
 				    };
 				    targetClass.TargetFieldList.Add(targetControl);
 				}
