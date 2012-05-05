@@ -18,7 +18,7 @@ namespace MMDB.UITest.Generator.Library
 		public List<TargetField> TargetFieldList { get; set; }
 		public string DesignerFilePath { get; set; }
 		public string UserFilePath { get; set; }
-		public string PageUrl { get; set; }
+		public string ExpectedUrl { get; set; }
 
 		public TargetClass()
 		{
@@ -230,7 +230,7 @@ namespace MMDB.UITest.Generator.Library
 			sb.AppendLine();
 			sb.AppendLine(string.Format("public {0} (Browser browser) : base(browser) {{}}", typeName));
 			sb.AppendLine();
-			sb.AppendLine(string.Format("protected override string ExpectedUrl {{ get {{ return \"{0}\"; }} }}", this.PageUrl));
+			sb.AppendLine(string.Format("protected override string ExpectedUrl {{ get {{ return \"{0}\"; }} }}", this.ExpectedUrl));
 
 			sb.AppendLine("}");
 			sb.AppendLine("}");

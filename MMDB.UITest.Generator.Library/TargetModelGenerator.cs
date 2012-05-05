@@ -101,7 +101,7 @@ namespace MMDB.UITest.Generator.Library
 						DesignerFilePath = Path.Combine(targetDirectory, targetClassName + ".designer.cs"),
 						UserFilePath = Path.Combine(targetDirectory, targetClassName + ".cs"),
 						TargetObjectType = EnumTargetObjectType.WebPage,
-						PageUrl = sourcePage.PageUrl
+						ExpectedUrl = sourcePage.PageUrl
 					};
 					targetProject.TargetClassList.Add(targetClass);
 				}
@@ -120,7 +120,7 @@ namespace MMDB.UITest.Generator.Library
 				    {
 				        SourceClassFullName = sourceControl.ClassFullName,
 				        SourceFieldName = sourceControl.FieldName,
-						TargetControlType = GetTargetControlType(sourceControl.ClassFullName),
+						TargetControlType = this.TargetClassManager.GetTargetControlType(sourceControl.ClassFullName),
 				        IsDirty = true,
 						TargetFieldName = sourceControl.FieldName
 				    };
@@ -135,22 +135,5 @@ namespace MMDB.UITest.Generator.Library
 			return targetClass;
 		}
 
-		private EnumTargetControlType GetTargetControlType(string sourceClassFullName)
-		{
-			EnumTargetControlType returnValue = EnumTargetControlType.Unknown;
-			switch(sourceClassFullName)
-			{
-				case "System.Web.UI.WebControls.HyperLink":
-					returnValue = EnumTargetControlType.Link;
-					break;
-				case "System.Web.UI.WebControls.TextBox":
-					returnValue = EnumTargetControlType.TextBox;
-					break;
-				case "System.Web.UI.WebControls.Label":
-					returnValue = EnumTargetControlType.Label;
-					break;
-			}
-			return returnValue;
-		}
 	}
 }

@@ -40,7 +40,7 @@ namespace MMDB.UITest.Generator.Tests
 				Assert.AreEqual(@"TestSourceNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
 				Assert.AreEqual(@"TestTargetNamespace.Client.Pages.Test1.TestItemPageClient", targetProject.TargetClassList[0].TargetClassFullName);
 				Assert.AreEqual(EnumTargetObjectType.WebPage,targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].PageUrl);
+				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
 			}
 
 			[Test]
@@ -71,7 +71,7 @@ namespace MMDB.UITest.Generator.Tests
 				Assert.AreEqual(@"SomeOtherNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
 				Assert.AreEqual(@"TestTargetNamespace.Client.Pages.SomeOtherNamespace.Test1.TestItemPageClient", targetProject.TargetClassList[0].TargetClassFullName);
 				Assert.AreEqual(EnumTargetObjectType.WebPage, targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].PageUrl);
+				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
 			}
 
 			[Test]
@@ -102,7 +102,7 @@ namespace MMDB.UITest.Generator.Tests
 							UserFilePath = @"Client\Pages\Test1\TestItemPageClient.cs",
 							TargetClassFullName = "TestTargetNamespace.Client.Pages.Test1.TestItemPageClient",
 							TargetObjectType = EnumTargetObjectType.WebPage,
-							PageUrl = "TestWebPage.aspx"
+							ExpectedUrl = "TestWebPage.aspx"
 						}
 					}
 				};
@@ -114,7 +114,7 @@ namespace MMDB.UITest.Generator.Tests
 				Assert.AreEqual("TestSourceNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
 				Assert.AreEqual("TestTargetNamespace.Client.Pages.Test1.TestItemPageClient", targetProject.TargetClassList[0].TargetClassFullName);
 				Assert.AreEqual(EnumTargetObjectType.WebPage, targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].PageUrl);
+				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
 			}
 
 			[Test]
@@ -145,7 +145,7 @@ namespace MMDB.UITest.Generator.Tests
 							UserFilePath = @"SomeOtherLocation\TestItemPageClient.cs",
 							TargetClassFullName = "SomeOtherLocation.TestItemPageClient",
 							TargetObjectType = EnumTargetObjectType.WebPage,
-							PageUrl = "TestWebPage.aspx"
+							ExpectedUrl = "TestWebPage.aspx"
 						}
 					}
 				};
@@ -157,7 +157,7 @@ namespace MMDB.UITest.Generator.Tests
 				Assert.AreEqual("TestSourceNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
 				Assert.AreEqual("SomeOtherLocation.TestItemPageClient", targetProject.TargetClassList[0].TargetClassFullName);
 				Assert.AreEqual(EnumTargetObjectType.WebPage, targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].PageUrl);
+				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
 			}
 
 			[Test]
@@ -188,7 +188,7 @@ namespace MMDB.UITest.Generator.Tests
 							UserFilePath = @"SomeOtherLocation\SomeOtherClassName.cs",
 							TargetClassFullName = "SomeOtherLocation.SomeOtherClassName",
 							TargetObjectType = EnumTargetObjectType.WebPage,
-							PageUrl = "TestWebPage.aspx"
+							ExpectedUrl = "TestWebPage.aspx"
 						}
 					}
 				};
@@ -200,7 +200,7 @@ namespace MMDB.UITest.Generator.Tests
 				Assert.AreEqual("TestSourceNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
 				Assert.AreEqual("SomeOtherLocation.SomeOtherClassName", targetProject.TargetClassList[0].TargetClassFullName);
 				Assert.AreEqual(EnumTargetObjectType.WebPage, targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].PageUrl);
+				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
 			}
 
 		}
@@ -208,15 +208,6 @@ namespace MMDB.UITest.Generator.Tests
 		[TestFixture]
 		public class UpdateClass
 		{
-			private void ValidateTargetField(TargetField targetField, bool isDirty, string sourceClassFullName, string sourceFieldName, EnumTargetControlType targetControlType, string targetFieldName)
-			{
-				Assert.AreEqual(isDirty, targetField.IsDirty);
-				Assert.AreEqual(sourceClassFullName, targetField.SourceClassFullName);
-				Assert.AreEqual(sourceFieldName, targetField.SourceFieldName);
-				Assert.AreEqual(targetControlType, targetField.TargetControlType);
-				Assert.AreEqual(targetFieldName, targetField.TargetFieldName);
-			}
-
 			[Test]
 			public void NewTargetClassWithLink() 
 			{
@@ -237,7 +228,7 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
-				this.ValidateTargetField(targetField: targetClass.TargetFieldList[0],
+				TestValidators.ValidateTargetField(targetField: targetClass.TargetFieldList[0],
 											isDirty:true, 
 											sourceClassFullName:"System.Web.UI.WebControls.HyperLink",
 											sourceFieldName:"ExistingTargetField",
@@ -265,7 +256,7 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
-				this.ValidateTargetField(targetClass.TargetFieldList[0], 
+				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0], 
 											isDirty:true,
 											sourceClassFullName: "System.Web.UI.WebControls.TextBox",
 											sourceFieldName:"TestTargetField",
@@ -293,7 +284,7 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
-				this.ValidateTargetField(targetClass.TargetFieldList[0],
+				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0],
 											isDirty:true,
 											sourceClassFullName:"System.Web.UI.WebControls.Label",
 											sourceFieldName:"TestTargetField",
@@ -335,14 +326,14 @@ namespace MMDB.UITest.Generator.Tests
 				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(2, targetClass.TargetFieldList.Count);
 
-				this.ValidateTargetField(targetClass.TargetFieldList[0],
+				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0],
 											isDirty:false,
 											sourceClassFullName: "TestSourcenamespace.TestSourceClass",
 											sourceFieldName: "ExistingTargetField",
 											targetControlType: EnumTargetControlType.Unknown,
 											targetFieldName: "ExistingTargetFieldName");
 
-				this.ValidateTargetField(targetClass.TargetFieldList[1],
+				TestValidators.ValidateTargetField(targetClass.TargetFieldList[1],
 											isDirty:true,
 											sourceClassFullName: "System.Web.UI.WebControls.HyperLink",
 											sourceFieldName: "NewTargetField", 
@@ -383,7 +374,7 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
-				this.ValidateTargetField(targetClass.TargetFieldList[0],
+				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0],
 											isDirty:false,
 											sourceClassFullName: "System.Web.UI.WebControls.HyperLink",
 											sourceFieldName: "TestTargetField",
@@ -424,7 +415,7 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
-				this.ValidateTargetField(targetClass.TargetFieldList[0],
+				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0],
 											isDirty: true,
 											sourceClassFullName: "System.Web.UI.WebControls.HyperLink", 
 											sourceFieldName: "TestTargetField", 
@@ -466,7 +457,7 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
-				this.ValidateTargetField(targetClass.TargetFieldList[0],
+				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0],
 											isDirty: false,
 											sourceClassFullName: "System.Web.UI.WebControls.HyperLink",
 											sourceFieldName: "TestTargetField",
@@ -507,7 +498,7 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
-				this.ValidateTargetField(targetClass.TargetFieldList[0],
+				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0],
 											isDirty: false,
 											sourceClassFullName: "System.Web.UI.WebControls.HyperLink",
 											sourceFieldName: "TestTargetField",

@@ -9,6 +9,7 @@ namespace MMDB.UITest.Core
 	public class UIClientPageAttribute : Attribute
 	{
 		public string SourceClassFullName { get; set; }
+		public string ExpectedUrl { get; set; }
 
 		public UIClientPageAttribute(string sourceClassFullName)
 		{

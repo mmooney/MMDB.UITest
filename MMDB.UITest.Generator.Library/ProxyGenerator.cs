@@ -73,7 +73,7 @@ namespace MMDB.UITest.Generator.Library
 					targetClass = TargetClass.Create(targetProject, sourceProject, masterPage);
 					classesToAddToProject.Add(targetClass);
 				}
-				targetClass.PageUrl = masterPage.PageUrl;
+				targetClass.ExpectedUrl = masterPage.PageUrl;
 				targetClass.TargetObjectType = EnumTargetObjectType.MasterPage;
 				//For each missing field, add it
 				var comparison = TargetClassComparisonResult.Compare(masterPage, targetClass);
@@ -88,7 +88,7 @@ namespace MMDB.UITest.Generator.Library
 					targetClass = TargetClass.Create(targetProject, sourceProject, webPage);
 					classesToAddToProject.Add(targetClass);
 				}
-				targetClass.PageUrl = webPage.PageUrl;
+				targetClass.ExpectedUrl = webPage.PageUrl;
 				targetClass.TargetObjectType = EnumTargetObjectType.WebPage;
 				var comparison = TargetClassComparisonResult.Compare(webPage, targetClass);
 				targetClass.EnsureFiles(targetProjectPath);

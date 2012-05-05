@@ -18,6 +18,14 @@ namespace MMDB.UITest.DotNetParser
 			{
 				return DotNetParserHelper.BuildFullName(this.TypeNamespace, this.TypeName);
 			}
+			set 
+			{
+				string className;
+				string namespaceName;
+				DotNetParserHelper.SplitType(value, out className, out namespaceName);
+				this.TypeName = className;
+				this.TypeNamespace = namespaceName;
+			}
 		}
 
 		public List<CSAttribute> AttributeList { get; set; }
