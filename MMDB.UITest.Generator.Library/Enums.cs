@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MMDB.UITest.Generator.Library
 {
-	public enum EnumTargetObjectType
+	public enum EnumSourceObjectType
 	{
 		Unknown,
 		WebPage,

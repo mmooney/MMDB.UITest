@@ -12,7 +12,7 @@ namespace MMDB.UITest.Generator.Library
 {
 	public class TargetClass
 	{
-		public EnumTargetObjectType TargetObjectType { get; set; }
+		public EnumSourceObjectType SourceObjectType { get; set; }
 		public string SourceClassFullName { get; set; }
 		public string TargetClassFullName { get; set; }
 		public List<TargetField> TargetFieldList { get; set; }
@@ -31,51 +31,51 @@ namespace MMDB.UITest.Generator.Library
 			return csClass.AttributeList.Any(i=>i.TypeName == typeof(UIClientPageAttribute).Name && i.TypeNamespace  ==  typeof(UIClientPageAttribute).Namespace);
 		}
 
-		internal static TargetClass TryLoad(CSClass csClass)
-		{
-			TargetClass returnValue = null;
-			var uiClientPageAttribute = csClass.AttributeList.SingleOrDefault(i => i.TypeName == typeof(UIClientPageAttribute).Name && i.TypeNamespace == typeof(UIClientPageAttribute).Namespace);
-			if(uiClientPageAttribute != null)
-			{
-				returnValue = new TargetClass
-				{
-					SourceClassFullName = Convert.ToString(uiClientPageAttribute.GetAttributeParameter(0, "SourceClassFullName", true)),
-					TargetClassFullName = csClass.ClassFullName
-				};
+		//internal static TargetClass TryLoad(CSClass csClass)
+		//{
+		//    TargetClass returnValue = null;
+		//    var uiClientPageAttribute = csClass.AttributeList.SingleOrDefault(i => i.TypeName == typeof(UIClientPageAttribute).Name && i.TypeNamespace == typeof(UIClientPageAttribute).Namespace);
+		//    if(uiClientPageAttribute != null)
+		//    {
+		//        returnValue = new TargetClass
+		//        {
+		//            SourceClassFullName = Convert.ToString(uiClientPageAttribute.GetAttributeParameter(0, "SourceClassFullName", true)),
+		//            TargetClassFullName = csClass.ClassFullName
+		//        };
 
-				//If there is only one field, that is the user and designer file.
-				//If there are two or more files and one ends with ".designer.cs", that is the designer file and the the first of the others is the user file
-				//If there are two or more files and none ends with ".designer.cs", then the first one is the designer and user file
-				if(csClass.FilePathList.Count == 1)
-				{
-					returnValue.DesignerFilePath = csClass.FilePathList[0];
-					returnValue.UserFilePath = csClass.FilePathList[0];
-				}
-				else if (csClass.FilePathList.Count > 1)
-				{
-					returnValue.DesignerFilePath = csClass.FilePathList.FirstOrDefault(i=>i.EndsWith(".designer.cs", StringComparison.CurrentCultureIgnoreCase));
-					if(string.IsNullOrEmpty(returnValue.DesignerFilePath))
-					{
-						returnValue.DesignerFilePath = csClass.FilePathList[0];
-						returnValue.UserFilePath = csClass.FilePathList[0];
-					}
-					else 
-					{
-						returnValue.UserFilePath = csClass.FilePathList.FirstOrDefault(i=>i != returnValue.DesignerFilePath);
-					}
-				}
+		//        //If there is only one field, that is the user and designer file.
+		//        //If there are two or more files and one ends with ".designer.cs", that is the designer file and the the first of the others is the user file
+		//        //If there are two or more files and none ends with ".designer.cs", then the first one is the designer and user file
+		//        if(csClass.FilePathList.Count == 1)
+		//        {
+		//            returnValue.DesignerFilePath = csClass.FilePathList[0];
+		//            returnValue.UserFilePath = csClass.FilePathList[0];
+		//        }
+		//        else if (csClass.FilePathList.Count > 1)
+		//        {
+		//            returnValue.DesignerFilePath = csClass.FilePathList.FirstOrDefault(i=>i.EndsWith(".designer.cs", StringComparison.CurrentCultureIgnoreCase));
+		//            if(string.IsNullOrEmpty(returnValue.DesignerFilePath))
+		//            {
+		//                returnValue.DesignerFilePath = csClass.FilePathList[0];
+		//                returnValue.UserFilePath = csClass.FilePathList[0];
+		//            }
+		//            else 
+		//            {
+		//                returnValue.UserFilePath = csClass.FilePathList.FirstOrDefault(i=>i != returnValue.DesignerFilePath);
+		//            }
+		//        }
 
-				foreach(var csProperty in csClass.PropertyList)
-				{
-					var targetField = TargetField.TryLoad(csProperty);
-					if(targetField != null)
-					{
-						returnValue.TargetFieldList.Add(targetField);
-					}
-				}
-			}
-			return returnValue;
-		}
+		//        foreach(var csProperty in csClass.PropertyList)
+		//        {
+		//            var targetField = TargetField.TryLoad(csProperty);
+		//            if(targetField != null)
+		//            {
+		//                returnValue.TargetFieldList.Add(targetField);
+		//            }
+		//        }
+		//    }
+		//    return returnValue;
+		//}
 
 		public static TargetClass Create(TargetProject targetProject, SourceWebProject sourceProject, SourceWebPage sourcePage)
 		{
@@ -191,16 +191,16 @@ namespace MMDB.UITest.Generator.Library
 			string designerFilePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), this.DesignerFilePath);
 			if (!File.Exists(designerFilePath))
 			{
-				switch(this.TargetObjectType)
+				switch(this.SourceObjectType)
 				{
-					case EnumTargetObjectType.MasterPage:
+					case EnumSourceObjectType.MasterPage:
 						this.CreateDesignerMasterPageFile(designerFilePath);
 						break;
-					case EnumTargetObjectType.WebPage:
+					case EnumSourceObjectType.WebPage:
 						this.CreateWebPageFile(designerFilePath);
 						break;
 					default:
-						throw new UnknownEnumValueException(this.TargetObjectType);
+						throw new UnknownEnumValueException(this.SourceObjectType);
 				}
 			}
 			

@@ -5,3 +5,8 @@
 */bin/**
 */obj/**
 */packages/**
+
+/Backup
+/UpgradeLog.htm
+/UpgradeLog.XML
+/_UpgradeReport_Files

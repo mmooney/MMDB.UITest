@@ -64,6 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestTargetClass.cs" />
+    <Compile Include="TestTargetClass.designer.cs">
+      <DependentUpon>TestTargetClass.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MMDB.UITest.Core\MMDB.UITest.Core.csproj">

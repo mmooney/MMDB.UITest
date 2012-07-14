@@ -14,45 +14,6 @@ namespace MMDB.UITest.Generator.Library
 {
 	public static class ProxyGenerator
 	{
-        public static SourceWebProject LoadWebPages(string csProjFilePath)
-        {
-			throw new NotImplementedException();
-			//SourceWebProject project = new SourceWebProject();
-			//List<SourceWebPage> returnList = new List<SourceWebPage>();
-			//XDocument xdoc = XDocument.Load(csProjFilePath);
-
-			//var projectParser = new ProjectParser();
-			//CSProjectFile csProject = projectParser.ParseFile(csProjFilePath);
-			//project.RootNamespace = csProject.RootNamespace;
-
-			//foreach (var csClass in csProject.ClassList)
-			//{
-			//    if (csClass.DependentUponFilePathList.Any(i => i.EndsWith(".master", StringComparison.CurrentCultureIgnoreCase)))
-			//    {
-			//        var pageObject = project.MasterPageList.SingleOrDefault(i => i.ClassFullName == csClass.ClassFullName);
-			//        if (pageObject == null)
-			//        {
-			//            pageObject = new SourceMasterPage();
-			//            project.MasterPageList.Add(pageObject);
-			//        }
-			//        ProxyGenerator.PopulateMasterPageObject(pageObject, csClass);
-			//        pageObject.PageUrl = ConvertToUrl(csClass.DependentUponFilePathList.Single(i => i.EndsWith(".master", StringComparison.CurrentCultureIgnoreCase)));
-			//    }
-			//    else if (csClass.DependentUponFilePathList.Any(i=>i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase)))
-			//    {
-			//        var pageObject = project.WebPageList.SingleOrDefault(i=>i.ClassFullName == csClass.ClassFullName);
-			//        if(pageObject == null)
-			//        {
-			//            pageObject = SourceWebPage.TryLoad(csProjFilePath, csClass);
-			//            project.WebPageList.Add(pageObject);
-			//        }
-			//        ProxyGenerator.PopulateWebPageObject(pageObject, csClass);
-			//        pageObject.PageUrl = ConvertToUrl(csClass.DependentUponFilePathList.Single(i => i.EndsWith(".aspx", StringComparison.CurrentCultureIgnoreCase)));
-			//    }
-			//}
-			//return project;
-        }
-
 		private static string ConvertToUrl(string filePath)
 		{
 			return filePath.Replace('\\','/');
@@ -61,39 +22,10 @@ namespace MMDB.UITest.Generator.Library
         public static void UpdateProxyProject(string targetProjectPath, SourceWebProject sourceProject)
 		{
 			XDocument xdoc = XDocument.Load(targetProjectPath);
-			TargetProject targetProject = TargetProject.Load(targetProjectPath);
-			List<TargetClass> classesToAddToProject = new List<TargetClass>();
-			foreach(var masterPage in sourceProject.MasterPageList)
-			{
-				//Find existing object
-				var targetClass = targetProject.TargetClassList.SingleOrDefault(i=>i.SourceClassFullName == masterPage.ClassFullName);
-				if(targetClass == null)
-				{
-					//If does not exist, create it
-					targetClass = TargetClass.Create(targetProject, sourceProject, masterPage);
-					classesToAddToProject.Add(targetClass);
-				}
-				targetClass.ExpectedUrl = masterPage.PageUrl;
-				targetClass.TargetObjectType = EnumTargetObjectType.MasterPage;
-				//For each missing field, add it
-				var comparison = TargetClassComparisonResult.Compare(masterPage, targetClass);
-				targetClass.EnsureFiles(targetProjectPath);
-				targetClass.AddFieldsToFile(targetProjectPath, targetClass.DesignerFilePath, comparison.FieldsToAdd);
-			}
-			foreach(var webPage in sourceProject.WebPageList)
-			{
-				var targetClass = targetProject.TargetClassList.SingleOrDefault(i=>i.SourceClassFullName == webPage.ClassFullName);
-				if(targetClass == null)
-				{
-					targetClass = TargetClass.Create(targetProject, sourceProject, webPage);
-					classesToAddToProject.Add(targetClass);
-				}
-				targetClass.ExpectedUrl = webPage.PageUrl;
-				targetClass.TargetObjectType = EnumTargetObjectType.WebPage;
-				var comparison = TargetClassComparisonResult.Compare(webPage, targetClass);
-				targetClass.EnsureFiles(targetProjectPath);
-				targetClass.AddFieldsToFile(targetProjectPath, targetClass.DesignerFilePath, comparison.FieldsToAdd);
-			}
+			var targetModelGenerator = new TargetModelGenerator();
+			TargetProject targetProject = targetModelGenerator.LoadFromProjectFile(targetProjectPath);
+			var projectComparison = targetModelGenerator.CompareProject(targetProject, sourceProject);
+			targetModelGenerator.UpdateProjectFile(targetProjectPath, projectComparison);
 		}
 
 		private static string GenerateTargetFilePath(string basePath, SourceWebPage page)

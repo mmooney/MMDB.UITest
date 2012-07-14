@@ -97,13 +97,8 @@ namespace MMDB.UITest.Generator.Tests
 				Assert.AreEqual("SourceClassFullName.aspx", targetClass.ExpectedUrl);
 			}
 
-			[Test]
-			public void SingleExpectedUrl()
-			{
-				Assert.Fail();
-			}
 
-			[Test]
+			[Test, Ignore("Multiple expected URLs not yet supported, maybe we'll add that a little later")]
 			public void MultipleExpectedUrl()
 			{
 				Assert.Fail();

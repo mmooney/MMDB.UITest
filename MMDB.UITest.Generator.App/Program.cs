@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MMDB.UITest.Generator.Library;
+using MMDB.UITest.DotNetParser;
 
 namespace MMDB.UITest.Generator.App
 {
@@ -18,7 +19,8 @@ namespace MMDB.UITest.Generator.App
 			string inputProjectPath = @"..\..\..\..\BugNet\src\BugNET_WAP\BugNET_WAP.csproj";
 			//string outputProjectPath = @"C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\ScrewturnWikiProxySample.csproj";
 			string outputProjectPath = @"..\..\..\BugNetProxySample\BugNetProxySample.csproj";
-			var sourceProject= ProxyGenerator.LoadWebPages(inputProjectPath);
+			var sourceProjectFile = new ProjectParser().ParseFile(inputProjectPath);
+			var sourceProject= new SourceWebModelParser().LoadFromProjectFile(sourceProjectFile, inputProjectPath);
 			ProxyGenerator.UpdateProxyProject(outputProjectPath, sourceProject);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);

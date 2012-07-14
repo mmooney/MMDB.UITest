@@ -19,26 +19,5 @@ namespace MMDB.UITest.Generator.Library
 		{
 			this.TargetClassList = new List<TargetClass>();
 		}
-
-		public static TargetProject Load(string targetProjectPath)
-		{
-			ProjectParser parser = new ProjectParser();
-			CSProjectFile csProject = parser.ParseFile(targetProjectPath);
-			TargetProject returnValue = new TargetProject()
-			{
-				Directory = Path.GetDirectoryName(targetProjectPath),
-				FileName = Path.GetFileName(targetProjectPath),
-				RootNamespace = csProject.RootNamespace
-			};
-			foreach(var csClass in csProject.ClassList)
-			{
-				var targetClass = TargetClass.TryLoad(csClass);
-				if(targetClass != null)
-				{
-					returnValue.TargetClassList.Add(targetClass);
-				}
-			}
-			return returnValue;
-		}
 	}
 }

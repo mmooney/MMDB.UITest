@@ -10,6 +10,10 @@ namespace MMDB.UITest.Generator.Library
 {
 	public class SourceWebPage : SourceContainer
 	{
+		public override EnumSourceObjectType SourceObjectType
+		{
+			get { return EnumSourceObjectType.WebPage; }
+		}
 		public string PageUrl { get; set; }
 
 		public static SourceWebPage TryLoad(string sourceProjectPath, CSClass csClass)

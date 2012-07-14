@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using MMDB.UITest.Generator.Library;
+using Moq;
+using MMDB.UITest.DotNetParser;
 
 namespace MMDB.UITest.Generator.Tests
 {
 	public class TargetModelGeneratorTests
 	{
 		[TestFixture]
-		public class UpdateProject 
+		public class CompareProject 
 		{
 			[Test]
 			public void SimpleTargetProject()
@@ -33,14 +35,16 @@ namespace MMDB.UITest.Generator.Tests
 					RootNamespace = "TestTargetNamespace"
 				};
 				var targetModelGenerator = new TargetModelGenerator();
-				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
-				Assert.AreEqual(1, targetProject.TargetClassList.Count);
-				Assert.AreEqual(@"Client\Pages\Test1\TestItemPageClient.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
-				Assert.AreEqual(@"Client\Pages\Test1\TestItemPageClient.cs", targetProject.TargetClassList[0].UserFilePath);
-				Assert.AreEqual(@"TestSourceNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
-				Assert.AreEqual(@"TestTargetNamespace.Client.Pages.Test1.TestItemPageClient", targetProject.TargetClassList[0].TargetClassFullName);
-				Assert.AreEqual(EnumTargetObjectType.WebPage,targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
+				var projectResult = targetModelGenerator.CompareProject(targetProject, sourceProject);
+				Assert.AreEqual(1, projectResult.ClassesToAdd.Count);
+				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
+				TestValidators.ValidateTargetClassComparisonResult(projectResult.ClassesToAdd[0],
+																	@"Client\Pages\Test1\TestItemPageClient.designer.cs",
+																	@"Client\Pages\Test1\TestItemPageClient.cs",
+																	@"TestSourceNamespace.Test1.TestItem",
+																	@"TestTargetNamespace.Client.Pages.Test1.TestItemPageClient", 
+																	EnumSourceObjectType.WebPage,
+																	"TestWebPage.aspx");
 			}
 
 			[Test]
@@ -64,18 +68,20 @@ namespace MMDB.UITest.Generator.Tests
 					RootNamespace = "TestTargetNamespace"
 				};
 				var targetModelGenerator = new TargetModelGenerator();
-				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
-				Assert.AreEqual(1, targetProject.TargetClassList.Count);
-				Assert.AreEqual(@"Client\Pages\SomeOtherNamespace\Test1\TestItemPageClient.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
-				Assert.AreEqual(@"Client\Pages\SomeOtherNamespace\Test1\TestItemPageClient.cs", targetProject.TargetClassList[0].UserFilePath);
-				Assert.AreEqual(@"SomeOtherNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
-				Assert.AreEqual(@"TestTargetNamespace.Client.Pages.SomeOtherNamespace.Test1.TestItemPageClient", targetProject.TargetClassList[0].TargetClassFullName);
-				Assert.AreEqual(EnumTargetObjectType.WebPage, targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
+				var projectResult = targetModelGenerator.CompareProject(targetProject, sourceProject);
+				Assert.AreEqual(1, projectResult.ClassesToAdd.Count);
+				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
+				TestValidators.ValidateTargetClassComparisonResult(projectResult.ClassesToAdd[0],
+																	@"Client\Pages\SomeOtherNamespace\Test1\TestItemPageClient.designer.cs", 
+																	@"Client\Pages\SomeOtherNamespace\Test1\TestItemPageClient.cs", 
+																	@"SomeOtherNamespace.Test1.TestItem", 
+																	@"TestTargetNamespace.Client.Pages.SomeOtherNamespace.Test1.TestItemPageClient", 
+																	EnumSourceObjectType.WebPage, 
+																	"TestWebPage.aspx");
 			}
 
 			[Test]
-			public void ExistingTargetClassInNormalPosition()
+			public void ExistingTargetClassWithExpectedNameAndLocation()
 			{
 				var sourceProject = new SourceWebProject
 				{
@@ -101,24 +107,19 @@ namespace MMDB.UITest.Generator.Tests
 							DesignerFilePath = @"Client\Pages\Test1\TestItemPageClient.designer.cs",
 							UserFilePath = @"Client\Pages\Test1\TestItemPageClient.cs",
 							TargetClassFullName = "TestTargetNamespace.Client.Pages.Test1.TestItemPageClient",
-							TargetObjectType = EnumTargetObjectType.WebPage,
+							SourceObjectType = EnumSourceObjectType.WebPage,
 							ExpectedUrl = "TestWebPage.aspx"
 						}
 					}
 				};
 				var targetModelGenerator = new TargetModelGenerator();
-				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
-				Assert.AreEqual(1, targetProject.TargetClassList.Count);
-				Assert.AreEqual(@"Client\Pages\Test1\TestItemPageClient.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
-				Assert.AreEqual(@"Client\Pages\Test1\TestItemPageClient.cs", targetProject.TargetClassList[0].UserFilePath);
-				Assert.AreEqual("TestSourceNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
-				Assert.AreEqual("TestTargetNamespace.Client.Pages.Test1.TestItemPageClient", targetProject.TargetClassList[0].TargetClassFullName);
-				Assert.AreEqual(EnumTargetObjectType.WebPage, targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
+				var projectResult = targetModelGenerator.CompareProject(targetProject, sourceProject);
+				Assert.AreEqual(0, projectResult.ClassesToAdd.Count);
+				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
 			}
 
 			[Test]
-			public void ExistingTargetClassInDifferentPosition()
+			public void ExistingTargetClassInDifferentLocation()
 			{
 				var sourceProject = new SourceWebProject
 				{
@@ -144,20 +145,15 @@ namespace MMDB.UITest.Generator.Tests
 							DesignerFilePath = @"SomeOtherLocation\TestItemPageClient.designer.cs",
 							UserFilePath = @"SomeOtherLocation\TestItemPageClient.cs",
 							TargetClassFullName = "SomeOtherLocation.TestItemPageClient",
-							TargetObjectType = EnumTargetObjectType.WebPage,
+							SourceObjectType = EnumSourceObjectType.WebPage,
 							ExpectedUrl = "TestWebPage.aspx"
 						}
 					}
 				};
 				var targetModelGenerator = new TargetModelGenerator();
-				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
-				Assert.AreEqual(1, targetProject.TargetClassList.Count);
-				Assert.AreEqual(@"SomeOtherLocation\TestItemPageClient.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
-				Assert.AreEqual(@"SomeOtherLocation\TestItemPageClient.cs", targetProject.TargetClassList[0].UserFilePath);
-				Assert.AreEqual("TestSourceNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
-				Assert.AreEqual("SomeOtherLocation.TestItemPageClient", targetProject.TargetClassList[0].TargetClassFullName);
-				Assert.AreEqual(EnumTargetObjectType.WebPage, targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
+				var projectResult = targetModelGenerator.CompareProject(targetProject, sourceProject);
+				Assert.AreEqual(0, projectResult.ClassesToAdd.Count);
+				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
 			}
 
 			[Test]
@@ -187,26 +183,28 @@ namespace MMDB.UITest.Generator.Tests
 							DesignerFilePath = @"SomeOtherLocation\SomeOtherClassName.designer.cs",
 							UserFilePath = @"SomeOtherLocation\SomeOtherClassName.cs",
 							TargetClassFullName = "SomeOtherLocation.SomeOtherClassName",
-							TargetObjectType = EnumTargetObjectType.WebPage,
+							SourceObjectType = EnumSourceObjectType.WebPage,
 							ExpectedUrl = "TestWebPage.aspx"
 						}
 					}
 				};
 				var targetModelGenerator = new TargetModelGenerator();
-				targetProject = targetModelGenerator.UpdateProject(targetProject, sourceProject);
-				Assert.AreEqual(1, targetProject.TargetClassList.Count);
-				Assert.AreEqual(@"SomeOtherLocation\SomeOtherClassName.designer.cs", targetProject.TargetClassList[0].DesignerFilePath);
-				Assert.AreEqual(@"SomeOtherLocation\SomeOtherClassName.cs", targetProject.TargetClassList[0].UserFilePath);
-				Assert.AreEqual("TestSourceNamespace.Test1.TestItem", targetProject.TargetClassList[0].SourceClassFullName);
-				Assert.AreEqual("SomeOtherLocation.SomeOtherClassName", targetProject.TargetClassList[0].TargetClassFullName);
-				Assert.AreEqual(EnumTargetObjectType.WebPage, targetProject.TargetClassList[0].TargetObjectType);
-				Assert.AreEqual("TestWebPage.aspx", targetProject.TargetClassList[0].ExpectedUrl);
+				var projectResult = targetModelGenerator.CompareProject(targetProject, sourceProject);
+				Assert.AreEqual(0, projectResult.ClassesToAdd.Count);
+				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
+				TestValidators.ValidateTargetClassComparisonResult(projectResult.ClassesToUpdate[0],
+																	@"SomeOtherLocation\SomeOtherClassName.designer.cs", 
+																	@"SomeOtherLocation\SomeOtherClassName.cs", 
+																	"TestSourceNamespace.Test1.TestItem", 
+																	"SomeOtherLocation.SomeOtherClassName", 
+																	EnumSourceObjectType.WebPage,
+																	"TestWebPage.aspx");
 			}
 
 		}
 
 		[TestFixture]
-		public class UpdateClass
+		public class CompareClass
 		{
 			[Test]
 			public void NewTargetClassWithLink() 
@@ -459,7 +457,7 @@ namespace MMDB.UITest.Generator.Tests
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
 				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0],
 											isDirty: false,
-											sourceClassFullName: "System.Web.UI.WebControls.HyperLink",
+											sourceClassFullName: typeof(System.Web.UI.WebControls.HyperLink).FullName,
 											sourceFieldName: "TestTargetField",
 											targetControlType: EnumTargetControlType.Link,
 											targetFieldName: "TestTargetFieldChanged");
@@ -476,7 +474,7 @@ namespace MMDB.UITest.Generator.Tests
 				    {
 				        new SourceWebControl
 				        {
-				            ClassFullName = "System.Web.UI.WebControls.HyperLink",
+				            ClassFullName = typeof(System.Web.UI.WebControls.HyperLink).FullName,
 				            FieldName = "TestTargetField"
 				        }
 				    }
@@ -488,7 +486,7 @@ namespace MMDB.UITest.Generator.Tests
 						new TargetField
 						{
 							IsDirty = false,
-							SourceClassFullName = "System.Web.UI.WebControls.HyperLink",
+							SourceClassFullName = typeof(System.Web.UI.WebControls.HyperLink).FullName,
 							SourceFieldName = "TestTargetField",
 							TargetControlType = EnumTargetControlType.TextBox,
 							TargetFieldName = "TestTargetField"
@@ -500,7 +498,7 @@ namespace MMDB.UITest.Generator.Tests
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
 				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0],
 											isDirty: false,
-											sourceClassFullName: "System.Web.UI.WebControls.HyperLink",
+											sourceClassFullName: typeof(System.Web.UI.WebControls.HyperLink).FullName,
 											sourceFieldName: "TestTargetField",
 											targetControlType: EnumTargetControlType.TextBox,
 											targetFieldName: "TestTargetField");
@@ -513,10 +511,21 @@ namespace MMDB.UITest.Generator.Tests
 			[Test]
 			public void LoadBasicFile()
 			{
+				//var targetModelGenerator = new TargetModelGenerator();
+				//CSProjectFile projectFile = new CSProjectFile() 
+				//{
+				//    RootNamespace = "TargetNamespace",
+				//    ClassList = new List<CSClass>()
+				//    {
+				//        new CSClass
+				//        {
+				//            AttributeList
+				//        }
+				//    }
+				//}
+				//Mock<TargetClassManager> targetClassManager = new Mock<TargetClassManager>();
+				//var targetProject = targetModelGenerator.LoadFromProjectFile(data, );
 				Assert.Fail();
-				string data = @"test";
-				var targetModelGenerator = new TargetModelGenerator();
-				//var targetProject = targetModelGenerator..LoadProjectFile(data);
 			}
 		}
 

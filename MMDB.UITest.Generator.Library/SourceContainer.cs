@@ -8,6 +8,7 @@ namespace MMDB.UITest.Generator.Library
 {
 	public abstract class SourceContainer 
 	{
+		public abstract EnumSourceObjectType SourceObjectType { get; }
 		public List<SourceWebControl> Controls { get; set; }
 		public string ClassName { get; set; }
 		public string NamespaceName { get; set; }
