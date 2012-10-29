@@ -70,7 +70,12 @@ namespace MMDB.UITest.Generator.Library
 		        {
 					TargetClassComparisonResult classResult = this.CompareClass(sourceProject, sourcePage, targetProject, null);
 		            result.ClassesToAdd.Add(classResult);
-		        }
+		        } 
+				else
+				{
+					TargetClassComparisonResult classResult = this.CompareClass(sourceProject, sourcePage, targetProject, targetClass);
+					result.ClassesToUpdate.Add(classResult);
+				}
 		    }
 		    return result;
 		}
@@ -156,12 +161,12 @@ namespace MMDB.UITest.Generator.Library
 				{
 					SourceClassFullName = sourceClass.ClassFullName,
 					TargetClassName = targetClassName,
-					TargetNamespaceName = targetClassName,
+					TargetNamespaceName = targetNamespace,
 					DesignerFileRelativePath = Path.Combine(targetDirectory, targetClassName + ".designer.cs"),
 					UserFileRelativePath = Path.Combine(targetDirectory, targetClassName + ".cs"),
 					SourceObjectType = EnumSourceObjectType.WebPage,
 					ExpectedUrl = sourceClass.PageUrl,
-					IsDirtry = true
+					IsDirty = true
 				};
 			}
 			else 
@@ -171,17 +176,19 @@ namespace MMDB.UITest.Generator.Library
 					SourceClassFullName = targetClass.SourceClassFullName,
 					TargetClassFullName = targetClass.TargetClassFullName,
 					DesignerFileRelativePath = targetClass.DesignerFilePath,
-					UserFileRelativePath = targetClass.UserFilePath
+					UserFileRelativePath = targetClass.UserFilePath,
+					SourceObjectType = targetClass.SourceObjectType,
+					ExpectedUrl = targetClass.ExpectedUrl
 				};
 				if(targetClass.ExpectedUrl != sourceClass.PageUrl)
 				{
 					result.ExpectedUrl = sourceClass.PageUrl;
-					result.IsDirtry = true;
+					result.IsDirty = true;
 				}
 				if(targetClass.SourceObjectType != sourceClass.SourceObjectType)
 				{
 					result.SourceObjectType = sourceClass.SourceObjectType;
-					result.IsDirtry = true;
+					result.IsDirty = true;
 				}
 			}
 			foreach(var sourceControl in sourceClass.Controls)
@@ -202,14 +209,14 @@ namespace MMDB.UITest.Generator.Library
 						TargetFieldName = sourceControl.FieldName
 				    };
 				    result.FieldsToAdd.Add(targetControl);
-					result.IsDirtry = true;
+					result.IsDirty = true;
 				}
 				else if(targetControl.SourceClassFullName != sourceControl.ClassFullName)
 				{
 				    targetControl.SourceClassFullName = sourceControl.ClassFullName;
 					result.FieldsToUpdate.Add(targetControl);
 				    targetControl.IsDirty = true;
-					result.IsDirtry = true;
+					result.IsDirty = true;
 				}
 			}
 			return result;
@@ -218,6 +225,67 @@ namespace MMDB.UITest.Generator.Library
 		public void UpdateProjectFile(string targetProjectPath, TargetProjectComparisonResult projectComparison)
 		{
 			throw new NotImplementedException();
+		}
+
+		public TargetClass UpdateClass(SourceWebPage sourceWebPage, TargetClass targetClass)
+		{
+			foreach(var sourceControl in sourceWebPage.Controls)
+			{
+				var targetField = targetClass.TargetFieldList.SingleOrDefault(i=>i.SourceFieldName == sourceControl.FieldName);
+				if(targetField == null)
+				{
+					targetField = new TargetField
+					{
+						IsDirty = true,
+						SourceNamespaceName = sourceControl.NamespaceName,
+						SourceClassName = sourceControl.ClassName,
+						SourceFieldName = sourceControl.FieldName,
+						TargetFieldName = sourceControl.FieldName
+					};
+					EnumTargetControlType targetControlType;
+					targetControlType = GetTargetControlType(sourceControl);
+					targetField.TargetControlType = targetControlType;
+					targetClass.TargetFieldList.Add(targetField);
+				}
+				else 
+				{
+					if(targetField.SourceClassFullName != sourceControl.ClassFullName)
+					{
+						targetField.SourceClassName = sourceControl.ClassName;
+						targetField.SourceNamespaceName = sourceControl.NamespaceName;
+						targetField.IsDirty = true;
+					}
+					var targetControlType = GetTargetControlType(sourceControl);
+					if(targetField.TargetControlType != targetControlType)
+					{
+						targetField.TargetControlType = targetControlType;
+						targetField.IsDirty = true;
+					}
+				}
+			}
+			return targetClass;
+		}
+
+		private static EnumTargetControlType GetTargetControlType(SourceWebControl sourceControl)
+		{
+			EnumTargetControlType targetControlType;
+			if (sourceControl.ClassFullName == typeof(System.Web.UI.WebControls.HyperLink).FullName)
+			{
+				targetControlType = EnumTargetControlType.Link;
+			}
+			else if (sourceControl.ClassFullName == typeof(System.Web.UI.WebControls.Label).FullName)
+			{
+				targetControlType = EnumTargetControlType.Label;
+			}
+			else if (sourceControl.ClassFullName == typeof(System.Web.UI.WebControls.TextBox).FullName)
+			{
+				targetControlType = EnumTargetControlType.TextBox;
+			}
+			else
+			{
+				targetControlType = EnumTargetControlType.Unknown;
+			}
+			return targetControlType;
 		}
 	}
 }

@@ -50,14 +50,14 @@ namespace MMDB.UITest.Generator.Library
 		public List<TargetField> FieldsToUpdate { get; set; }
 		public List<TargetField> FieldsToDelete { get; set; }
 		public string ExpectedUrl { get; set; }
-		public bool IsDirtry { get; set; }
+		public bool IsDirty { get; set; }
 
 		public TargetClassComparisonResult()
 		{
 			this.FieldsToAdd = new List<TargetField>();
 			this.FieldsToUpdate = new List<TargetField>();
 			this.FieldsToDelete = new List<TargetField>();
-			this.IsDirtry = false;
+			this.IsDirty = false;
 		}
 
 		public static TargetClassComparisonResult Compare(SourceWebPage webPage, TargetClass targetClass)

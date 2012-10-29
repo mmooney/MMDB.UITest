@@ -15,7 +15,7 @@ namespace MMDB.UITest.Generator.Tests
 		public class CompareProject 
 		{
 			[Test]
-			public void SimpleTargetProject()
+			public void OneSourceClass_NewTargetProject_ShouldCreateTargetClass()
 			{
 				var sourceProject = new SourceWebProject 
 				{
@@ -48,7 +48,7 @@ namespace MMDB.UITest.Generator.Tests
 			}
 
 			[Test]
-			public void DifferentSourceNamespace()
+			public void DifferentSourceNamespace_CreatesTargetClassWithDifferentNamespace()
 			{
 				var sourceProject = new SourceWebProject
 				{
@@ -81,7 +81,7 @@ namespace MMDB.UITest.Generator.Tests
 			}
 
 			[Test]
-			public void ExistingTargetClassWithExpectedNameAndLocation()
+			public void ExistingTargetClassWithExpectedNameAndLocation_ShouldUpdateExistingClass()
 			{
 				var sourceProject = new SourceWebProject
 				{
@@ -115,11 +115,11 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				var projectResult = targetModelGenerator.CompareProject(targetProject, sourceProject);
 				Assert.AreEqual(0, projectResult.ClassesToAdd.Count);
-				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
+				Assert.AreEqual(1, projectResult.ClassesToUpdate.Count);
 			}
 
 			[Test]
-			public void ExistingTargetClassInDifferentLocation()
+			public void ExistingTargetClassInDifferentLocation_ShouldUpdateExistingClass()
 			{
 				var sourceProject = new SourceWebProject
 				{
@@ -153,11 +153,11 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				var projectResult = targetModelGenerator.CompareProject(targetProject, sourceProject);
 				Assert.AreEqual(0, projectResult.ClassesToAdd.Count);
-				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
+				Assert.AreEqual(1, projectResult.ClassesToUpdate.Count);
 			}
 
 			[Test]
-			public void ExistingTargetClassWithDifferentName()
+			public void ExistingTargetClassWithDifferentName_ShouldUpdateExistingTargetClass()
 			{
 				var sourceProject = new SourceWebProject
 				{
@@ -191,7 +191,7 @@ namespace MMDB.UITest.Generator.Tests
 				var targetModelGenerator = new TargetModelGenerator();
 				var projectResult = targetModelGenerator.CompareProject(targetProject, sourceProject);
 				Assert.AreEqual(0, projectResult.ClassesToAdd.Count);
-				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
+				Assert.AreEqual(1, projectResult.ClassesToUpdate.Count);
 				TestValidators.ValidateTargetClassComparisonResult(projectResult.ClassesToUpdate[0],
 																	@"SomeOtherLocation\SomeOtherClassName.designer.cs", 
 																	@"SomeOtherLocation\SomeOtherClassName.cs", 
@@ -207,7 +207,7 @@ namespace MMDB.UITest.Generator.Tests
 		public class CompareClass
 		{
 			[Test]
-			public void NewTargetClassWithLink() 
+			public void NewTargetClassWithLink_ShouldCreateNewTargetClassWithLink() 
 			{
 				SourceWebPage sourceWebPage = new SourceWebPage
 				{
@@ -218,7 +218,7 @@ namespace MMDB.UITest.Generator.Tests
 				        new SourceWebControl
 				        {
 				            ClassFullName = "System.Web.UI.WebControls.HyperLink",
-				            FieldName = "ExistingTargetField"
+				            FieldName = "NewLinkField"
 				        }
 				    }
 				};
@@ -229,13 +229,13 @@ namespace MMDB.UITest.Generator.Tests
 				TestValidators.ValidateTargetField(targetField: targetClass.TargetFieldList[0],
 											isDirty:true, 
 											sourceClassFullName:"System.Web.UI.WebControls.HyperLink",
-											sourceFieldName:"ExistingTargetField",
+											sourceFieldName: "NewLinkField",
 											targetControlType: EnumTargetControlType.Link,
-											targetFieldName: "ExistingTargetField");
+											targetFieldName: "NewLinkField");
 			}
 
 			[Test]
-			public void NewTargetClassWithTextBox()
+			public void NewTargetClassWithTextBox_ShouldCreateNewTargetClassWithTextBox()
 			{
 				SourceWebPage sourceWebPage = new SourceWebPage
 				{
@@ -263,7 +263,7 @@ namespace MMDB.UITest.Generator.Tests
 			}
 
 			[Test]
-			public void NewTargetClassWithLabel()
+			public void NewTargetClassWithLabel_ShouldCreateNewTargetClassWithLabel()
 			{
 				SourceWebPage sourceWebPage = new SourceWebPage
 				{
@@ -381,7 +381,7 @@ namespace MMDB.UITest.Generator.Tests
 			}
 
 			[Test]
-			public void ExistingClassExistingFieldChangedSourceType()
+			public void ExistingClassExistingFieldChangedSourceType_ShouldUpdateExistingTargetField()
 			{
 				SourceWebPage sourceWebPage = new SourceWebPage
 				{
@@ -423,7 +423,7 @@ namespace MMDB.UITest.Generator.Tests
 			}
 
 			[Test]
-			public void ExistingClassChangedTargetFieldName()
+			public void ExistingClassChangedTargetFieldName_ShouldKeepExistingTargetFieldName()
 			{
 				SourceWebPage sourceWebPage = new SourceWebPage
 				{
@@ -464,7 +464,7 @@ namespace MMDB.UITest.Generator.Tests
 			}
 
 			[Test]
-			public void ExistingClassChangedTargetFieldType()
+			public void ExistingClassChangedTargetFieldType_ShouldUpdateTargetFieldType()
 			{
 				SourceWebPage sourceWebPage = new SourceWebPage
 				{
@@ -497,35 +497,11 @@ namespace MMDB.UITest.Generator.Tests
 				targetClass = targetModelGenerator.UpdateClass(sourceWebPage, targetClass);
 				Assert.AreEqual(1, targetClass.TargetFieldList.Count);
 				TestValidators.ValidateTargetField(targetClass.TargetFieldList[0],
-											isDirty: false,
+											isDirty: true,
 											sourceClassFullName: typeof(System.Web.UI.WebControls.HyperLink).FullName,
 											sourceFieldName: "TestTargetField",
-											targetControlType: EnumTargetControlType.TextBox,
+											targetControlType: EnumTargetControlType.Link,
 											targetFieldName: "TestTargetField");
-			}
-		}
-
-		[TestFixture]
-		public class LoadProjectFile
-		{
-			[Test]
-			public void LoadBasicFile()
-			{
-				//var targetModelGenerator = new TargetModelGenerator();
-				//CSProjectFile projectFile = new CSProjectFile() 
-				//{
-				//    RootNamespace = "TargetNamespace",
-				//    ClassList = new List<CSClass>()
-				//    {
-				//        new CSClass
-				//        {
-				//            AttributeList
-				//        }
-				//    }
-				//}
-				//Mock<TargetClassManager> targetClassManager = new Mock<TargetClassManager>();
-				//var targetProject = targetModelGenerator.LoadFromProjectFile(data, );
-				Assert.Fail();
 			}
 		}
 
