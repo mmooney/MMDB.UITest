@@ -73,6 +73,7 @@
     <Compile Include="DotNetParserHelper.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ProjectParser.cs" />
+    <Compile Include="ProjectWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebForms\CSWebFormParser.cs" />
     <Compile Include="WebForms\WebFormContainer.cs" />

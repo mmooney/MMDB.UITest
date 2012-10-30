@@ -28,7 +28,7 @@ namespace MMDB.UITest.DotNetParser.WebForms
 			WebFormsParser telerikParser = new WebFormsParser(nodeFactory, nodeFilterProvider);
 			var document = telerikParser.Parse(input);
 			
-			var directiveNode = document.RootNode.Children.FirstOrDefault(i=>i is DirectiveNode);
+			var directiveNode = document.RootNode.Children.FirstOrDefault(i=>i is DirectiveNode && !i.Attributes.ContainsKey("Register"));
 			if(directiveNode == null)
 			{
 				throw new ArgumentException("Failed to find directive node");

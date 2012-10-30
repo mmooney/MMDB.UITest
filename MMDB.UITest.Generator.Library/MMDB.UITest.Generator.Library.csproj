@@ -88,6 +88,8 @@
     <Compile Include="TargetControlGenerator.cs" />
     <Compile Include="TargetField.cs" />
     <Compile Include="TargetModelGenerator.cs" />
+    <Compile Include="TargetModelParser.cs" />
+    <Compile Include="TargetModelWriter.cs" />
     <Compile Include="TargetProject.cs" />
     <Compile Include="TargetProjectComparisonResult.cs" />
     <Compile Include="TargetClassComparisonResult.cs" />

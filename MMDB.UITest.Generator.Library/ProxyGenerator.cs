@@ -25,7 +25,7 @@ namespace MMDB.UITest.Generator.Library
 			var targetModelGenerator = new TargetModelGenerator();
 			TargetProject targetProject = targetModelGenerator.LoadFromProjectFile(targetProjectPath);
 			var projectComparison = targetModelGenerator.CompareProject(targetProject, sourceProject);
-			targetModelGenerator.UpdateProjectFile(targetProjectPath, projectComparison);
+			targetModelGenerator.UpdateProjectFile(targetProject, projectComparison);
 		}
 
 		private static string GenerateTargetFilePath(string basePath, SourceWebPage page)

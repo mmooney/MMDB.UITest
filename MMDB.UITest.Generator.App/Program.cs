@@ -20,8 +20,15 @@ namespace MMDB.UITest.Generator.App
 			//string outputProjectPath = @"C:\Users\admin\Dropbox\Code\MMDB.UITest\ScrewturnWikiProxySample\ScrewturnWikiProxySample.csproj";
 			string outputProjectPath = @"..\..\..\BugNetProxySample\BugNetProxySample.csproj";
 			var sourceProjectFile = new ProjectParser().ParseFile(inputProjectPath);
-			var sourceProject= new SourceWebModelParser().LoadFromProjectFile(sourceProjectFile, inputProjectPath);
-			ProxyGenerator.UpdateProxyProject(outputProjectPath, sourceProject);
+			var sourceModel = new SourceWebModelParser().LoadFromProjectFile(sourceProjectFile, inputProjectPath);
+
+			var targetProjectFile = new ProjectParser().ParseFile(outputProjectPath);
+			var targetModel = new TargetModelParser().LoadFromProjectFile(targetProjectFile, outputProjectPath);
+
+			var comparison = new TargetModelGenerator().CompareProject(targetModel, sourceModel);
+			new TargetModelWriter().ApplyChanges(comparison, outputProjectPath);
+
+			//ProxyGenerator.UpdateProxyProject(outputProjectPath, sourceProject);
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new Form1());

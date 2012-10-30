@@ -505,5 +505,29 @@ namespace MMDB.UITest.Generator.Tests
 			}
 		}
 
+		//[TestFixture]
+		//public class LoadProjectFile
+		//{
+		//    [Test]
+		//    public void LoadBasicFile()
+		//    {
+		//        var targetModelGenerator = new TargetModelGenerator();
+		//        CSProjectFile projectFile = new CSProjectFile() 
+		//        {
+		//            RootNamespace = "TargetNamespace",
+		//            ClassList = new List<CSClass>()
+		//            {
+		//                new CSClass
+		//                {
+		//                    AttributeList
+		//                }
+		//            }
+		//        }
+		//        Mock<TargetClassManager> targetClassManager = new Mock<TargetClassManager>();
+		//        var targetProject = targetModelGenerator.LoadFromProjectFile(projectFile, Guid.NewGuid().ToString());
+		//        Assert.Fail();
+		//    }
+		//}
+
 	}
 }

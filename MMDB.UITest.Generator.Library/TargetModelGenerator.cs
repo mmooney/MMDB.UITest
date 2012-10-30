@@ -222,7 +222,24 @@ namespace MMDB.UITest.Generator.Library
 			return result;
 		}
 
-		public void UpdateProjectFile(string targetProjectPath, TargetProjectComparisonResult projectComparison)
+		public void UpdateProjectFile(TargetProject targetProject, TargetProjectComparisonResult projectComparison)
+		{
+			foreach(var newClass in projectComparison.ClassesToAdd)
+			{
+				this.AddClass(targetProject, newClass);
+			}
+			foreach(var updateClass in projectComparison.ClassesToUpdate)
+			{
+				this.UpdateClass(targetProject, updateClass);
+			}
+		}
+
+		private void UpdateClass(TargetProject targetProject, TargetClassComparisonResult updateClass)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void AddClass(TargetProject targetProject, TargetClassComparisonResult newClass)
 		{
 			throw new NotImplementedException();
 		}
