@@ -48,6 +48,39 @@ namespace MMDB.UITest.Generator.Tests
 			}
 
 			[Test]
+			public void MatchingSourceNamespace_CreatesTargetClassWithSameNamespace()
+			{
+				var sourceProject = new SourceWebProject
+				{
+					WebPageList = new List<SourceWebPage>()
+					{
+						new SourceWebPage
+						{
+							ClassFullName = "TestTargetNamespace.Test1.TestItem",
+							PageUrl = "TestWebPage.aspx"
+						}
+					},
+					RootNamespace = "TestSourceNamespace"
+				};
+
+				var targetProject = new TargetProject
+				{
+					RootNamespace = "TestTargetNamespace.Test1"
+				};
+				var targetModelGenerator = new TargetModelGenerator();
+				var projectResult = targetModelGenerator.CompareProject(targetProject, sourceProject);
+				Assert.AreEqual(1, projectResult.ClassesToAdd.Count);
+				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
+				TestValidators.ValidateTargetClassComparisonResult(classResult:projectResult.ClassesToAdd[0],
+																	designerFileRelativePath:@"Client\Pages\TestTargetNamespace\Test1\TestItemPageClient.designer.cs",
+																	userFileRelativePath: @"Client\Pages\TestTargetNamespace\Test1\TestItemPageClient.cs",
+																	sourceClassFullName: @"TestTargetNamespace.Test1.TestItem",
+																	targetClassFullName: @"TestTargetNamespace.Test1.Client.Pages.TestTargetNamespace.Test1.TestItemPageClient", 
+																	targetObjectType:EnumSourceObjectType.WebPage, 
+																	expectedUrl:"TestWebPage.aspx");
+			}
+
+			[Test]
 			public void DifferentSourceNamespace_CreatesTargetClassWithDifferentNamespace()
 			{
 				var sourceProject = new SourceWebProject
@@ -72,11 +105,11 @@ namespace MMDB.UITest.Generator.Tests
 				Assert.AreEqual(1, projectResult.ClassesToAdd.Count);
 				Assert.AreEqual(0, projectResult.ClassesToUpdate.Count);
 				TestValidators.ValidateTargetClassComparisonResult(projectResult.ClassesToAdd[0],
-																	@"Client\Pages\SomeOtherNamespace\Test1\TestItemPageClient.designer.cs", 
-																	@"Client\Pages\SomeOtherNamespace\Test1\TestItemPageClient.cs", 
-																	@"SomeOtherNamespace.Test1.TestItem", 
-																	@"TestTargetNamespace.Client.Pages.SomeOtherNamespace.Test1.TestItemPageClient", 
-																	EnumSourceObjectType.WebPage, 
+																	@"Client\Pages\SomeOtherNamespace\Test1\TestItemPageClient.designer.cs",
+																	@"Client\Pages\SomeOtherNamespace\Test1\TestItemPageClient.cs",
+																	@"SomeOtherNamespace.Test1.TestItem",
+																	@"TestTargetNamespace.Client.Pages.SomeOtherNamespace.Test1.TestItemPageClient",
+																	EnumSourceObjectType.WebPage,
 																	"TestWebPage.aspx");
 			}
 

@@ -57,13 +57,14 @@ namespace MMDB.UITest.Generator.Library
 			sb.AppendLine();
 			sb.AppendLine(string.Format("namespace {0}", typeNamespace));
 			sb.AppendLine("{");
-			sb.AppendLine(string.Format("[{0}(\"{1}\")]", typeof(UIClientPageAttribute).FullName, targetClass.SourceClassFullName));
+			//sb.AppendLine(string.Format("[{0}(sourceClassFullName:\"{1}\",expectedUrlList: new string[] {{\"{2}\"}})]", typeof(UIClientPageAttribute).FullName, targetClass.SourceClassFullName, targetClass.ExpectedUrl));
+			sb.AppendLine(string.Format("[{0}(sourceClassFullName:\"{1}\")]", typeof(UIClientPageAttribute).FullName, targetClass.SourceClassFullName));
 			sb.AppendLine(string.Format("partial class {0} : {1}", typeName, typeof(BasePageClient).FullName));
 			sb.AppendLine("{");
 			sb.AppendLine();
 			sb.AppendLine(string.Format("public {0} (Browser browser) : base(browser) {{}}", typeName));
 			sb.AppendLine();
-			sb.AppendLine(string.Format("protected override string ExpectedUrl {{ get {{ return \"{0}\"; }} }}", targetClass.ExpectedUrl));
+			sb.AppendLine(string.Format("protected override IEnumerable<string> ExpectedUrlList {{ get {{ return new string[] {{ \"{0}\" }}; }} }}", targetClass.ExpectedUrl));
 
 			sb.AppendLine("}");
 			sb.AppendLine("}");
@@ -95,7 +96,7 @@ namespace MMDB.UITest.Generator.Library
 			sb.AppendLine();
 			sb.AppendLine(string.Format("namespace {0}", typeNamespace));
 			sb.AppendLine("{");
-			sb.AppendLine(string.Format("[{0}(\"{1}\")]", typeof(UIClientPageAttribute).FullName, targetClass.SourceClassFullName));
+			sb.AppendLine(string.Format("[{0}(sourceClassFullName:\"{1}\")]", typeof(UIClientPageAttribute).FullName, targetClass.SourceClassFullName));
 			sb.AppendLine(string.Format("partial class {0} : {1}", typeName, typeof(BaseMasterPageClient).FullName));
 			sb.AppendLine("{");
 			sb.AppendLine();

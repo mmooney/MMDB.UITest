@@ -9,11 +9,12 @@ namespace MMDB.UITest.Core
 	public class UIClientPageAttribute : Attribute
 	{
 		public string SourceClassFullName { get; set; }
-		public string ExpectedUrl { get; set; }
+		//public IEnumerable<string> ExpectedUrlList { get; set; }
 
-		public UIClientPageAttribute(string sourceClassFullName)
+		public UIClientPageAttribute(string sourceClassFullName/*, IEnumerable<string> expectedUrlList=null*/)
 		{
 			this.SourceClassFullName = sourceClassFullName;
+			//this.ExpectedUrlList = expectedUrlList;
 		}
 	}
 }

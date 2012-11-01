@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using MMDB.UITest.DotNetParser;
+using MMDB.Shared;
 
 namespace MMDB.UITest.Generator.Library
 {
@@ -155,8 +156,13 @@ namespace MMDB.UITest.Generator.Library
 					relativeSourceNamespace = sourceClass.NamespaceName;
 				}
 				string targetClassName = sourceClass.ClassName + "PageClient";
-				string targetDirectory = @"Client\Pages\" + relativeSourceNamespace.Replace(".", "\\"); ;
-				string targetNamespace = targetProject.RootNamespace + ".Client.Pages." + relativeSourceNamespace;
+				string targetDirectory = @"Client\Pages";
+				string targetNamespace = targetProject.RootNamespace + ".Client.Pages";
+				if(!string.IsNullOrEmpty(relativeSourceNamespace))
+				{
+					targetDirectory += "\\" + relativeSourceNamespace.Replace(".", "\\");
+					targetNamespace += "." + relativeSourceNamespace;
+				}
 				result = new TargetClassComparisonResult
 				{
 					SourceClassFullName = sourceClass.ClassFullName,
