@@ -22,8 +22,8 @@ namespace MMDB.UITest.Generator.Library
 					this.CreateUserFile(newClass, userFilePath);
 				}
 				string designerFilePath = Path.Combine(Path.GetDirectoryName(outputProjectPath), newClass.DesignerFileRelativePath);
-				if (!File.Exists(designerFilePath))
-				{
+				//if (!File.Exists(designerFilePath))
+				//{
 					switch (newClass.SourceObjectType)
 					{
 						case EnumSourceObjectType.MasterPage:
@@ -35,7 +35,7 @@ namespace MMDB.UITest.Generator.Library
 						default:
 							throw new UnknownEnumValueException(newClass.SourceObjectType);
 					}
-				}
+				//}
 				ProjectParser parser = new ProjectParser();
 				parser.EnsureFileInclude(outputProjectPath, newClass.UserFileRelativePath, null);
 				parser.EnsureFileInclude(outputProjectPath, newClass.DesignerFileRelativePath, newClass.UserFileRelativePath);

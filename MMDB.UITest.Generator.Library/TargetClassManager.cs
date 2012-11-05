@@ -17,9 +17,9 @@ namespace MMDB.UITest.Generator.Library
 			{
 				returnValue = new TargetClass
 				{
-					SourceClassFullName = Convert.ToString(uiClientPageAttribute.GetAttributeParameter(0, "SourceClassFullName", true)),
+					SourceClassFullName = Convert.ToString(uiClientPageAttribute.GetAttributeParameter(0, "sourceClassFullName", true)),
 					TargetClassFullName = csClass.ClassFullName,
-					ExpectedUrl = Convert.ToString(uiClientPageAttribute.GetAttributeParameter(1, "ExpectedUrl", false))
+					//ExpectedUrl = Convert.ToString(uiClientPageAttribute.GetAttributeParameter(1, "ExpectedUrl", false))
 				};
 				
 				//If there is only one file, that is the user and designer file.

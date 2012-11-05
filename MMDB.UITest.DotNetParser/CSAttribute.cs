@@ -79,6 +79,29 @@ namespace MMDB.UITest.DotNetParser
 						throw new Exception("Unrecognized expression type: " + namedExpressionNode.Expression.GetType().FullName);
 					}
 				}
+				if(node is NamedArgumentExpression)
+				{
+					var namedArgumentExpressionNode = (NamedArgumentExpression)node;
+					if (namedArgumentExpressionNode.Expression is PrimitiveExpression)
+					{
+						var primitiveExpressionNode = (PrimitiveExpression)namedArgumentExpressionNode.Expression;
+						var argument = new CSAttributeArgument
+						{
+							ArgumentName = namedArgumentExpressionNode.Identifier,
+							ArguementValue = primitiveExpressionNode.Value
+						};
+						returnValue.ArgumentList.Add(argument);
+					}
+					else if (namedArgumentExpressionNode.Expression is MemberReferenceExpression)
+					{
+						var memberReferenceExpressionNode = (MemberReferenceExpression)namedArgumentExpressionNode.Expression;
+					}
+					else
+					{
+						throw new Exception("Unrecognized expression type: " + namedArgumentExpressionNode.Expression.GetType().FullName);
+					}
+					
+				}
 			}
 			return returnValue;
 		}
