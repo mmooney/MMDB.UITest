@@ -22,9 +22,9 @@ namespace MMDB.UITest.Generator.Tests
 					RootNamespace = "Test.Namespace",
 					ClassList = new List<CSClass>
 					{
-						new CSClass { ClassFullName="Test1.TestClass1", FilePathList=new List<string> {"TestClass1.aspx"} },
-						new CSClass { ClassFullName="Test1.TestMaster", FilePathList=new List<string> {"TestMasterPage.Master"} },
-						new CSClass { ClassFullName="Test1.TestUserControl", FilePathList=new List<string> {"TestUserControl.ascx"} }
+						new CSClass { ClassFullName="Test1.TestClass1", FileRelativePathList=new List<string> {"TestClass1.aspx"} },
+						new CSClass { ClassFullName="Test1.TestMaster", FileRelativePathList=new List<string> {"TestMasterPage.Master"} },
+						new CSClass { ClassFullName="Test1.TestUserControl", FileRelativePathList=new List<string> {"TestUserControl.ascx"} }
 					},
 					WebFormContainers = new List<WebFormContainer>()
 					{

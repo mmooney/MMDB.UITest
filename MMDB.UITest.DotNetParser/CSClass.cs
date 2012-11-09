@@ -28,7 +28,7 @@ namespace MMDB.UITest.DotNetParser
 			}
 		}
 		public EnumProtectionLevel ProtectionLevel { get; set; }
-		public List<string> FilePathList { get; set; }
+		public List<string> FileRelativePathList { get; set; }
 		public List<CSField> FieldList { get; set; }
 		public List<CSProperty> PropertyList { get; set; }
 		public List<CSAttribute> AttributeList { get; set; }
@@ -38,7 +38,7 @@ namespace MMDB.UITest.DotNetParser
 		{
 			this.FieldList = new List<CSField>();
 			this.PropertyList = new List<CSProperty>();
-			this.FilePathList = new List<string>();
+			this.FileRelativePathList = new List<string>();
 			this.AttributeList = new List<CSAttribute>();
 		}
 

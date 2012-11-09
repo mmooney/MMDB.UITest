@@ -9,22 +9,26 @@ namespace MMDB.UITest.DotNetParser
 {
 	public class ClassParser 
 	{
-		public virtual List<CSClass> ParseFile(string filePath, IEnumerable<CSClass> existingClassList = null)
+		public virtual List<CSClass> ParseFile(string filePath, string projectDirectory, IEnumerable<CSClass> existingClassList)
 		{
 			if(!File.Exists(filePath))
 			{
 				throw new Exception("Class file does not exist: " + filePath);
 			}
 			string data = File.ReadAllText(filePath);
-			return ParseString(data, filePath, existingClassList);
+			return ParseString(data, filePath, projectDirectory, existingClassList);
 		}
 
-		public virtual List<CSClass> ParseString(string data, string filePath, IEnumerable<CSClass> existingClassList = null)
+		public virtual List<CSClass> ParseString(string data, string filePath, string projectDirectory, IEnumerable<CSClass> existingClassList)
 		{
-			string fileName = Path.GetFileName(filePath);
+			string relativeFilePath = filePath.Replace(projectDirectory,"");
+			if(relativeFilePath.StartsWith("\\"))
+			{
+				relativeFilePath = relativeFilePath.Substring(1);
+			}
 			List<CSClass> returnValue = new List<CSClass>(existingClassList ?? new CSClass[]{} );
 			var parser = new CSharpParser();
-			var compilationUnit = parser.Parse(data, fileName);
+			var compilationUnit = parser.Parse(data, filePath);
 			var namespaceNodeList = compilationUnit.Children.Where(i=>i is NamespaceDeclaration);
 			foreach(NamespaceDeclaration namespaceNode in namespaceNodeList)
 			{
@@ -41,13 +45,13 @@ namespace MMDB.UITest.DotNetParser
 						};
 						returnValue.Add(classObject);
 					}
-					ClassParser.BuildClass(classObject, typeDeclarationNode, fileName);
+					ClassParser.BuildClass(classObject, typeDeclarationNode, relativeFilePath);
 				}
 			}
 			return returnValue;
 		}
 
-		internal static void BuildClass(CSClass classObject, TypeDeclaration typeDefinitionNode, string filePath)
+		internal static void BuildClass(CSClass classObject, TypeDeclaration typeDefinitionNode, string relativeFilePath)
 		{
 			var fieldList = typeDefinitionNode.Children.Where(i => i is FieldDeclaration);
 			if ((typeDefinitionNode.Modifiers & Modifiers.Public) == Modifiers.Public)
@@ -86,9 +90,9 @@ namespace MMDB.UITest.DotNetParser
 					classObject.AttributeList.Add(attribute);
 				}
 			}
-			if (!classObject.FilePathList.Contains(filePath, StringComparer.CurrentCultureIgnoreCase))
+			if (!classObject.FileRelativePathList.Contains(relativeFilePath, StringComparer.CurrentCultureIgnoreCase))
 			{
-				classObject.FilePathList.Add(filePath);
+				classObject.FileRelativePathList.Add(relativeFilePath);
 			}
 		}
 	}

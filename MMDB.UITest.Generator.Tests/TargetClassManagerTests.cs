@@ -31,7 +31,7 @@ namespace MMDB.UITest.Generator.Tests
 							}
 						}
 					},
-					FilePathList = new List<string>()
+					FileRelativePathList = new List<string>()
 					{
 						"TargetClassName.aspx.designer.cs",
 						"TargetClassName.aspx.cs"

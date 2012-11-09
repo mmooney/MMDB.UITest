@@ -25,22 +25,22 @@ namespace MMDB.UITest.Generator.Library
 				//If there is only one file, that is the user and designer file.
 				//If there are two or more files and one ends with ".designer.cs", that is the designer file and the the first of the others is the user file
 				//If there are two or more files and none ends with ".designer.cs", then the first one is the designer and user file
-				if (csClass.FilePathList.Count == 1)
+				if (csClass.FileRelativePathList.Count == 1)
 				{
-					returnValue.DesignerFilePath = csClass.FilePathList[0];
-					returnValue.UserFilePath = csClass.FilePathList[0];
+					returnValue.DesignerFileRelativePath = csClass.FileRelativePathList[0];
+					returnValue.UserFileRelativePath = csClass.FileRelativePathList[0];
 				}
-				else if (csClass.FilePathList.Count > 1)
+				else if (csClass.FileRelativePathList.Count > 1)
 				{
-					returnValue.DesignerFilePath = csClass.FilePathList.FirstOrDefault(i => i.EndsWith(".designer.cs", StringComparison.CurrentCultureIgnoreCase));
-					if (string.IsNullOrEmpty(returnValue.DesignerFilePath))
+					returnValue.DesignerFileRelativePath = csClass.FileRelativePathList.FirstOrDefault(i => i.EndsWith(".designer.cs", StringComparison.CurrentCultureIgnoreCase));
+					if (string.IsNullOrEmpty(returnValue.DesignerFileRelativePath))
 					{
-						returnValue.DesignerFilePath = csClass.FilePathList[0];
-						returnValue.UserFilePath = csClass.FilePathList[0];
+						returnValue.DesignerFileRelativePath = csClass.FileRelativePathList[0];
+						returnValue.UserFileRelativePath = csClass.FileRelativePathList[0];
 					}
 					else
 					{
-						returnValue.UserFilePath = csClass.FilePathList.FirstOrDefault(i => i != returnValue.DesignerFilePath);
+						returnValue.UserFileRelativePath = csClass.FileRelativePathList.FirstOrDefault(i => i != returnValue.DesignerFileRelativePath);
 					}
 				}
 

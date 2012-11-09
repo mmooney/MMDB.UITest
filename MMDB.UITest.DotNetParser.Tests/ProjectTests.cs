@@ -40,7 +40,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 					NamespaceName = "Test.Test1"
 				};
 				classList.Add(testClass1);
-				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.cs", It.IsAny<IEnumerable<CSClass>>())).Returns(classList);
+				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.cs", It.IsAny<string>(), It.IsAny<IEnumerable<CSClass>>())).Returns(classList);
 
 				ProjectParser parser = new ProjectParser(classParser.Object);
 
@@ -77,7 +77,7 @@ namespace MMDB.UITest.DotNetParser.Tests
 					NamespaceName = "Test.Test1"
 				};
 				classList.Add(testClass1);
-				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.cs", It.IsAny<IEnumerable<CSClass>>())).Returns(classList);
+				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.cs", It.IsAny<string>(), It.IsAny<IEnumerable<CSClass>>())).Returns(classList);
 
 				Mock<CSWebFormParser> webFormParser =new Mock<CSWebFormParser>();
 				webFormParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx"))
@@ -141,11 +141,11 @@ namespace MMDB.UITest.DotNetParser.Tests
 					PropertyList = new List<CSProperty>() {new CSProperty { PropertyName = "TestProperty3", TypeName = "int" }}
 				};
 				classList.Add(testClass1);
-				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.cs", It.IsAny<IEnumerable<CSClass>>()))
+				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.cs", It.IsAny<string>(), It.IsAny<IEnumerable<CSClass>>()))
 							.Returns((string filePath, IEnumerable<CSClass> inputClassList) => AppendClassToList(inputClassList, testClass1));
-				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.SomethingElse.cs", It.IsAny<IEnumerable<CSClass>>()))
+				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass1.aspx.SomethingElse.cs", It.IsAny<string>(), It.IsAny<IEnumerable<CSClass>>()))
 							.Returns((string filePath, IEnumerable<CSClass> inputClassList) => AppendClassToList(inputClassList, testClass1SomethingElse));
-				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass2.aspx.cs", It.IsAny<IEnumerable<CSClass>>()))
+				classParser.Setup(i => i.ParseFile("C:\\Test\\TestClass2.aspx.cs", It.IsAny<string>(), It.IsAny<IEnumerable<CSClass>>()))
 							.Returns((string filePath, IEnumerable<CSClass> inputClassList) => AppendClassToList(inputClassList, testClass2));
 			
 				Mock<CSWebFormParser> webFormParser = new Mock<CSWebFormParser>();
@@ -210,9 +210,9 @@ namespace MMDB.UITest.DotNetParser.Tests
 					ClassFullName = "Test.Test2.TestClass2"
 				};
 				classList.Add(testClass1);
-				classParser.Setup(i => i.ParseFile("C:\\Test\\TestDirectory\\TestClass1.aspx.cs", It.IsAny<IEnumerable<CSClass>>()))
+				classParser.Setup(i => i.ParseFile("C:\\Test\\TestDirectory\\TestClass1.aspx.cs", It.IsAny<string>(), It.IsAny<IEnumerable<CSClass>>()))
 							.Returns((string filePath, IEnumerable<CSClass> inputClassList) => AppendClassToList(inputClassList, testClass1));
-				classParser.Setup(i => i.ParseFile("C:\\Test\\TestDirectory1\\TestDirectory2\\TestClass2.aspx.cs", It.IsAny<IEnumerable<CSClass>>()))
+				classParser.Setup(i => i.ParseFile("C:\\Test\\TestDirectory1\\TestDirectory2\\TestClass2.aspx.cs", It.IsAny<string>(), It.IsAny<IEnumerable<CSClass>>()))
 							.Returns((string filePath, IEnumerable<CSClass> inputClassList) => AppendClassToList(inputClassList, testClass2));
 
 				Mock<CSWebFormParser> webFormParser = new Mock<CSWebFormParser>();

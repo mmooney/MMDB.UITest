@@ -181,8 +181,8 @@ namespace MMDB.UITest.Generator.Library
 				{
 					SourceClassFullName = targetClass.SourceClassFullName,
 					TargetClassFullName = targetClass.TargetClassFullName,
-					DesignerFileRelativePath = targetClass.DesignerFilePath,
-					UserFileRelativePath = targetClass.UserFilePath,
+					DesignerFileRelativePath = targetClass.DesignerFileRelativePath,
+					UserFileRelativePath = targetClass.UserFileRelativePath,
 					SourceObjectType = targetClass.SourceObjectType,
 					ExpectedUrl = targetClass.ExpectedUrl
 				};

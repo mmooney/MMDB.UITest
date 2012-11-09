@@ -68,6 +68,111 @@
     <Compile Include="TestTargetClass.designer.cs">
       <DependentUpon>TestTargetClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Client\Pages\Account\ForgotPasswordPageClient.cs">
+      <DependentUpon>ForgotPasswordPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Account\LoginPageClient.cs">
+      <DependentUpon>LoginPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Account\RegisterPageClient.cs">
+      <DependentUpon>RegisterPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Account\UserProfilePageClient.cs">
+      <DependentUpon>UserProfilePageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Account\VerifyPageClient.cs">
+      <DependentUpon>VerifyPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\AdminPageClient.cs">
+      <DependentUpon>AdminPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\Host\LogViewerPageClient.cs">
+      <DependentUpon>LogViewerPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\Host\SettingsPageClient.cs">
+      <DependentUpon>SettingsPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\Projects\AddProjectPageClient.cs">
+      <DependentUpon>AddProjectPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\Projects\EditProjectPageClient.cs">
+      <DependentUpon>EditProjectPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\Projects\ProjectListPageClient.cs">
+      <DependentUpon>ProjectListPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\Users\EditUserPageClient.cs">
+      <DependentUpon>EditUserPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\Users\UserListPageClient.cs">
+      <DependentUpon>UserListPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\_DefaultPageClient.cs">
+      <DependentUpon>_DefaultPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Errors\AccessDeniedPageClient.cs">
+      <DependentUpon>AccessDeniedPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Errors\NotFoundPageClient.cs">
+      <DependentUpon>NotFoundPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Errors\SomethingMissingPageClient.cs">
+      <DependentUpon>SomethingMissingPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\FeedPageClient.cs">
+      <DependentUpon>FeedPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Install\InstallPageClient.cs">
+      <DependentUpon>InstallPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\SearchResultsPageClient.cs">
+      <DependentUpon>SearchResultsPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Issues\MyIssuesPageClient.cs">
+      <DependentUpon>MyIssuesPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Projects\ReleaseNotesPageClient.cs">
+      <DependentUpon>ReleaseNotesPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\Projects\CloneProjectPageClient.cs">
+      <DependentUpon>CloneProjectPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Errors\ErrorPageClient.cs">
+      <DependentUpon>ErrorPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Issues\IssueDetailPageClient.cs">
+      <DependentUpon>IssueDetailPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Issues\IssueListPageClient.cs">
+      <DependentUpon>IssueListPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Administration\Users\AddUserPageClient.cs">
+      <DependentUpon>AddUserPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Errors\SessionExpiredPageClient.cs">
+      <DependentUpon>SessionExpiredPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Projects\ChangeLogPageClient.cs">
+      <DependentUpon>ChangeLogPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Projects\ProjectCalendarPageClient.cs">
+      <DependentUpon>ProjectCalendarPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Projects\ProjectSummaryPageClient.cs">
+      <DependentUpon>ProjectSummaryPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Projects\RoadmapPageClient.cs">
+      <DependentUpon>RoadmapPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Queries\QueryDetailPageClient.cs">
+      <DependentUpon>QueryDetailPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\Queries\QueryListPageClient.cs">
+      <DependentUpon>QueryListPageClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client\Pages\SvnBrowse\SubversionBrowserPageClient.cs">
+      <DependentUpon>SubversionBrowserPageClient.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MMDB.UITest.Core\MMDB.UITest.Core.csproj">
@@ -78,9 +183,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Client\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -34,6 +34,7 @@ namespace MMDB.UITest.DotNetParser
 		public virtual CSProjectFile ParseString(string data, string projectFilePath)
 		{
 			string workingProjectFilePath = Path.GetFullPath(projectFilePath);
+			string projectDirectory = Path.GetDirectoryName(workingProjectFilePath);
 			CSProjectFile returnValue = new CSProjectFile();
 			XDocument xdoc = XDocument.Parse(data);
 			var rootNamespaceNode = xdoc.Descendants().FirstOrDefault(i => i.Name.LocalName == "RootNamespace");
@@ -51,7 +52,7 @@ namespace MMDB.UITest.DotNetParser
 				string filePath = Path.Combine(Path.GetDirectoryName(workingProjectFilePath), classFile.FilePath);
 				filePath = Path.GetFullPath(filePath);
 				//ClassParser returns new class list
-				var newClassList = this.ClassParser.ParseFile(filePath, null);
+				var newClassList = this.ClassParser.ParseFile(filePath, projectDirectory, null);
 				//Then cycle trough and try to merge them, while building dependency list
 				foreach(var newClass in newClassList)
 				{

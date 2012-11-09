@@ -16,8 +16,8 @@ namespace MMDB.UITest.Generator.Library
 		public string SourceClassFullName { get; set; }
 		public string TargetClassFullName { get; set; }
 		public List<TargetField> TargetFieldList { get; set; }
-		public string DesignerFilePath { get; set; }
-		public string UserFilePath { get; set; }
+		public string DesignerFileRelativePath { get; set; }
+		public string UserFileRelativePath { get; set; }
 		public string ExpectedUrl { get; set; }
 
 		public TargetClass()
@@ -102,8 +102,8 @@ namespace MMDB.UITest.Generator.Library
 			{
 				SourceClassFullName = sourcePage.ClassFullName,
 				TargetClassFullName = targetNamespace + "." + targetClassName,
-				DesignerFilePath = Path.Combine(targetNamespace.Replace('.', '\\'), targetClassName + ".designer.cs"),
-				UserFilePath = Path.Combine(targetNamespace.Replace('.', '\\'), targetClassName + ".cs"),
+				DesignerFileRelativePath = Path.Combine(targetNamespace.Replace('.', '\\'), targetClassName + ".designer.cs"),
+				UserFileRelativePath = Path.Combine(targetNamespace.Replace('.', '\\'), targetClassName + ".cs"),
 			};
 			return returnValue;
 		}
@@ -182,13 +182,13 @@ namespace MMDB.UITest.Generator.Library
 
         public void EnsureFiles(string targetProjectPath)
 		{
-			string userFilePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), this.UserFilePath);
+			string userFilePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), this.UserFileRelativePath);
 			if (!File.Exists(userFilePath))
 			{
 				this.CreateUserFile(userFilePath);
 			}
 
-			string designerFilePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), this.DesignerFilePath);
+			string designerFilePath = Path.Combine(Path.GetDirectoryName(targetProjectPath), this.DesignerFileRelativePath);
 			if (!File.Exists(designerFilePath))
 			{
 				switch(this.SourceObjectType)
@@ -205,8 +205,8 @@ namespace MMDB.UITest.Generator.Library
 			}
 			
 			ProjectParser parser = new ProjectParser();
-			parser.EnsureFileInclude(targetProjectPath, this.UserFilePath, null);
-			parser.EnsureFileInclude(targetProjectPath, this.DesignerFilePath, this.UserFilePath);
+			parser.EnsureFileInclude(targetProjectPath, this.UserFileRelativePath, null);
+			parser.EnsureFileInclude(targetProjectPath, this.DesignerFileRelativePath, this.UserFileRelativePath);
 		}
 
 		private void CreateWebPageFile(string designerFilePath)

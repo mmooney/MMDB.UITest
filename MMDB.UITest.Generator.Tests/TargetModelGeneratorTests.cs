@@ -137,8 +137,8 @@ namespace MMDB.UITest.Generator.Tests
 						new TargetClass
 						{
 							SourceClassFullName = "TestSourceNamespace.Test1.TestItem",
-							DesignerFilePath = @"Client\Pages\Test1\TestItemPageClient.designer.cs",
-							UserFilePath = @"Client\Pages\Test1\TestItemPageClient.cs",
+							DesignerFileRelativePath = @"Client\Pages\Test1\TestItemPageClient.designer.cs",
+							UserFileRelativePath = @"Client\Pages\Test1\TestItemPageClient.cs",
 							TargetClassFullName = "TestTargetNamespace.Client.Pages.Test1.TestItemPageClient",
 							SourceObjectType = EnumSourceObjectType.WebPage,
 							ExpectedUrl = "TestWebPage.aspx"
@@ -175,8 +175,8 @@ namespace MMDB.UITest.Generator.Tests
 						new TargetClass
 						{
 							SourceClassFullName = "TestSourceNamespace.Test1.TestItem",
-							DesignerFilePath = @"SomeOtherLocation\TestItemPageClient.designer.cs",
-							UserFilePath = @"SomeOtherLocation\TestItemPageClient.cs",
+							DesignerFileRelativePath = @"SomeOtherLocation\TestItemPageClient.designer.cs",
+							UserFileRelativePath = @"SomeOtherLocation\TestItemPageClient.cs",
 							TargetClassFullName = "SomeOtherLocation.TestItemPageClient",
 							SourceObjectType = EnumSourceObjectType.WebPage,
 							ExpectedUrl = "TestWebPage.aspx"
@@ -213,8 +213,8 @@ namespace MMDB.UITest.Generator.Tests
 						new TargetClass
 						{
 							SourceClassFullName = "TestSourceNamespace.Test1.TestItem",
-							DesignerFilePath = @"SomeOtherLocation\SomeOtherClassName.designer.cs",
-							UserFilePath = @"SomeOtherLocation\SomeOtherClassName.cs",
+							DesignerFileRelativePath = @"SomeOtherLocation\SomeOtherClassName.designer.cs",
+							UserFileRelativePath = @"SomeOtherLocation\SomeOtherClassName.cs",
 							TargetClassFullName = "SomeOtherLocation.SomeOtherClassName",
 							SourceObjectType = EnumSourceObjectType.WebPage,
 							ExpectedUrl = "TestWebPage.aspx"

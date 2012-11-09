@@ -40,6 +40,26 @@ namespace MMDB.UITest.Generator.Library
 				parser.EnsureFileInclude(outputProjectPath, newClass.UserFileRelativePath, null);
 				parser.EnsureFileInclude(outputProjectPath, newClass.DesignerFileRelativePath, newClass.UserFileRelativePath);
 			}
+			foreach(var updatedClass in comparison.ClassesToUpdate)
+			{
+				string designerFilePath = Path.Combine(Path.GetDirectoryName(outputProjectPath), updatedClass.DesignerFileRelativePath);
+				//if (!File.Exists(designerFilePath))
+				//{
+				switch (updatedClass.SourceObjectType)
+				{
+					case EnumSourceObjectType.MasterPage:
+						this.CreateDesignerMasterPageFile(updatedClass, designerFilePath);
+						break;
+					case EnumSourceObjectType.WebPage:
+						this.CreateDesignerWebPageFile(updatedClass, designerFilePath);
+						break;
+					default:
+						throw new UnknownEnumValueException(updatedClass.SourceObjectType);
+				}
+				//}
+				ProjectParser parser = new ProjectParser();
+				parser.EnsureFileInclude(outputProjectPath, updatedClass.DesignerFileRelativePath, updatedClass.UserFileRelativePath);
+			}
 		}
 
 		private void CreateDesignerWebPageFile(TargetClassComparisonResult targetClass, string designerFilePath)
