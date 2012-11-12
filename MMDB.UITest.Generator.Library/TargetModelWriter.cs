@@ -58,7 +58,7 @@ namespace MMDB.UITest.Generator.Library
 				}
 				//}
 				ProjectParser parser = new ProjectParser();
-				parser.EnsureFileInclude(outputProjectPath, updatedClass.DesignerFileRelativePath, updatedClass.UserFileRelativePath);
+				parser.EnsureFileInclude(outputProjectPath, updatedClass.DesignerFileRelativePath, updatedClass.DesignerFileRelativePath);
 			}
 		}
 

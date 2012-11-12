@@ -52,6 +52,7 @@ namespace MMDB.UITest.DotNetParser
 			this.AttributeList.AddRange(newClass.AttributeList);
 			this.PropertyList.AddRange(newClass.PropertyList);
 			this.FieldList.AddRange(newClass.FieldList);
+			this.FileRelativePathList.AddRange(newClass.FileRelativePathList);
 		}
 	}
 }
