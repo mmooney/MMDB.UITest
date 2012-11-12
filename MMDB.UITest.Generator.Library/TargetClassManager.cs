@@ -62,8 +62,8 @@ namespace MMDB.UITest.Generator.Library
 			var uiClientPropertyAttribute = csProperty.AttributeList.SingleOrDefault(i => i.TypeFullName == typeof(UIClientPropertyAttribute).FullName);
 			if (uiClientPropertyAttribute != null)
 			{
-				string sourceFieldName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(0, "sourceFieldName", true));
-				string sourceClassFullName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(1, "sourceFieldTypeFullName", true));
+				string sourceFieldName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(0, "SourceFieldName", true));
+				string sourceClassFullName = Convert.ToString(uiClientPropertyAttribute.GetAttributeParameter(1, "SourceFieldTypeFullName", true));
 				returnValue = new TargetField
 				{
 					SourceFieldName = sourceFieldName,

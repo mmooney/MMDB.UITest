@@ -26,8 +26,8 @@ namespace MMDB.UITest.Generator.Tests
 							TypeFullName = typeof(UIClientPageAttribute).FullName,
 							ArgumentList = new List<CSAttribute.CSAttributeArgument>()
 							{
-								new CSAttribute.CSAttributeArgument { ArgumentName = "sourceClassFullName", ArguementValue = "Test.Test1.SourceClassFullNameValue" }//,
-								//new CSAttribute.CSAttributeArgument { ArgumentName = "ExpectedUrl", ArguementValue = "SourceClassFullName.aspx" }
+								new CSAttribute.CSAttributeArgument { ArgumentName = "SourceClassFullName", ArguementValue = "Test.Test1.SourceClassFullNameValue" },
+								new CSAttribute.CSAttributeArgument { ArgumentName = "ExpectedUrl", ArguementValue = "SourceClassFullName.aspx" }
 							}
 						}
 					},
@@ -50,8 +50,8 @@ namespace MMDB.UITest.Generator.Tests
 									TypeFullName = typeof(UIClientPropertyAttribute).FullName,
 									ArgumentList = new List<CSAttribute.CSAttributeArgument>()
 									{
-										new CSAttribute.CSAttributeArgument() { ArgumentName="sourceFieldTypeFullName", ArguementValue=typeof(System.Web.UI.WebControls.HyperLink).FullName },
-										new CSAttribute.CSAttributeArgument() { ArgumentName="sourceFieldName", ArguementValue="TestLink" }
+										new CSAttribute.CSAttributeArgument() { ArgumentName="SourceFieldTypeFullName", ArguementValue=typeof(System.Web.UI.WebControls.HyperLink).FullName },
+										new CSAttribute.CSAttributeArgument() { ArgumentName="SourceFieldName", ArguementValue="TestLink" }
 									}
 								}
 							}
@@ -68,8 +68,8 @@ namespace MMDB.UITest.Generator.Tests
 									TypeFullName = typeof(UIClientPropertyAttribute).FullName,
 									ArgumentList = new List<CSAttribute.CSAttributeArgument>()
 									{
-										new CSAttribute.CSAttributeArgument() { ArgumentName="sourceFieldTypeFullName", ArguementValue=typeof(System.Web.UI.WebControls.TextBox).FullName },
-										new CSAttribute.CSAttributeArgument() { ArgumentName="sourceFieldName", ArguementValue="TestTextBox" }
+										new CSAttribute.CSAttributeArgument() { ArgumentName="SourceFieldTypeFullName", ArguementValue=typeof(System.Web.UI.WebControls.TextBox).FullName },
+										new CSAttribute.CSAttributeArgument() { ArgumentName="SourceFieldName", ArguementValue="TestTextBox" }
 									}
 								}
 							}
@@ -94,7 +94,7 @@ namespace MMDB.UITest.Generator.Tests
 											sourceFieldName: "TestTextBox",
 											targetControlType: EnumTargetControlType.TextBox,
 											targetFieldName: "TestTextBox");
-				//Assert.AreEqual("SourceClassFullName.aspx", targetClass.ExpectedUrl);
+				Assert.AreEqual("SourceClassFullName.aspx", targetClass.ExpectedUrl);
 			}
 
 
